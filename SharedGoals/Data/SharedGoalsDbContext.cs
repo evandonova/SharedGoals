@@ -11,25 +11,16 @@ namespace SharedGoals.Data
         {
         }
 
-        public DbSet<PersonalGoal> PersonalGoals { get; init; }
-
-        public DbSet<TeamGoal> TeamGoals { get; init; }
+        public DbSet<Goal> Goals { get; init; }
 
         public DbSet<Tag> Tags { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
-                .Entity<PersonalGoal>()
+                .Entity<Goal>()
                 .HasOne(c => c.Tag)
-                .WithMany(c => c.PersonalGoals)
-                .HasForeignKey(c => c.TagId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                .Entity<TeamGoal>()
-                .HasOne(c => c.Tag)
-                .WithMany(c => c.TeamGoals)
+                .WithMany(c => c.Goals)
                 .HasForeignKey(c => c.TagId)
                 .OnDelete(DeleteBehavior.Restrict);
 

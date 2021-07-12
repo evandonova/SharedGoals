@@ -1,20 +1,18 @@
-﻿using System;
+﻿using SharedGoals.Data.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
-
 using static SharedGoals.Data.DataConstants;
 
-namespace SharedGoals.Data.Models
+namespace SharedGoals.Models.PersonalGoals
 {
-    public class PersonalGoal
+    public class AddPersonalGoalFormModel
     {
-        public int Id { get; init; }
-
         [Required]
-        [MaxLength(GoalNameMaxLength)]
+        [StringLength(GoalNameMaxLength, MinimumLength = GoalNameMinLength)]
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(GoalDescriptionMaxLength)]
+        [StringLength(GoalDescriptionMaxLength, MinimumLength = GoalDescriptionMinLength)]
         public string Description { get; set; }
 
         public DateTime DueDate { get; set; }

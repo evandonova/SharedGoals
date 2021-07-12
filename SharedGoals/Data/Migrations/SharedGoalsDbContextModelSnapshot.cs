@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharedGoals.Data;
 
 namespace SharedGoals.Data.Migrations
 {
     [DbContext(typeof(SharedGoalsDbContext))]
-    [Migration("20210712110200_InitialTablesCreated")]
-    partial class InitialTablesCreated
+    partial class SharedGoalsDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,12 +219,15 @@ namespace SharedGoals.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SharedGoals.Data.Models.PersonalGoal", b =>
+            modelBuilder.Entity("SharedGoals.Data.Models.Goal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -254,7 +255,7 @@ namespace SharedGoals.Data.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("PersonalGoals");
+                    b.ToTable("Goals");
                 });
 
             modelBuilder.Entity("SharedGoals.Data.Models.Tag", b =>
@@ -272,42 +273,6 @@ namespace SharedGoals.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
-                });
-
-            modelBuilder.Entity("SharedGoals.Data.Models.TeamGoal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("IconUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<double?>("ProgressInPercents")
-                        .HasColumnType("float");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("TeamGoals");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -361,21 +326,10 @@ namespace SharedGoals.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SharedGoals.Data.Models.PersonalGoal", b =>
+            modelBuilder.Entity("SharedGoals.Data.Models.Goal", b =>
                 {
                     b.HasOne("SharedGoals.Data.Models.Tag", "Tag")
-                        .WithMany("PersonalGoals")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("SharedGoals.Data.Models.TeamGoal", b =>
-                {
-                    b.HasOne("SharedGoals.Data.Models.Tag", "Tag")
-                        .WithMany("TeamGoals")
+                        .WithMany("Goals")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -385,9 +339,7 @@ namespace SharedGoals.Data.Migrations
 
             modelBuilder.Entity("SharedGoals.Data.Models.Tag", b =>
                 {
-                    b.Navigation("PersonalGoals");
-
-                    b.Navigation("TeamGoals");
+                    b.Navigation("Goals");
                 });
 #pragma warning restore 612, 618
         }

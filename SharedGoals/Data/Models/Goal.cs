@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using static SharedGoals.Data.DataConstants;
 
 namespace SharedGoals.Data.Models
 {
-    public class TeamGoal
+    public class Goal
     {
         public int Id { get; init; }
 
@@ -16,6 +17,8 @@ namespace SharedGoals.Data.Models
         [Required]
         [MaxLength(GoalDescriptionMaxLength)]
         public string Description { get; set; }
+
+        public DateTime CreatedOn { get; init; }
 
         public DateTime DueDate { get; set; }
 

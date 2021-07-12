@@ -13,7 +13,6 @@ namespace SharedGoals.Data.Models
         [MaxLength(TagNameMaxLength)]
         public string Name { get; set; }
 
-        public IEnumerable<PersonalGoal> PersonalGoals { get; init; } = new List<PersonalGoal>();
-        public IEnumerable<TeamGoal> TeamGoals { get; init; } = new List<TeamGoal>();
+        public IEnumerable<Goal> Goals { get; init; } = new List<Goal>();
     }
 }
