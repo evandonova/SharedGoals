@@ -1,0 +1,45 @@
+﻿@model CreateGoalFormModel
+
+@{
+    ViewData["Title"] = "Create Car";
+}
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <h2 class="heading-margin text-center">Add Goal</h2>
+
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="Be More Positive...">
+                <span asp-validation-for="Name" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input asp-for="Description" class="form-control" placeholder="My goal is to...">
+                <span asp-validation-for="Description" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DueDate" class="control-label"></label>
+                <input asp-for="DueDate" class="form-control" placeholder="Due Date..." />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IconUrl"></label>
+                <input asp-for="IconUrl" class="form-control" placeholder="Goal Icon URL here...">
+                <span asp-validation-for="IconUrl" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TagId"></label>
+                <select asp-for="TagId" class="form-control">
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <option value="@tag.Id">@tag.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="TagId" class="small text-danger"></span>
+            </div>
+            <input class="btn btn-primary" type="submit" value="Create" />
+        </form>
+    </div>
+</div>
