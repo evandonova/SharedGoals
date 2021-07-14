@@ -20,9 +20,6 @@ namespace SharedGoals.Models.Goals
         [DataType(DataType.Date)]
         public DateTime DueDate { get; set; }
 
-        [Display(Name = "Icon URL")]
-        public string IconUrl { get; set; }
-
         [Display(Name = "Tag")]
         public int TagId { get; set; }
 

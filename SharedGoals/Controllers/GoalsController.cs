@@ -17,7 +17,41 @@ namespace SharedGoals.Controllers
 
         public IActionResult All()
         {
-            return Redirect("/");
+            var goals = this.dbContext.Goals
+                .Select(g => new GoalListingViewModel()
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    DueDate = g.DueDate.ToString("dd-MM-yyyy"),
+                    ProgressInPercents = g.ProgressInPercents.ToString(),
+                    Tag = this.dbContext.Tags.FirstOrDefault(t => t.Id == g.TagId).Name
+                })
+                .ToList();
+
+            return View(goals);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var goal = this.dbContext.Goals.FirstOrDefault(g => g.Id == id);
+            var goalData = new GoalDetailsViewModel()
+            {
+                Id = goal.Id,
+                Name = goal.Name,
+                Description = goal.Description,
+                CreatedOn = goal.CreatedOn.ToString("dd-MM-yyyy"),
+                DueDate = goal.DueDate.ToString("dd-MM-yyyy"),
+                ProgressInPercents = goal.ProgressInPercents.ToString(),
+                Tag = this.dbContext.Tags.FirstOrDefault(t => t.Id == goal.TagId).Name,
+                Owner = this.User.Identity.Name
+            };
+
+            if(goal == null)
+            {
+                return View();
+            }
+
+            return View(goalData);
         }
 
         public IActionResult Create() => View(new CreateGoalFormModel
@@ -51,8 +85,7 @@ namespace SharedGoals.Controllers
                Description = goal.Description,
                CreatedOn = DateTime.UtcNow,
                DueDate = goal.DueDate,
-               TagId = goal.TagId,
-               IconUrl = goal.IconUrl
+               TagId = goal.TagId
             };
 
             this.dbContext.Goals.Add(goalData);
