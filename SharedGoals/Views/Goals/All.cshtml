@@ -9,46 +9,18 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DueDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProgressInPercents)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tag)
-            </th>
-            <th>
-                
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProgressInPercents)%
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tag)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+<div class="list-group-horizontal row">
+    @foreach (var item in Model)
+    {
+    <div class="list-group-item form-group text-center col-md-4 mr-1 mb-3">
+        <div class="form-group">
+            <h5 class="mb-1">@item.Name</h5>
+            <small>@item.ProgressInPercents%</small>
+            <small>@item.DueDate</small>
+        </div>
+        <p class="mb-1">@item.Tag</p>
+        <a asp-controller="Goals" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">View More</a>
+    </div>
+        <div class="mb-3"></div>
+    }
+</div>
