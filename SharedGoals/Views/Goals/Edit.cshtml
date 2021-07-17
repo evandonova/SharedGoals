@@ -1,14 +1,14 @@
 ﻿@model CreateGoalFormModel
 
 @{
-    ViewData["Title"] = "Edit Goal";
+    ViewBag.Title = "Edit Goal";
 }
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
 
 @if (Model != null)
 {
-    <h1>Edit Event</h1>
-    <hr />
-
     <form asp-action="Edit">
         <div class="row">
             <div class="col-md-3">

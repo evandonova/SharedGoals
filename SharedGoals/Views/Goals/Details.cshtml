@@ -1,12 +1,14 @@
 ﻿@model GoalDetailsViewModel
 
 @{
-    ViewData["Title"] = "Goal Details";
+    ViewBag.Title = "Goal Details";
 }
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
 
 @if (Model != null)
 {
-    <h1>Goal Details</h1>
     <p>
         <a asp-controller="Goals" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Edit Goal</a>
         <a asp-controller="Goals" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-secondary">Delete Goal</a>
@@ -18,7 +20,7 @@
         <div class="card-body">
             <h2 class="card-title">@Model.Name</h2>
             <p class="card-text">@Model.Description</p>
-            <a asp-controller="Goals" asp-action="Work" asp-route-id="@Model.Id" class="btn btn-secondary mb-3">Work on Goal</a>
+            <a asp-controller="Goals" asp-action="Work" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Work on Goal</a>
             <p class="card-text">@Model.Tag Goal - Completed on @Model.ProgressInPercents%</p>
         </div>
         <div class="card-footer text-muted">

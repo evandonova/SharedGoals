@@ -1,25 +1,30 @@
 ﻿@model IEnumerable<GoalListingViewModel>
 
 @{
-    ViewData["Title"] = "All Goals";
+    ViewBag.Title = "All Goals";
 }
 
-<h1>All Goals</h1>
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
 
-<p>
-    <a asp-action="Create">Create New</a>
+<p class="text-center">
+    <a asp-controller="Goals" asp-action="Create" class="btn btn-primary">Create New Goal</a>
 </p>
-<div class="list-group-horizontal row">
+<div class="list-group-horizontal row ml-1 justify-content-center">
     @foreach (var item in Model)
     {
     <div class="list-group-item form-group text-center col-md-4 mr-1 mb-3">
         <div class="form-group">
             <h5 class="mb-1">@item.Name</h5>
-            <small>@item.ProgressInPercents%</small>
-            <small>@item.DueDate</small>
+            <hr />
+            <small>Completed on <b>@item.ProgressInPercents%</b></small>
+            <br />
+            <small>Due to <b>@item.DueDate</b></small>
+            <br />
+            <small class="mb-1"><b>@item.Tag</b></small>
         </div>
-        <p class="mb-1">@item.Tag</p>
-        <a asp-controller="Goals" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">View More</a>
+        
+        <a asp-controller="Goals" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary">View Details</a>
     </div>
         <div class="mb-3"></div>
     }

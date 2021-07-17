@@ -1,10 +1,10 @@
 ﻿@model GoalListingViewModel
 
 @{
-    ViewData["Title"] = "Delete Goal";
+    ViewBag.Title = "Delete Goal";
 }
 
-<h1>Delete Existing Goal</h1>
+<h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
 @if (Model != null)
