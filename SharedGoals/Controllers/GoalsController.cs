@@ -48,8 +48,7 @@ namespace SharedGoals.Controllers
                 CreatedOn = goal.CreatedOn.ToString("dd-MM-yyyy"),
                 DueDate = goal.DueDate.ToString("dd-MM-yyyy"),
                 ProgressInPercents = goal.ProgressInPercents.ToString(),
-                Tag = this.dbContext.Tags.FirstOrDefault(t => t.Id == goal.TagId).Name,
-                Owner = this.User.Identity.Name
+                Tag = this.dbContext.Tags.FirstOrDefault(t => t.Id == goal.TagId).Name
             };
 
             return View(goalData);
@@ -110,7 +109,7 @@ namespace SharedGoals.Controllers
                 Id = goal.Id,
                 Name = goal.Name,
                 ProgressInPercents = goal.ProgressInPercents.ToString(),
-                DueDate = goal.DueDate.ToString(),
+                DueDate = goal.DueDate.ToString("dd/MM/yyyy"),
                 Tag = tagName
             };
 

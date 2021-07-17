@@ -9,5 +9,7 @@
         public const int GoalDescriptionMinLength = 5;
 
         public const int TagNameMaxLength = 20;
+
+        public const int CreatorNameMaxLength = 20;
     }
 }

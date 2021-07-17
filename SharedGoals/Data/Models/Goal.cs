@@ -27,5 +27,9 @@ namespace SharedGoals.Data.Models
         public int TagId { get; set; }
 
         public Tag Tag { get; init; }
+
+        public string CreatorId { get; init; }
+
+        public Creator Creator { get; init; }
     }
 }
