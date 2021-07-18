@@ -11,5 +11,6 @@
         public const int TagNameMaxLength = 20;
 
         public const int CreatorNameMaxLength = 20;
+        public const int CreatorNameMinLength = 3;
     }
 }
