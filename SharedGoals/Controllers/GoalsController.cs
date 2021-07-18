@@ -17,9 +17,11 @@ namespace SharedGoals.Controllers
         public GoalsController(SharedGoalsDbContext dbContext)
             => this.dbContext = dbContext;
 
-        public IActionResult All()
+        public IActionResult All([FromQuery] AllGoalsQueryModel query)
         {
             var goals = this.dbContext.Goals
+                .Skip((query.CurrentPage - 1) * AllGoalsQueryModel.CarsPerPage)
+                .Take(AllGoalsQueryModel.CarsPerPage)
                 .Select(g => new GoalListingViewModel()
                 {
                     Id = g.Id,
@@ -30,7 +32,12 @@ namespace SharedGoals.Controllers
                 })
                 .ToList();
 
-            return View(goals);
+            var totalGoals = this.dbContext.Goals.Count();
+
+            query.TotalGoals = totalGoals;
+            query.Goals = goals;
+
+            return View(query);
         }
 
         [Authorize]
