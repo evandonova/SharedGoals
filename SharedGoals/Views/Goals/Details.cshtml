@@ -20,7 +20,7 @@
         <div class="card-body">
             <h2 class="card-title">@Model.Name</h2>
             <p class="card-text">@Model.Description</p>
-            <a asp-controller="Goals" asp-action="Work" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Work on Goal</a>
+            <a asp-controller="GoalWorks" asp-action="Work" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Work on Goal</a>
             <p class="card-text">@Model.Tag Goal - Completed on @Model.ProgressInPercents%</p>
         </div>
         <div class="card-footer text-muted">

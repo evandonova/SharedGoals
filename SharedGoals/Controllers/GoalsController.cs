@@ -27,7 +27,7 @@ namespace SharedGoals.Controllers
                     Id = g.Id,
                     Name = g.Name,
                     DueDate = g.DueDate.ToString("dd-MM-yyyy"),
-                    ProgressInPercents = g.ProgressInPercents.ToString(),
+                    ProgressInPercents = (int)g.ProgressInPercents,
                     Tag = this.dbContext.Tags.FirstOrDefault(t => t.Id == g.TagId).Name
                 })
                 .ToList();
@@ -131,11 +131,6 @@ namespace SharedGoals.Controllers
         {
             var goal = this.dbContext.Goals.FirstOrDefault(g => g.Id == id);
 
-            if (!this.UserIsCreator())
-            {
-                return RedirectToAction(nameof(CreatorsController.Become), "Creators");
-            }
-
             if (goal == null)
             {
                 return View();
@@ -152,7 +147,7 @@ namespace SharedGoals.Controllers
             {
                 Id = goal.Id,
                 Name = goal.Name,
-                ProgressInPercents = goal.ProgressInPercents.ToString(),
+                ProgressInPercents = (int)goal.ProgressInPercents,
                 DueDate = goal.DueDate.ToString("dd/MM/yyyy"),
                 Tag = tagName
             };
@@ -170,12 +165,7 @@ namespace SharedGoals.Controllers
                 return this.View();
             }
 
-            if (!this.UserIsCreator())
-            {
-                return RedirectToAction(nameof(CreatorsController.Become), "Creators");
-            }
-
-            var currentUser = this.dbContext.Creators.FirstOrDefault(u => u.UserId == this.User.GetId());
+            var currentUser = this.dbContext.Users.FirstOrDefault(u => u.Id == this.User.GetId());
             if (goal.CreatorId != currentUser.Id)
             {
                 return Unauthorized("You cannot delete a goal of another creator!");
@@ -196,12 +186,7 @@ namespace SharedGoals.Controllers
                 return this.View();
             }
 
-            if (!this.UserIsCreator())
-            {
-                return RedirectToAction(nameof(CreatorsController.Become), "Creators");
-            }
-
-            var currentUser = this.dbContext.Creators.FirstOrDefault(u => u.UserId == this.User.GetId());
+            var currentUser = this.dbContext.Users.FirstOrDefault(u => u.Id == this.User.GetId());
             if (goal.CreatorId != currentUser.Id)
             {
                 return Unauthorized("You cannot edit a goal of another creator!");
@@ -226,11 +211,6 @@ namespace SharedGoals.Controllers
             if (goal == null)
             {
                 return this.View();
-            }
-
-            if (!this.UserIsCreator())
-            {
-                return RedirectToAction(nameof(CreatorsController.Become), "Creators");
             }
 
             var currentUser = this.dbContext.Creators.FirstOrDefault(u => u.UserId == this.User.GetId());

@@ -18,13 +18,22 @@ namespace SharedGoals.Data
 
         public DbSet<Creator> Creators { get; init; }
 
+        public DbSet<GoalWork> GoalWorks { get; init; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
                 .Entity<Goal>()
-                .HasOne(c => c.Tag)
-                .WithMany(c => c.Goals)
-                .HasForeignKey(c => c.TagId)
+                .HasOne(g => g.Tag)
+                .WithMany(t => t.Goals)
+                .HasForeignKey(g => g.TagId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<GoalWork>()
+                .HasOne(gw => gw.Goal)
+                .WithMany(g => g.GoalWorks)
+                .HasForeignKey(gw => gw.GoalId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder

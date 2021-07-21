@@ -13,7 +13,7 @@ namespace SharedGoals.Models.Goals
         public string DueDate { get; init; }
 
         [DisplayName("Progress In Percents")]
-        public string ProgressInPercents { get; init; }
+        public int ProgressInPercents { get; init; }
 
         public string Tag { get; init; }
     }

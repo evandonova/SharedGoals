@@ -12,5 +12,11 @@
 
         public const int CreatorNameMaxLength = 20;
         public const int CreatorNameMinLength = 3;
+
+        public const int WorkDescriptionMaxLength = 200;
+        public const int WorkDescriptionMinLength = 10;
+
+        public const int PercentsMaxValue = 100;
+        public const int PercentsMinValue = 0;
     }
 }

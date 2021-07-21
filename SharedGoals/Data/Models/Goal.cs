@@ -31,5 +31,7 @@ namespace SharedGoals.Data.Models
         public string CreatorId { get; init; }
 
         public Creator Creator { get; init; }
+
+        public IEnumerable<GoalWork> GoalWorks { get; init; } = new List<GoalWork>();
     }
 }
