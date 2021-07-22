@@ -172,7 +172,7 @@ namespace SharedGoals.Controllers
                 return this.View();
             }
 
-            var currentUser = this.dbContext.Users.FirstOrDefault(u => u.Id == this.User.GetId());
+            var currentUser = this.dbContext.Creators.FirstOrDefault(u => u.UserId == this.User.GetId());
             if (goal.CreatorId != currentUser.Id)
             {
                 return Unauthorized("You cannot delete a goal of another creator!");
@@ -193,7 +193,7 @@ namespace SharedGoals.Controllers
                 return this.View();
             }
 
-            var currentUser = this.dbContext.Users.FirstOrDefault(u => u.Id == this.User.GetId());
+            var currentUser = this.dbContext.Creators.FirstOrDefault(u => u.UserId == this.User.GetId());
             if (goal.CreatorId != currentUser.Id)
             {
                 return Unauthorized("You cannot edit a goal of another creator!");
