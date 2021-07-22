@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SharedGoals.Data.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SharedGoals.Models.Goals
 {
@@ -19,5 +21,7 @@ namespace SharedGoals.Models.Goals
         public string ProgressInPercents { get; init; }
 
         public string Tag{ get; init; }
+
+        public IEnumerable<GoalWorkViewModel> GoalWorks { get; init; } = new List<GoalWorkViewModel>();
     }
 }

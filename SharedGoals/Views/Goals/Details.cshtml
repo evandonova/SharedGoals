@@ -27,6 +27,22 @@
             Created on: @Model.CreatedOn | Due to: @Model.DueDate
         </div>
     </div>
+    <br />
+    <div class="card text-center">
+        <div class="card-header">
+            Works on the "@Model.Name" Goal
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                @foreach (var work in Model.GoalWorks)
+                {
+                    <li class="list-group-item"><b>@work.Description</b> by <b>@work.User</b></li>
+                }
+            </ul>
+        </div>
+        <div class="card-footer text-muted"></div>
+    </div>
+    
 }
 else
 {

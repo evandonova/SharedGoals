@@ -50,6 +50,8 @@ namespace SharedGoals.Controllers
                 return View();
             }
 
+            var works = this.dbContext.GoalWorks.Where(g => g.GoalId == goal.Id);
+
             var goalData = new GoalDetailsViewModel()
             {
                 Id = goal.Id,
@@ -58,7 +60,12 @@ namespace SharedGoals.Controllers
                 CreatedOn = goal.CreatedOn.ToString("dd-MM-yyyy"),
                 DueDate = goal.DueDate.ToString("dd-MM-yyyy"),
                 ProgressInPercents = goal.ProgressInPercents.ToString(),
-                Tag = this.dbContext.Tags.FirstOrDefault(t => t.Id == goal.TagId).Name
+                Tag = this.dbContext.Tags.FirstOrDefault(t => t.Id == goal.TagId).Name,
+                GoalWorks = works.Select(w => new GoalWorkViewModel()
+                {
+                    Description = w.Description,
+                    User = this.dbContext.Users.FirstOrDefault(u => u.Id == w.UserId).UserName
+                })
             };
 
             return View(goalData);
