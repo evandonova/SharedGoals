@@ -1,16 +1,16 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel;
 
-namespace SharedGoals.Models.Goals
+namespace SharedGoals.Services.Goals
 {
-    public class GoalListingViewModel
+    public class GoalServiceModel
     {
         public int Id { get; init; }
 
         public string Name { get; init; }
 
         [DisplayName("Due Date")]
-        public string DueDate { get; init; }
+        public DateTime DueDate { get; init; }
 
         [DisplayName("Progress In Percents")]
         public int ProgressInPercents { get; init; }

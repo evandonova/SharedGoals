@@ -1,6 +1,6 @@
-﻿namespace SharedGoals.Models.Goals
+﻿namespace SharedGoals.Services.Goals
 {
-    public class GoalTagViewModel
+    public class GoalTagServiceModel
     {
         public int Id { get; init; }
 

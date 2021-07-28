@@ -1,4 +1,5 @@
 ﻿using SharedGoals.Data.Models;
+using SharedGoals.Services.Goals;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,6 +24,6 @@ namespace SharedGoals.Models.Goals
         [Display(Name = "Tag")]
         public int TagId { get; set; }
 
-        public IEnumerable<GoalTagViewModel> Tags { get; set; }
+        public IEnumerable<GoalTagServiceModel> Tags { get; set; }
     }
 }

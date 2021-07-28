@@ -64,7 +64,7 @@ namespace SharedGoals.Controllers
                 return Unauthorized("Creators cannot work on goals!");
             }
 
-            var currentUser = this.dbContext.Users.FirstOrDefault(u => u.Id == this.User.GetId());
+            var currentUser = this.dbContext.Users.FirstOrDefault(u => u.Id == this.User.Id());
             var goalWork = new GoalWork()
             {
                 Description = goalWorkModel.Description,
@@ -83,6 +83,6 @@ namespace SharedGoals.Controllers
         private bool UserIsCreator()
            => this.dbContext
                .Creators
-               .Any(c => c.UserId == this.User.GetId());
+               .Any(c => c.UserId == this.User.Id());
     }
 }

@@ -1,41 +1,30 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedGoals.Data;
-using SharedGoals.Data.Models;
 using SharedGoals.Infrastructure;
 using SharedGoals.Models.Goals;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using SharedGoals.Services.Creators;
+using SharedGoals.Services.Goals;
 
 namespace SharedGoals.Controllers
 {
     public class GoalsController : Controller
     {
-        private readonly SharedGoalsDbContext dbContext;
+        private readonly IGoalService goals;
+        private readonly ICreatorService creators;
 
-        public GoalsController(SharedGoalsDbContext dbContext)
-            => this.dbContext = dbContext;
+        public GoalsController(IGoalService goals, ICreatorService creators)
+        {
+            this.goals = goals;
+            this.creators = creators;
+        }
 
         public IActionResult All([FromQuery] AllGoalsQueryModel query)
         {
-            var goals = this.dbContext.Goals
-                .Skip((query.CurrentPage - 1) * AllGoalsQueryModel.CarsPerPage)
-                .Take(AllGoalsQueryModel.CarsPerPage)
-                .Select(g => new GoalListingViewModel()
-                {
-                    Id = g.Id,
-                    Name = g.Name,
-                    DueDate = g.DueDate.ToString("dd-MM-yyyy"),
-                    ProgressInPercents = (int)g.ProgressInPercents,
-                    Tag = this.dbContext.Tags.FirstOrDefault(t => t.Id == g.TagId).Name
-                })
-                .ToList();
+            var queryResult = this.goals.All(query.GoalsPerPage, query.CurrentPage, query.TotalGoals);
 
-            var totalGoals = this.dbContext.Goals.Count();
-
-            query.TotalGoals = totalGoals;
-            query.Goals = goals;
+            query.TotalGoals = queryResult.TotalGoals;
+            query.Goals = queryResult.Goals;
 
             return View(query);
         }
@@ -43,45 +32,22 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Details(int id)
         {
-            var goal = this.dbContext.Goals.FirstOrDefault(g => g.Id == id);
+            var goal = this.goals.Details(id);
 
-            if (goal == null)
-            {
-                return View();
-            }
-
-            var works = this.dbContext.GoalWorks.Where(g => g.GoalId == goal.Id);
-
-            var goalData = new GoalDetailsViewModel()
-            {
-                Id = goal.Id,
-                Name = goal.Name,
-                Description = goal.Description,
-                CreatedOn = goal.CreatedOn.ToString("dd-MM-yyyy"),
-                DueDate = goal.DueDate.ToString("dd-MM-yyyy"),
-                ProgressInPercents = goal.ProgressInPercents.ToString(),
-                Tag = this.dbContext.Tags.FirstOrDefault(t => t.Id == goal.TagId).Name,
-                GoalWorks = works.Select(w => new GoalWorkViewModel()
-                {
-                    Description = w.Description,
-                    User = this.dbContext.Users.FirstOrDefault(u => u.Id == w.UserId).UserName
-                })
-            };
-
-            return View(goalData);
+            return View(goal);
         }
 
         [Authorize]
         public IActionResult Create()
         {
-            if (!this.UserIsCreator())
+            if (!this.creators.IsCreator(this.User.Id()))
             {
                 return RedirectToAction(nameof(CreatorsController.Become), "Creators");
             }
 
             return View(new CreateGoalFormModel
             {
-                Tags = GetGoalTags()
+                Tags = this.goals.Tags()
             });
         }
 
@@ -89,46 +55,35 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Create(CreateGoalFormModel goal)
         {
-            var creatorId = this.dbContext
-                .Creators
-                .Where(c => c.UserId == this.User.GetId())
-                .FirstOrDefault()
-                .Id;
+            var creatorId = this.creators.IdByUser(this.User.Id());
 
             if (creatorId == null)
             {
                 return RedirectToAction(nameof(CreatorsController.Become), "Creators");
             }
 
-            if (!this.dbContext.Tags.Any(c => c.Id == goal.TagId))
+            if (!this.goals.TagExists(goal.TagId))
             {
                 this.ModelState.AddModelError(nameof(goal.TagId), "Tag does not exist.");
             }
 
-            if (goal.DueDate <= DateTime.UtcNow || goal.DueDate.Year > 2100)
+            if (!this.goals.DateIsValid(goal.DueDate))
             {
                 this.ModelState.AddModelError(nameof(goal.DueDate), "Due Date must be in the future and before 2100 year.");
             }
 
             if (!ModelState.IsValid)
             {
-                goal.Tags = GetGoalTags();
+                goal.Tags = this.goals.Tags();
 
                 return View(goal);
             }
 
-            var goalData = new Goal
-            {
-                Name = goal.Name,
-                Description = goal.Description,
-                CreatedOn = DateTime.UtcNow,
-                DueDate = goal.DueDate,
-                TagId = goal.TagId,
-                CreatorId = creatorId
-            };
-
-            this.dbContext.Goals.Add(goalData);
-            this.dbContext.SaveChanges();
+            this.goals.Create(goal.Name,
+                goal.Description,
+                goal.DueDate,
+                goal.TagId,
+                creatorId);
 
             return RedirectToAction("All", "Goals");
         }
@@ -136,135 +91,100 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Delete(int id)
         {
-            var goal = this.dbContext.Goals.FirstOrDefault(g => g.Id == id);
+            var userId = this.User.Id();
 
-            if (goal == null)
+            var goal = this.goals.Info(id);
+
+            if (goal.UserId != userId)
             {
-                return View();
+                return Unauthorized("You cannot edit a goal of another creator!");
             }
 
-            var currentUser = this.dbContext.Creators.FirstOrDefault(u => u.UserId == this.User.GetId());
-            if (goal.CreatorId != currentUser.Id)
+            return this.View(new GoalExtendedServiceModel()
             {
-                return Unauthorized("You cannot delete a goal of another creator!");
-            }
-
-            var tagName = this.dbContext.Tags.FirstOrDefault(t => t.Id == goal.TagId).Name;
-            GoalListingViewModel model = new GoalListingViewModel()
-            {
-                Id = goal.Id,
                 Name = goal.Name,
-                ProgressInPercents = (int)goal.ProgressInPercents,
-                DueDate = goal.DueDate.ToString("dd/MM/yyyy"),
-                Tag = tagName
-            };
-
-            return View(model);
+                Description = goal.Description,
+                DueDate = goal.DueDate,
+                ProgressInPercents = goal.ProgressInPercents,
+                Tag = goal.Tag
+            });
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Delete(GoalListingViewModel goalModel)
+        public IActionResult Delete(GoalExtendedServiceModel goalModel)
         {
-            var goal = this.dbContext.Goals.FirstOrDefault(g => g.Id == goalModel.Id);
-            if (goal == null)
+            var userId = this.User.Id();
+            var goalData = this.goals.Info(goalModel.Id);
+
+            if (goalData.UserId != userId)
             {
-                return this.View();
+                return Unauthorized("You cannot edit a goal of another creator!");
             }
 
-            var currentUser = this.dbContext.Creators.FirstOrDefault(u => u.UserId == this.User.GetId());
-            if (goal.CreatorId != currentUser.Id)
-            {
-                return Unauthorized("You cannot delete a goal of another creator!");
-            }
+            this.goals.Delete(goalModel.Id);
 
-            dbContext.Goals.Remove(goal);
-            dbContext.SaveChanges();
             return this.RedirectToAction("All");
         }
 
         [Authorize]
         public IActionResult Edit(int id)
         {
-            var goal = this.dbContext.Goals.FirstOrDefault(g => g.Id == id);
+            var userId = this.User.Id();
 
-            if (goal == null)
-            {
-                return this.View();
-            }
+            var goal = this.goals.Info(id);
 
-            var currentUser = this.dbContext.Creators.FirstOrDefault(u => u.UserId == this.User.GetId());
-            if (goal.CreatorId != currentUser.Id)
+            if (goal.UserId != userId)
             {
                 return Unauthorized("You cannot edit a goal of another creator!");
             }
 
-            CreateGoalFormModel model = new CreateGoalFormModel()
+            return this.View(new CreateGoalFormModel()
             {
                 Name = goal.Name,
                 Description = goal.Description,
                 DueDate = goal.DueDate,
                 TagId = goal.TagId,
-                Tags = GetGoalTags()
-            };
-
-            return this.View(model);
+                Tags = this.goals.Tags()
+            });
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, CreateGoalFormModel bindingModel)
+        public IActionResult Edit(int id, CreateGoalFormModel goal)
         {
-            var goal = this.dbContext.Goals.FirstOrDefault(g => g.Id == id);
-            if (goal == null)
-            {
-                return this.View();
-            }
+            var userId = this.User.Id();
+            var goalData = this.goals.Info(id);
 
-            var currentUser = this.dbContext.Creators.FirstOrDefault(u => u.UserId == this.User.GetId());
-            if (goal.CreatorId != currentUser.Id)
+            if (goalData.UserId != userId)
             {
                 return Unauthorized("You cannot edit a goal of another creator!");
             }
 
-            if (!this.dbContext.Tags.Any(c => c.Id == bindingModel.TagId))
+            if (!this.goals.TagExists(goal.TagId))
             {
-                this.ModelState.AddModelError(nameof(bindingModel.TagId), "Tag does not exist.");
+                this.ModelState.AddModelError(nameof(goal.TagId), "Tag does not exist.");
             }
 
-            if (bindingModel.DueDate <= DateTime.UtcNow || bindingModel.DueDate.Year > 2100)
+            if (!this.goals.DateIsValid(goal.DueDate))
             {
-                this.ModelState.AddModelError(nameof(bindingModel.DueDate), "Due Date must be in the future and before 2100 year.");
+                this.ModelState.AddModelError(nameof(goal.DueDate), "Due Date must be in the future and before 2100 year.");
             }
 
             if (!this.ModelState.IsValid)
             {
-                bindingModel.Tags = GetGoalTags();
-                return this.View(bindingModel);
+                goal.Tags = this.goals.Tags();
+                return this.View(goal);
             }
 
-            goal.Name = bindingModel.Name;
-            goal.Description = bindingModel.Description;
-            goal.DueDate = bindingModel.DueDate;
-            goal.TagId = bindingModel.TagId;
+            this.goals.Edit(
+                id, 
+                goal.Name, 
+                goal.Description, 
+                goal.DueDate, 
+                goal.TagId);
 
-            dbContext.SaveChanges();
             return this.RedirectToAction("All");
         }
-
-        private bool UserIsCreator()
-            => this.dbContext
-                .Creators
-                .Any(c => c.UserId == this.User.GetId());
-
-        private IEnumerable<GoalTagViewModel> GetGoalTags()
-            => this.dbContext
-                .Tags
-                .Select(c => new GoalTagViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name
-                })
-                .ToList();
 
     }
 }

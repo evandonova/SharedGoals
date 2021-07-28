@@ -1,18 +1,21 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SharedGoals.Data;
 using SharedGoals.Infrastructure;
+using SharedGoals.Services.Creators;
+using SharedGoals.Services.Goals;
 
 namespace SharedGoals
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) 
+        public Startup(IConfiguration configuration)
             => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
@@ -36,7 +39,11 @@ namespace SharedGoals
                 .AddEntityFrameworkStores<SharedGoalsDbContext>();
 
             services
-                .AddControllersWithViews();
+                .AddControllersWithViews(options =>
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
+
+            services.AddTransient<IGoalService, GoalService>();
+            services.AddTransient<ICreatorService, CreatorService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

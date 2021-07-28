@@ -1,43 +1,39 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedGoals.Data;
-using SharedGoals.Data.Models;
 using SharedGoals.Infrastructure;
-using SharedGoals.Models.Creators;
+using SharedGoals.Services.Creators;
 
 namespace SharedGoals.Controllers
 {
     public class CreatorsController : Controller
     {
-        private readonly SharedGoalsDbContext data;
+        private readonly ICreatorService creators;
 
-        public CreatorsController(SharedGoalsDbContext data)
-            => this.data = data;
+        public CreatorsController(ICreatorService creators)
+        {
+            this.creators = creators;
+        }
 
         [Authorize]
         public IActionResult Become() => View();
 
         [HttpPost]
         [Authorize]
-        public IActionResult Become(BecomeCreatorFormModel creator)
+        public IActionResult Become(BecomeCreatorServiceModel creator)
         {
-            var userId = this.User.GetId();
+            var userId = this.User.Id();
 
-            var userIdAlreadyCreator = this.data
-                .Creators
-                .Any(c => c.UserId == userId);
+            var userIsAlreadyCreator = this.creators.IsCreator(userId);
 
-            if (userIdAlreadyCreator)
+            if (userIsAlreadyCreator)
             {
                 return BadRequest();
             }
 
-            var userWithNameAlreadyCreator = this.data
-                .Creators
-                .Any(c => c.Name == creator.Name);
+            var userWithNameAlreadyCreator = this.creators.IsCreatorByName(creator.Name);
 
-            if(userWithNameAlreadyCreator)
+            if (userWithNameAlreadyCreator)
             {
                 this.ModelState.AddModelError(nameof(creator.Name), "This name is already taken!");
             }
@@ -47,14 +43,7 @@ namespace SharedGoals.Controllers
                 return View(creator);
             }
 
-            var creatorData = new Creator
-            {
-                Name = creator.Name,
-                UserId = userId
-            };
-
-            this.data.Creators.Add(creatorData);
-            this.data.SaveChanges();
+            this.creators.Become(userId, creator.Name);
 
             return RedirectToAction("All", "Goals");
         }

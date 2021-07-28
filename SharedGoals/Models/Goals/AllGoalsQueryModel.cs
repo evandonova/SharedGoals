@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using SharedGoals.Services.Goals;
+using System.Collections.Generic;
 
 namespace SharedGoals.Models.Goals
 {
     public class AllGoalsQueryModel
     {
-        public const int CarsPerPage = 4;
+        public int GoalsPerPage = 4;
 
         public int CurrentPage { get; init; } = 1;
 
         public int TotalGoals { get; set; }
 
-        public IEnumerable<GoalListingViewModel> Goals { get; set; } = new List<GoalListingViewModel>();
+        public IEnumerable<GoalServiceModel> Goals { get; set; } = new List<GoalServiceModel>();
     }
 }
