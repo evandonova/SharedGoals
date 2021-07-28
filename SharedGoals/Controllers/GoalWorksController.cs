@@ -34,7 +34,7 @@ namespace SharedGoals.Controllers
                 return View();
             }
 
-            if (this.creators.IsCreator(this.User.Id()))
+            if (this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
             {
                 return Unauthorized("Creators cannot work on goals!");
             }
@@ -51,7 +51,7 @@ namespace SharedGoals.Controllers
                 return View();
             }
 
-            if (this.creators.IsCreator(this.User.Id()))
+            if (this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
             {
                 return Unauthorized("Creators cannot work on goals!");
             }

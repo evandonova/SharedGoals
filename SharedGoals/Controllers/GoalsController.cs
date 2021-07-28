@@ -56,7 +56,7 @@ namespace SharedGoals.Controllers
         {
             var creatorId = this.creators.IdByUser(this.User.Id());
 
-            if (creatorId == null)
+            if (creatorId == null && !this.User.IsAdmin())
             {
                 return RedirectToAction(nameof(CreatorsController.Become), "Creators");
             }
@@ -94,7 +94,7 @@ namespace SharedGoals.Controllers
 
             var goal = this.goals.Info(id);
 
-            if (goal.UserId != userId)
+            if (goal.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized("You cannot edit a goal of another creator!");
             }
@@ -116,7 +116,7 @@ namespace SharedGoals.Controllers
             var userId = this.User.Id();
             var goalData = this.goals.Info(goalModel.Id);
 
-            if (goalData.UserId != userId)
+            if (goalData.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized("You cannot edit a goal of another creator!");
             }
@@ -133,7 +133,7 @@ namespace SharedGoals.Controllers
 
             var goal = this.goals.Info(id);
 
-            if (goal.UserId != userId)
+            if (goal.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized("You cannot edit a goal of another creator!");
             }
@@ -154,7 +154,7 @@ namespace SharedGoals.Controllers
             var userId = this.User.Id();
             var goalData = this.goals.Info(id);
 
-            if (goalData.UserId != userId)
+            if (goalData.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized("You cannot edit a goal of another creator!");
             }
@@ -184,6 +184,5 @@ namespace SharedGoals.Controllers
 
             return this.RedirectToAction("All");
         }
-
     }
 }

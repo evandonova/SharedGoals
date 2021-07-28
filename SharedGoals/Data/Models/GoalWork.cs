@@ -18,7 +18,7 @@ namespace SharedGoals.Data.Models
         [Required]
         public string UserId { get; init; }
 
-        public IdentityUser User { get; init; }
+        public User User { get; init; }
 
         public int GoalId { get; init; }
 

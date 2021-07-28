@@ -5,7 +5,7 @@ using SharedGoals.Data.Models;
 
 namespace SharedGoals.Data
 {
-    public class SharedGoalsDbContext : IdentityDbContext
+    public class SharedGoalsDbContext : IdentityDbContext<User>
     {
         public SharedGoalsDbContext(DbContextOptions<SharedGoalsDbContext> options)
             : base(options)
@@ -45,7 +45,7 @@ namespace SharedGoals.Data
 
             builder
                 .Entity<Creator>()
-                .HasOne<IdentityUser>()
+                .HasOne<User>()
                 .WithOne()
                 .HasForeignKey<Creator>(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);

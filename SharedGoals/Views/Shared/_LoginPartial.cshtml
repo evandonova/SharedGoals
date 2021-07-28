@@ -1,13 +1,22 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@inject ICreatorService Creators
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Creators" asp-action="Become">Become Creator</a>
-        </li>
+        var userId = User.Id();
+        var userIsCreator = Creators.IsCreator(userId);
+        var userIsAdmin = User.IsAdmin();
+
+        @if (!userIsCreator && !userIsAdmin)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Creators" asp-action="Become">Become Creator</a>
+            </li>
+        }
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Profile</a>
         </li>

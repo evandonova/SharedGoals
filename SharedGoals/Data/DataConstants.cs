@@ -18,5 +18,11 @@
 
         public const int PercentsMaxValue = 100;
         public const int PercentsMinValue = 0;
+
+        public const int UserFirstNameMaxLenght = 10;
+        public const int UserFirstNameMinLenght = 1;
+
+        public const int UserLastNameMaxLenght = 15;
+        public const int UserLastNameMinLenght = 3;
     }
 }
