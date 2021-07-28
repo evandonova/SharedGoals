@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SharedGoals.Data;
 using SharedGoals.Infrastructure;
 using SharedGoals.Models.Goals;
 using SharedGoals.Services.Creators;
@@ -100,19 +99,19 @@ namespace SharedGoals.Controllers
                 return Unauthorized("You cannot edit a goal of another creator!");
             }
 
-            return this.View(new GoalExtendedServiceModel()
+            return this.View(new GoalDetailsViewModel()
             {
                 Name = goal.Name,
                 Description = goal.Description,
-                DueDate = goal.DueDate,
-                ProgressInPercents = goal.ProgressInPercents,
+                DueDate = goal.DueDate.ToString("dd/MM/yyyy hh:mm"),
+                ProgressInPercents = goal.ProgressInPercents.ToString(),
                 Tag = goal.Tag
             });
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Delete(GoalExtendedServiceModel goalModel)
+        public IActionResult Delete(GoalDetailsViewModel goalModel)
         {
             var userId = this.User.Id();
             var goalData = this.goals.Info(goalModel.Id);

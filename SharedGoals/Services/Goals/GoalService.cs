@@ -10,10 +10,8 @@ namespace SharedGoals.Services.Goals
     {
         private readonly SharedGoalsDbContext dbContext;
 
-        public GoalService(SharedGoalsDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
+        public GoalService(SharedGoalsDbContext dbContext) 
+            => this.dbContext = dbContext;
 
         public GoalQueryServiceModel All(int goalsPerPage, int currentPage, int totalGoals)
         {

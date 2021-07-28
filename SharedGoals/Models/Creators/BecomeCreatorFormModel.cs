@@ -2,9 +2,9 @@
 
 using static SharedGoals.Data.DataConstants;
 
-namespace SharedGoals.Services.Creators
+namespace SharedGoals.Models.Creators
 {
-    public class BecomeCreatorServiceModel
+    public class BecomeCreatorFormModel
     {
         [Required]
         [StringLength(CreatorNameMaxLength, MinimumLength = CreatorNameMinLength)]

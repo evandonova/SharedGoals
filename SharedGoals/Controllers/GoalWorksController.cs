@@ -1,47 +1,40 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SharedGoals.Data;
-using SharedGoals.Data.Models;
 using SharedGoals.Infrastructure;
 using SharedGoals.Models.GoalWorks;
-using System.Linq;
+using SharedGoals.Services.Creators;
+using SharedGoals.Services.GoalWorks;
 
 namespace SharedGoals.Controllers
 {
     public class GoalWorksController : Controller
     {
-        private readonly SharedGoalsDbContext dbContext;
+        private readonly IGoalWorkService goalWorks;
+        private readonly ICreatorService creators;
 
-        public GoalWorksController(SharedGoalsDbContext dbContext)
-            => this.dbContext = dbContext;
+        public GoalWorksController(IGoalWorkService goalWorks, ICreatorService creators)
+        {
+            this.goalWorks = goalWorks;
+            this.creators = creators;
+        }
 
         [Authorize]
         public IActionResult All()
         {
-            var goals = this.dbContext.GoalWorks
-                .Select(g => new GoalWorkListingViewModel()
-                {
-                    Description = g.Description,
-                    WorkDoneInPercents = g.WorkDoneInPercents,
-                    User = this.dbContext.Users.FirstOrDefault(u => u.Id == g.UserId).UserName,
-                    Goal = this.dbContext.Goals.FirstOrDefault(gl => gl.Id == g.GoalId).Name,
-                })
-                .ToList();
-            
-            return View(goals);
+            var goalWorks = this.goalWorks.All();
+
+            return View(goalWorks);
         }
 
         [Authorize]
         public IActionResult Work(int id)
         {
-            var goal = this.dbContext.Goals.FirstOrDefault(g => g.Id == id);
-
-            if (goal == null)
+            if (!this.goalWorks.GoalExists(id))
             {
                 return View();
             }
 
-            if (this.UserIsCreator())
+            if (this.creators.IsCreator(this.User.Id()))
             {
                 return Unauthorized("Creators cannot work on goals!");
             }
@@ -53,36 +46,23 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Work(int id, GoalWorkFormModel goalWorkModel)
         {
-            var goal = this.dbContext.Goals.FirstOrDefault(g => g.Id == id);
-            if (goal == null)
+            if (!this.goalWorks.GoalExists(id))
             {
-                return this.View();
+                return View();
             }
 
-            if (this.UserIsCreator())
+            if (this.creators.IsCreator(this.User.Id()))
             {
                 return Unauthorized("Creators cannot work on goals!");
             }
 
-            var currentUser = this.dbContext.Users.FirstOrDefault(u => u.Id == this.User.Id());
-            var goalWork = new GoalWork()
-            {
-                Description = goalWorkModel.Description,
-                WorkDoneInPercents = goalWorkModel.WorkDoneInPercents,
-                UserId = currentUser.Id,
-                GoalId = id
-            };
+            this.goalWorks.Work(
+                goalWorkModel.Description,
+                goalWorkModel.WorkDoneInPercents,
+                this.User.Id(),
+                id);
 
-            goal.ProgressInPercents += goalWork.WorkDoneInPercents;
-
-            dbContext.GoalWorks.Add(goalWork);
-            dbContext.SaveChanges();
             return this.RedirectToAction("All", "Goals");
         }
-
-        private bool UserIsCreator()
-           => this.dbContext
-               .Creators
-               .Any(c => c.UserId == this.User.Id());
     }
 }

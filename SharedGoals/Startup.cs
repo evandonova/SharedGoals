@@ -10,6 +10,7 @@ using SharedGoals.Data;
 using SharedGoals.Infrastructure;
 using SharedGoals.Services.Creators;
 using SharedGoals.Services.Goals;
+using SharedGoals.Services.GoalWorks;
 
 namespace SharedGoals
 {
@@ -44,6 +45,7 @@ namespace SharedGoals
 
             services.AddTransient<IGoalService, GoalService>();
             services.AddTransient<ICreatorService, CreatorService>();
+            services.AddTransient<IGoalWorkService, GoalWorkService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SharedGoals.Data;
 using SharedGoals.Infrastructure;
+using SharedGoals.Models.Creators;
 using SharedGoals.Services.Creators;
 
 namespace SharedGoals.Controllers
@@ -20,7 +20,7 @@ namespace SharedGoals.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Become(BecomeCreatorServiceModel creator)
+        public IActionResult Become(BecomeCreatorFormModel creator)
         {
             var userId = this.User.Id();
 
