@@ -1,11 +1,13 @@
-﻿using SharedGoals.Services.Goals.Models;
+﻿using SharedGoals.Data;
+using SharedGoals.Services.Goals.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static SharedGoals.Data.DataConstants;
 
 namespace SharedGoals.Models.Goals
 {
+    using static DataConstants;
+
     public class CreateGoalFormModel
     {
         [Required]

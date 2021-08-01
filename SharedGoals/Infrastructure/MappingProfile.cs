@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using SharedGoals.Data.Models;
 using SharedGoals.Models.Goals;
-using SharedGoals.Models.GoalWorks;
+using SharedGoals.Services.Creators;
 using SharedGoals.Services.Goals.Models;
 using SharedGoals.Services.GoalWorks;
+using SharedGoals.Services.Users;
 
 namespace SharedGoals.Infrastructure
 {
@@ -23,8 +24,7 @@ namespace SharedGoals.Infrastructure
             this.CreateMap<GoalWork, GoalWorkExtendedServiceModel>()
                 .ForMember(g => g.User, cfg => cfg.MapFrom(g => g.User.UserName))
                 .ForMember(g => g.Goal, cfg => cfg.MapFrom(g => g.Goal.Name));
-            this.CreateMap<GoalWork, GoalWorkListingViewModel>()
-                .ForMember(g => g.Goal, cfg => cfg.MapFrom(g => g.Goal.Name));
+            this.CreateMap<User, UserServiceModel>();
         }
     }
 }

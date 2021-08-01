@@ -24,15 +24,7 @@ namespace SharedGoals.Controllers
         {
             var userId = this.User.Id();
 
-            var allGoalWorks = this.goalWorks.Mine(userId);
-
-            var goalWorks = allGoalWorks.Select(g => new GoalWorkListingViewModel()
-            {
-                Description = g.Description,
-                WorkDoneInPercents = g.WorkDoneInPercents,
-                User = g.User,
-                Goal = g.Goal.ToString()
-            });
+            var goalWorks = this.goalWorks.Mine(userId);
 
             return View(goalWorks);
         }

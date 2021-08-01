@@ -9,6 +9,5 @@ namespace SharedGoals.Areas.Admin.Controllers
     [Authorize(Roles = AdministratorRoleName)]
     public abstract class AdminController : Controller
     {
-
     }
 }

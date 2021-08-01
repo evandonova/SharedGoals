@@ -2,13 +2,15 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SharedGoals.Data;
 using SharedGoals.Data.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using static SharedGoals.Data.DataConstants;
 
 namespace SharedGoals.Areas.Identity.Pages.Account
 {
+    using static DataConstants;
+
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {

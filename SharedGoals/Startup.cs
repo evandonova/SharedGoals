@@ -13,6 +13,7 @@ using SharedGoals.Services.Creators;
 using SharedGoals.Services.Goals;
 using SharedGoals.Services.GoalWorks;
 using AutoMapper;
+using SharedGoals.Services.Users;
 
 namespace SharedGoals
 {
@@ -51,6 +52,7 @@ namespace SharedGoals
             services.AddTransient<IGoalService, GoalService>();
             services.AddTransient<ICreatorService, CreatorService>();
             services.AddTransient<IGoalWorkService, GoalWorkService>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

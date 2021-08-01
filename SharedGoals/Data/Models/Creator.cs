@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using static SharedGoals.Data.DataConstants;
-
 namespace SharedGoals.Data.Models
 {
+    using static DataConstants;
+
     public class Creator
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();

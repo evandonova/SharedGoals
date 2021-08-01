@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-using static SharedGoals.Data.DataConstants;
-
 namespace SharedGoals.Data.Models
 {
+    using static DataConstants;
     public class User : IdentityUser
     {
         [MaxLength(UserFirstNameMaxLenght)]
