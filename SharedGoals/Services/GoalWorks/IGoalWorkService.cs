@@ -7,6 +7,7 @@ namespace SharedGoals.Services.GoalWorks
 {
     public interface IGoalWorkService
     {
+        public IEnumerable<GoalWorkServiceModel> Mine(string userId);
         public IEnumerable<GoalWorkServiceModel> All();
         public bool GoalExists(int id);
         public void Work(string description, int workDone, string userId, int goalId);

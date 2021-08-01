@@ -14,6 +14,18 @@ namespace SharedGoals.Services.GoalWorks
         public GoalWorkService(SharedGoalsDbContext dbContext)
             => this.dbContext = dbContext;
 
+        public IEnumerable<GoalWorkServiceModel> Mine(string userId)
+            => this.dbContext.GoalWorks
+                .Where(g => g.UserId == userId)
+                .Select(g => new GoalWorkServiceModel()
+                {
+                    Description = g.Description,
+                    WorkDoneInPercents = g.WorkDoneInPercents,
+                    User = this.dbContext.Users.FirstOrDefault(u => u.Id == g.UserId).UserName,
+                    Goal = this.dbContext.Goals.FirstOrDefault(gl => gl.Id == g.GoalId).Name,
+                })
+                .ToList();
+
         public IEnumerable<GoalWorkServiceModel> All()
             => this.dbContext.GoalWorks
                 .Select(g => new GoalWorkServiceModel()

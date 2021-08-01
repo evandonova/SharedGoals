@@ -23,12 +23,18 @@
                                 Goals
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="Goals" asp-action="All">All Goals</a>
                                 <a class="dropdown-item" asp-controller="Goals" asp-action="Create">Create Goal</a>
+                                <a class="dropdown-item" asp-controller="Goals" asp-action="All">All Goals</a>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="GoalWorks" asp-action="All">Works</a>
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" asp-controller="GoalWorks" asp-action="All" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Works
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-controller="GoalWorks" asp-action="Mine">My Works</a>
+                                <a class="dropdown-item" asp-controller="GoalWorks" asp-action="All">All Works</a>
+                            </div>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

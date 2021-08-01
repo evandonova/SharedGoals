@@ -4,6 +4,7 @@ using SharedGoals.Infrastructure;
 using SharedGoals.Models.GoalWorks;
 using SharedGoals.Services.Creators;
 using SharedGoals.Services.GoalWorks;
+using System.Linq;
 
 namespace SharedGoals.Controllers
 {
@@ -19,9 +20,19 @@ namespace SharedGoals.Controllers
         }
 
         [Authorize]
-        public IActionResult All()
+        public IActionResult Mine()
         {
-            var goalWorks = this.goalWorks.All();
+            var userId = this.User.Id();
+
+            var allGoalWorks = this.goalWorks.Mine(userId);
+
+            var goalWorks = allGoalWorks.Select(g => new GoalWorkListingViewModel()
+            {
+                Description = g.Description,
+                WorkDoneInPercents = g.WorkDoneInPercents,
+                User = g.User,
+                Goal = g.Goal
+            });
 
             return View(goalWorks);
         }

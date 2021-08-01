@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-using static SharedGoals.WebConstants;
+using static SharedGoals.Areas.Admin.AdminConstants;
 
 namespace SharedGoals.Infrastructure
 {
