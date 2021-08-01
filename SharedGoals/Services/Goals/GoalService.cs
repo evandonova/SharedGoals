@@ -1,5 +1,9 @@
-﻿using SharedGoals.Data;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
+using AutoMapper.QueryableExtensions;
+using SharedGoals.Data;
 using SharedGoals.Data.Models;
+using SharedGoals.Services.Goals.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +13,20 @@ namespace SharedGoals.Services.Goals
     public class GoalService : IGoalService
     {
         private readonly SharedGoalsDbContext dbContext;
+        private readonly IMapper mapper;
 
-        public GoalService(SharedGoalsDbContext dbContext) 
-            => this.dbContext = dbContext;
+        public GoalService(SharedGoalsDbContext dbContext, IMapper mapper)
+        {
+            this.dbContext = dbContext;
+            this.mapper = mapper;
+        }
 
         public GoalQueryServiceModel All(int goalsPerPage, int currentPage, int totalGoals)
         {
             var goals = this.dbContext.Goals
                .Skip((currentPage - 1) * goalsPerPage)
                .Take(goalsPerPage)
-               .Select(g => new GoalServiceModel()
-               {
-                   Id = g.Id,
-                   Name = g.Name,
-                   DueDate = g.DueDate,
-                   ProgressInPercents = (int)g.ProgressInPercents,
-                   Tag = this.dbContext.Tags.FirstOrDefault(t => t.Id == g.TagId).Name
-               })
+               .ProjectTo<GoalServiceModel>(this.mapper.ConfigurationProvider)
                .ToList();
 
             return new GoalQueryServiceModel()
@@ -56,19 +57,7 @@ namespace SharedGoals.Services.Goals
             => this.dbContext
                 .Goals
                 .Where(g => g.Id == id)
-                .Select(g => new GoalExtendedServiceModel
-                {
-                    Id = g.Id,
-                    Name = g.Name,
-                    Description = g.Description,
-                    DueDate = g.DueDate,
-                    ProgressInPercents = g.ProgressInPercents,
-                    CreatorId = g.CreatorId,
-                    CreatorName = g.Creator.Name,
-                    TagId = g.TagId,
-                    Tag = g.Tag.Name,
-                    UserId = g.Creator.UserId
-                })
+                .ProjectTo<GoalExtendedServiceModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefault();
 
         public GoalDetailsServiceModel Details(int id)
@@ -76,6 +65,12 @@ namespace SharedGoals.Services.Goals
             var works = this.dbContext
                 .GoalWorks
                 .Where(g => g.GoalId == id);
+
+            var goalWorksModel = works.Select(w => new GoalWorkServiceModel()
+            {
+                Description = w.Description,
+                User = this.dbContext.Users.FirstOrDefault(u => u.Id == w.UserId).UserName
+            }).ToList();
 
             return this.dbContext
                 .Goals
@@ -89,11 +84,7 @@ namespace SharedGoals.Services.Goals
                     ProgressInPercents = g.ProgressInPercents,
                     Tag = g.Tag.Name,
                     CreatedOn = g.CreatedOn.ToString("dd/MM/yyyy hh:mm"),
-                    GoalWorks = works.Select(w => new GoalWorkServiceModel()
-                    {
-                        Description = w.Description,
-                        User = this.dbContext.Users.FirstOrDefault(u => u.Id == w.UserId).UserName
-                    }).ToList()
+                    GoalWorks = goalWorksModel
                 })
                 .FirstOrDefault();
         }
@@ -138,11 +129,7 @@ namespace SharedGoals.Services.Goals
         public IEnumerable<GoalTagServiceModel> Tags()
          => this.dbContext
                 .Tags
-                .Select(c => new GoalTagServiceModel
-                {
-                    Id = c.Id,
-                    Name = c.Name
-                })
+                .ProjectTo<GoalTagServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
 
         public bool TagExists(int tagId)

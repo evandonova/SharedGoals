@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedGoals.Infrastructure;
 using SharedGoals.Models.Goals;
@@ -11,11 +12,13 @@ namespace SharedGoals.Controllers
     {
         private readonly IGoalService goals;
         private readonly ICreatorService creators;
+        private readonly IMapper mapper;
 
-        public GoalsController(IGoalService goals, ICreatorService creators)
+        public GoalsController(IGoalService goals, ICreatorService creators, IMapper mapper)
         {
             this.goals = goals;
             this.creators = creators;
+            this.mapper = mapper;
         }
 
         public IActionResult All([FromQuery] AllGoalsQueryModel query)
@@ -99,14 +102,9 @@ namespace SharedGoals.Controllers
                 return Unauthorized("You cannot edit a goal of another creator!");
             }
 
-            return this.View(new GoalDetailsViewModel()
-            {
-                Name = goal.Name,
-                Description = goal.Description,
-                DueDate = goal.DueDate.ToString("dd/MM/yyyy hh:mm"),
-                ProgressInPercents = goal.ProgressInPercents.ToString(),
-                Tag = goal.Tag
-            });
+            var goalModel = this.mapper.Map<GoalDetailsViewModel>(goal);
+
+            return this.View(goalModel);
         }
 
         [HttpPost]
@@ -138,14 +136,9 @@ namespace SharedGoals.Controllers
                 return Unauthorized("You cannot edit a goal of another creator!");
             }
 
-            return this.View(new CreateGoalFormModel()
-            {
-                Name = goal.Name,
-                Description = goal.Description,
-                DueDate = goal.DueDate,
-                TagId = goal.TagId,
-                Tags = this.goals.Tags()
-            });
+            var goalForm = this.mapper.Map<CreateGoalFormModel>(goal);
+            goalForm.Tags = this.goals.Tags();
+            return this.View(goalForm);
         }
 
         [HttpPost]

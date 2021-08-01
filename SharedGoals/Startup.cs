@@ -12,6 +12,7 @@ using SharedGoals.Infrastructure;
 using SharedGoals.Services.Creators;
 using SharedGoals.Services.Goals;
 using SharedGoals.Services.GoalWorks;
+using AutoMapper;
 
 namespace SharedGoals
 {
@@ -40,6 +41,8 @@ namespace SharedGoals
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<SharedGoalsDbContext>();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services
                 .AddControllersWithViews(options =>
@@ -73,9 +76,7 @@ namespace SharedGoals
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
-                    endpoints.MapControllerRoute(
-                        name: "Areas",
-                        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapDefaultAreaRoute();
                     endpoints.MapDefaultControllerRoute();
                     endpoints.MapRazorPages();
                 });

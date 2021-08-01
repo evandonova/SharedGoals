@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace SharedGoals.Services.Goals
+namespace SharedGoals.Services.Goals.Models
 {
     public class GoalServiceModel
     {

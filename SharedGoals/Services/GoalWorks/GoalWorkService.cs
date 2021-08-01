@@ -1,40 +1,33 @@
-﻿using SharedGoals.Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using SharedGoals.Data;
 using SharedGoals.Data.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SharedGoals.Services.GoalWorks
 {
     public class GoalWorkService : IGoalWorkService
     {
         private readonly SharedGoalsDbContext dbContext;
+        private readonly IMapper mapper;
 
-        public GoalWorkService(SharedGoalsDbContext dbContext)
-            => this.dbContext = dbContext;
+        public GoalWorkService(SharedGoalsDbContext dbContext, IMapper mapper) 
+        {
+            this.dbContext = dbContext;
+            this.mapper = mapper;
+        }
 
-        public IEnumerable<GoalWorkServiceModel> Mine(string userId)
-            => this.dbContext.GoalWorks
+        public IEnumerable<GoalWorkExtendedServiceModel> Mine(string userId)
+            => this.dbContext
+                .GoalWorks
                 .Where(g => g.UserId == userId)
-                .Select(g => new GoalWorkServiceModel()
-                {
-                    Description = g.Description,
-                    WorkDoneInPercents = g.WorkDoneInPercents,
-                    User = this.dbContext.Users.FirstOrDefault(u => u.Id == g.UserId).UserName,
-                    Goal = this.dbContext.Goals.FirstOrDefault(gl => gl.Id == g.GoalId).Name,
-                })
+                .ProjectTo<GoalWorkExtendedServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
 
-        public IEnumerable<GoalWorkServiceModel> All()
+        public IEnumerable<GoalWorkExtendedServiceModel> All()
             => this.dbContext.GoalWorks
-                .Select(g => new GoalWorkServiceModel()
-                {
-                    Description = g.Description,
-                    WorkDoneInPercents = g.WorkDoneInPercents,
-                    User = this.dbContext.Users.FirstOrDefault(u => u.Id == g.UserId).UserName,
-                    Goal = this.dbContext.Goals.FirstOrDefault(gl => gl.Id == g.GoalId).Name,
-                })
+                .ProjectTo<GoalWorkExtendedServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
 
         public bool GoalExists(int id)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SharedGoals.Models.GoalWorks;
 using SharedGoals.Services.GoalWorks;
 using System.Linq;
@@ -8,10 +9,12 @@ namespace SharedGoals.Areas.Admin.Controllers
     public class GoalWorksController : AdminController
     {
         private readonly IGoalWorkService goalWorks;
+        private readonly IMapper mapper;
 
-        public GoalWorksController(IGoalWorkService goalWorks)
+        public GoalWorksController(IGoalWorkService goalWorks, IMapper mapper)
         {
             this.goalWorks = goalWorks;
+            this.mapper = mapper;
         }
 
         [Route("/GoalWorks/All")]
@@ -19,7 +22,8 @@ namespace SharedGoals.Areas.Admin.Controllers
         {
             var allGoalWorks = this.goalWorks.All();
 
-            var goalWorks = allGoalWorks.Select(g => new GoalWorkListingViewModel()
+            var goalWorks = allGoalWorks
+                .Select(g => new GoalWorkListingViewModel()
             {
                 Description = g.Description,
                 WorkDoneInPercents = g.WorkDoneInPercents,

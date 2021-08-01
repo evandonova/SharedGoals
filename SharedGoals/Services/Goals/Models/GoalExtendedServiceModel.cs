@@ -1,4 +1,4 @@
-﻿namespace SharedGoals.Services.Goals
+﻿namespace SharedGoals.Services.Goals.Models
 {
     public class GoalExtendedServiceModel : GoalServiceModel
     {

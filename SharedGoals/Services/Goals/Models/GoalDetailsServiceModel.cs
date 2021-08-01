@@ -1,7 +1,7 @@
 ﻿using SharedGoals.Models.Goals;
 using System.Collections.Generic;
 
-namespace SharedGoals.Services.Goals
+namespace SharedGoals.Services.Goals.Models
 {
     public class GoalDetailsServiceModel : GoalServiceModel
     {

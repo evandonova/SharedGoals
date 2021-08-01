@@ -31,7 +31,7 @@ namespace SharedGoals.Controllers
                 Description = g.Description,
                 WorkDoneInPercents = g.WorkDoneInPercents,
                 User = g.User,
-                Goal = g.Goal
+                Goal = g.Goal.ToString()
             });
 
             return View(goalWorks);
