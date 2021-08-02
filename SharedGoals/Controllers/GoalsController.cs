@@ -47,7 +47,7 @@ namespace SharedGoals.Controllers
                 return RedirectToAction(nameof(CreatorsController.Become), "Creators");
             }
 
-            return View(new CreateGoalFormModel
+            return View(new GoalFormModel
             {
                 Tags = this.goals.Tags()
             });
@@ -55,7 +55,7 @@ namespace SharedGoals.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create(CreateGoalFormModel goal)
+        public IActionResult Create(GoalFormModel goal)
         {
             var creatorId = this.creators.IdByUser(this.User.Id());
 
@@ -146,13 +146,13 @@ namespace SharedGoals.Controllers
                 return Unauthorized("You cannot edit a goal of another creator!");
             }
 
-            var goalForm = this.mapper.Map<CreateGoalFormModel>(goal);
+            var goalForm = this.mapper.Map<GoalFormModel>(goal);
             goalForm.Tags = this.goals.Tags();
             return this.View(goalForm);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, CreateGoalFormModel goal)
+        public IActionResult Edit(int id, GoalFormModel goal)
         {
             var userId = this.User.Id();
             var goalData = this.goals.Info(id);
@@ -184,6 +184,45 @@ namespace SharedGoals.Controllers
                 goal.Description, 
                 goal.DueDate, 
                 goal.TagId);
+
+            return this.RedirectToAction("All");
+        }
+
+        [Authorize]
+        public IActionResult Finish(int id)
+        {
+            var userId = this.User.Id();
+
+            var goal = this.goals.Info(id);
+
+            if (goal == null)
+            {
+                return View();
+            }
+
+            if (goal.UserId != userId && !this.User.IsAdmin())
+            {
+                return Unauthorized("You cannot edit a goal of another creator!");
+            }
+
+            var goalModel = this.mapper.Map<GoalDetailsViewModel>(goal);
+
+            return this.View(goalModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Finish(GoalDetailsViewModel goalModel)
+        {
+            var userId = this.User.Id();
+            var goalData = this.goals.Info(goalModel.Id);
+
+            if (goalData.UserId != userId && !this.User.IsAdmin())
+            {
+                return Unauthorized("You cannot edit a goal of another creator!");
+            }
+
+            this.goals.Finish(goalModel.Id);
 
             return this.RedirectToAction("All");
         }

@@ -36,12 +36,10 @@ namespace SharedGoals.Services.GoalWorks
 
         public void Work(string description, string userId, int goalId)
         {
-            var currentUser = this.dbContext.Users.FirstOrDefault(u => u.Id == userId);
-            var goal = this.dbContext.Goals.FirstOrDefault(g => g.Id == goalId);
             var goalWork = new GoalWork()
             {
                 Description = description,
-                UserId = currentUser.Id,
+                UserId = userId,
                 GoalId = goalId
             };
 

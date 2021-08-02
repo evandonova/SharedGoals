@@ -23,6 +23,7 @@ namespace SharedGoals.Services.Goals
 
         public GoalQueryServiceModel All(int goalsPerPage, int currentPage, int totalGoals)
         {
+            CheckGoals();
             var goals = this.dbContext.Goals
                .Skip((currentPage - 1) * goalsPerPage)
                .Take(goalsPerPage)
@@ -37,6 +38,20 @@ namespace SharedGoals.Services.Goals
                 Goals = goals
             };
         }
+
+        private void CheckGoals()
+        {
+            var unfinishedGoals = this.dbContext.Goals.Where(g => !g.IsFinished);
+
+            foreach (var goal in unfinishedGoals)
+            {
+                if (DateTime.Compare(goal.DueDate, DateTime.UtcNow) <= 0)
+                {
+                    goal.IsFinished = true;
+                }
+            }
+        }
+
         public void Create(string name, string description,
             DateTime dueDate, int tagId, string creatorId)
         {
@@ -62,31 +77,34 @@ namespace SharedGoals.Services.Goals
 
         public GoalDetailsServiceModel Details(int id)
         {
-            var works = this.dbContext
+            var goal = this.dbContext
+                  .Goals
+                  .FirstOrDefault(g => g.Id == id);
+
+            var goalWorksModel = 
+                this.dbContext
                 .GoalWorks
-                .Where(g => g.GoalId == id);
+                .Where(g => g.GoalId == id)
+                .ProjectTo<GoalWorkServiceModel>(this.mapper.ConfigurationProvider);
 
-            var goalWorksModel = works.Select(w => new GoalWorkServiceModel()
+            var goalData = this.mapper.Map<GoalDetailsServiceModel>(goal);
+            goalData.GoalWorks = goalWorksModel;
+
+            return goalData;
+        }
+
+        public bool Finish(int id)
+        {
+            var goal = this.dbContext.Goals.Find(id);
+
+            if (goal == null || goal.IsFinished)
             {
-                Description = w.Description,
-                User = this.dbContext.Users.FirstOrDefault(u => u.Id == w.UserId).UserName
-            }).ToList();
+                return false;
+            }
 
-            return this.dbContext
-                .Goals
-                .Where(g => g.Id == id)
-                .Select(g => new GoalDetailsServiceModel
-                {
-                    Id = g.Id,
-                    Name = g.Name,
-                    Description = g.Description,
-                    DueDate = g.DueDate,
-                    IsFinished = g.IsFinished,
-                    Tag = g.Tag.Name,
-                    CreatedOn = g.CreatedOn.ToString("dd/MM/yyyy hh:mm"),
-                    GoalWorks = goalWorksModel
-                })
-                .FirstOrDefault();
+            goal.IsFinished = true;
+            this.dbContext.SaveChanges();
+            return true;
         }
 
         public bool Edit(int id, string name,

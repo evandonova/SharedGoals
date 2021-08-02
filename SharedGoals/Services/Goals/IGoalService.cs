@@ -23,6 +23,8 @@ namespace SharedGoals.Services.Goals
 
         GoalDetailsServiceModel Details(int id);
 
+        bool Finish(int id);
+
         bool Edit(int id,
             string name,
             string description,

@@ -9,6 +9,6 @@ namespace SharedGoals.Services.Goals.Models
 
         public string CreatedOn { get; init; }
 
-        public IEnumerable<GoalWorkServiceModel> GoalWorks { get; init; } = new List<GoalWorkServiceModel>();
+        public IEnumerable<GoalWorkServiceModel> GoalWorks { get; set; } = new List<GoalWorkServiceModel>();
     }
 }

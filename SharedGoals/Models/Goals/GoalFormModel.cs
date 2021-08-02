@@ -8,7 +8,7 @@ namespace SharedGoals.Models.Goals
 {
     using static DataConstants;
 
-    public class CreateGoalFormModel
+    public class GoalFormModel
     {
         [Required]
         [StringLength(GoalNameMaxLength, MinimumLength = GoalNameMinLength)]

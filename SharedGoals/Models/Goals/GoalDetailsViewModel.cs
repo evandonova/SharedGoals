@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SharedGoals.Models.Goals
@@ -14,7 +15,7 @@ namespace SharedGoals.Models.Goals
         public string CreatedOn { get; init; }
 
         [Display(Name = "Due Date")]
-        public string DueDate { get; init; }
+        public DateTime DueDate { get; init; }
 
         [Display(Name = "Finished")]
         public bool IsFinished { get; init; }

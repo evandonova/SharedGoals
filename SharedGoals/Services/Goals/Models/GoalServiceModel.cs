@@ -10,7 +10,7 @@ namespace SharedGoals.Services.Goals.Models
         public string Name { get; init; }
 
         [DisplayName("Due Date")]
-        public DateTime DueDate { get; init; }
+        public string DueDate { get; init; }
 
         [DisplayName("Finished")]
         public bool IsFinished { get; init; }
