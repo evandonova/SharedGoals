@@ -16,8 +16,8 @@ namespace SharedGoals.Models.Goals
         [Display(Name = "Due Date")]
         public string DueDate { get; init; }
 
-        [Display(Name = "Progress in Percents")]
-        public string ProgressInPercents { get; init; }
+        [Display(Name = "Finished")]
+        public bool IsFinished { get; init; }
 
         public string Tag { get; init; }
 

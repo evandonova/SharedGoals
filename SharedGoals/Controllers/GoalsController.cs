@@ -97,6 +97,11 @@ namespace SharedGoals.Controllers
 
             var goal = this.goals.Info(id);
 
+            if(goal == null)
+            {
+                return View();
+            }
+
             if (goal.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized("You cannot edit a goal of another creator!");
@@ -130,6 +135,11 @@ namespace SharedGoals.Controllers
             var userId = this.User.Id();
 
             var goal = this.goals.Info(id);
+
+            if (goal == null)
+            {
+                return View();
+            }
 
             if (goal.UserId != userId && !this.User.IsAdmin())
             {

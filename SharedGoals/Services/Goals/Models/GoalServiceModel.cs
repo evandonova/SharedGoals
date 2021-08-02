@@ -12,8 +12,8 @@ namespace SharedGoals.Services.Goals.Models
         [DisplayName("Due Date")]
         public DateTime DueDate { get; init; }
 
-        [DisplayName("Progress In Percents")]
-        public int ProgressInPercents { get; init; }
+        [DisplayName("Finished")]
+        public bool IsFinished { get; init; }
 
         public string Tag { get; init; }
     }

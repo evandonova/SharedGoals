@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GoalWorkExtendedServiceModel>
+﻿@model IEnumerable<GoalWorkServiceModel>
 
 @{
     ViewBag.Title = "All Goal Works";
@@ -14,9 +14,6 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.WorkDoneInPercents)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Goal)
             </th>
             <th>
@@ -30,9 +27,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => goalWork.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => goalWork.WorkDoneInPercents)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => goalWork.Goal)

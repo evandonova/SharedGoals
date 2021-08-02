@@ -11,9 +11,5 @@ namespace SharedGoals.Models.GoalWorks
         [Required]
         [StringLength(WorkDescriptionMaxLength, MinimumLength = WorkDescriptionMinLength)]
         public string Description { get; init; }
-
-        [Range(PercentsMinValue, PercentsMaxValue)]
-        [Display(Name = "Work Done in Percents")]
-        public int WorkDoneInPercents { get; init; }
     }
 }

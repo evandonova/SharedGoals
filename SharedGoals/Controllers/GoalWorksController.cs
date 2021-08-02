@@ -61,7 +61,6 @@ namespace SharedGoals.Controllers
 
             this.goalWorks.Work(
                 goalWorkModel.Description,
-                goalWorkModel.WorkDoneInPercents,
                 this.User.Id(),
                 id);
 

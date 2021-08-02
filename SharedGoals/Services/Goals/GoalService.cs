@@ -81,7 +81,7 @@ namespace SharedGoals.Services.Goals
                     Name = g.Name,
                     Description = g.Description,
                     DueDate = g.DueDate,
-                    ProgressInPercents = g.ProgressInPercents,
+                    IsFinished = g.IsFinished,
                     Tag = g.Tag.Name,
                     CreatedOn = g.CreatedOn.ToString("dd/MM/yyyy hh:mm"),
                     GoalWorks = goalWorksModel

@@ -21,7 +21,7 @@
             <h2 class="card-title">@Model.Name</h2>
             <p class="card-text">@Model.Description</p>
             <a asp-controller="GoalWorks" asp-action="Work" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Work on Goal</a>
-            <p class="card-text">@Model.Tag Goal - Completed on @Model.ProgressInPercents%</p>
+            <p class="card-text">@Model.Tag Goal - Finshed: @Model.IsFinished</p>
         </div>
         <div class="card-footer text-muted">
             Created on: @Model.CreatedOn | Due to: @Model.DueDate

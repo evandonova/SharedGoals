@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedGoals.Services.Goals.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,9 +8,9 @@ namespace SharedGoals.Services.GoalWorks
 {
     public interface IGoalWorkService
     {
-        public IEnumerable<GoalWorkExtendedServiceModel> Mine(string userId);
-        public IEnumerable<GoalWorkExtendedServiceModel> All();
+        public IEnumerable<GoalWorkServiceModel> Mine(string userId);
+        public IEnumerable<GoalWorkServiceModel> All();
         public bool GoalExists(int id);
-        public void Work(string description, int workDone, string userId, int goalId);
+        public void Work(string description, string userId, int goalId);
     }
 }

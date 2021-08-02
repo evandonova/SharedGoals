@@ -22,7 +22,7 @@ namespace SharedGoals.Data.Models
 
         public DateTime DueDate { get; set; }
 
-        public int ProgressInPercents { get; set; } = 0;
+        public bool IsFinished { get; set; } = false;
 
         public int TagId { get; set; }
 

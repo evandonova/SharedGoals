@@ -13,8 +13,6 @@ namespace SharedGoals.Data.Models
         [MaxLength(WorkDescriptionMaxLength)]
         public string Description { get; init; }
 
-        public int WorkDoneInPercents { get; init; }
-
         [Required]
         public string UserId { get; init; }
 

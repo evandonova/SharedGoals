@@ -21,7 +21,7 @@ namespace SharedGoals.Infrastructure
                 .ForMember(g => g.Tag, cfg => cfg.MapFrom(g => g.Tag.Name))
                 .ForMember(g => g.UserId, cfg => cfg.MapFrom(g => g.Creator.UserId));
             this.CreateMap<Tag, GoalTagServiceModel>();
-            this.CreateMap<GoalWork, GoalWorkExtendedServiceModel>()
+            this.CreateMap<GoalWork, GoalWorkServiceModel>()
                 .ForMember(g => g.User, cfg => cfg.MapFrom(g => g.User.UserName))
                 .ForMember(g => g.Goal, cfg => cfg.MapFrom(g => g.Goal.Name));
             this.CreateMap<User, UserServiceModel>();
