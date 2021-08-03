@@ -23,19 +23,30 @@
                                 Goals
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="Goals" asp-action="Create">Create Goal</a>
-                                <a class="dropdown-item" asp-controller="Goals" asp-action="All">All Goals</a>
+                                <a class="dropdown-item" asp-area="Default" asp-controller="Goals" asp-action="Create">Create Goal</a>
+                                <a class="dropdown-item" asp-area="Default" asp-controller="Goals" asp-action="All">All Goals</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" asp-controller="GoalWorks" asp-action="All" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" asp-controller="GoalWorks" asp-action="Mine" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Works
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="GoalWorks" asp-action="Mine">My Works</a>
-                                <a class="dropdown-item" asp-controller="GoalWorks" asp-action="All">All Works</a>
+                                <a class="dropdown-item" asp-area="Default" asp-controller="GoalWorks" asp-action="Mine">My Works</a>
                             </div>
                         </li>
+                        @if (User.IsAdmin())
+                        {
+                            <li class="nav-item dropdown active">
+                                <a class="nav-link dropdown-toggle" asp-controller="GoalWorks" asp-action="All" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    See All
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="GoalWorks" asp-action="All">Works</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="All">Users</a>
+                                </div>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

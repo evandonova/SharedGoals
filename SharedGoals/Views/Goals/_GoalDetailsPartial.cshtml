@@ -1,0 +1,25 @@
+﻿@model GoalDetailsViewModel
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" disabled="disabled" />
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="DueDate" class="control-label"></label>
+            <input asp-for="DueDate" class="form-control" disabled="disabled" />
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="Tag" class="control-label"></label>
+            <input asp-for="Tag" class="form-control" disabled="disabled" />
+        </div>
+    </div>
+</div>

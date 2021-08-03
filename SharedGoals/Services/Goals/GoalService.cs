@@ -50,6 +50,8 @@ namespace SharedGoals.Services.Goals
                     goal.IsFinished = true;
                 }
             }
+
+            this.dbContext.SaveChanges();
         }
 
         public void Create(string name, string description,

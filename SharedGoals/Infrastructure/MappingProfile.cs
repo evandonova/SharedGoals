@@ -28,8 +28,6 @@ namespace SharedGoals.Infrastructure
                 .ForMember(g => g.User, cfg => cfg.MapFrom(g => g.User.UserName))
                 .ForMember(g => g.Goal, cfg => cfg.MapFrom(g => g.Goal.Name));
             this.CreateMap<User, UserServiceModel>();
-            this.CreateMap<GoalWork, GoalWorkServiceModel>()
-                .ForMember(g => g.User, cfg => cfg.MapFrom(g => g.User.UserName));
             this.CreateMap<Goal, GoalDetailsServiceModel>()
                 .ForMember(g => g.DueDate, cfg => cfg.MapFrom(g => g.DueDate.ToString("dd/MM/yyyy")))
                 .ForMember(g => g.Tag, cfg => cfg.MapFrom(g => g.Tag.Name))

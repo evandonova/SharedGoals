@@ -4,38 +4,4 @@
     ViewBag.Title = "All Goal Works";
 }
 
-<h2 class="text-center">@ViewBag.Title</h2>
-<hr />
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Goal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var goalWork in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => goalWork.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => goalWork.Goal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => goalWork.User)
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
-
+@await Html.PartialAsync("~/Views/GoalWorks/_GoalWorksPartial.cshtml", Model)
