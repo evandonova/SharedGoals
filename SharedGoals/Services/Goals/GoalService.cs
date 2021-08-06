@@ -39,21 +39,6 @@ namespace SharedGoals.Services.Goals
             };
         }
 
-        private void CheckGoals()
-        {
-            var unfinishedGoals = this.dbContext.Goals.Where(g => !g.IsFinished);
-
-            foreach (var goal in unfinishedGoals)
-            {
-                if (DateTime.Compare(goal.DueDate, DateTime.UtcNow) <= 0)
-                {
-                    goal.IsFinished = true;
-                }
-            }
-
-            this.dbContext.SaveChanges();
-        }
-
         public void Create(string name, string description,
             DateTime dueDate, int tagId, string creatorId)
         {
@@ -63,6 +48,7 @@ namespace SharedGoals.Services.Goals
                 Description = description,
                 CreatedOn = DateTime.UtcNow,
                 DueDate = dueDate,
+                IsFinished = false,
                 TagId = tagId,
                 CreatorId = creatorId
             };
@@ -152,6 +138,11 @@ namespace SharedGoals.Services.Goals
                 .ProjectTo<GoalTagServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
 
+        public bool GoalExists(int goalId)
+            => this.dbContext
+            .Goals
+            .Any(c => c.Id == goalId);
+
         public bool TagExists(int tagId)
             => this.dbContext
             .Tags
@@ -160,5 +151,21 @@ namespace SharedGoals.Services.Goals
         public bool DateIsValid(DateTime dueDate)
             => dueDate > DateTime.UtcNow &&
                 dueDate.Year < 2100;
+
+
+        private void CheckGoals()
+        {
+            var unfinishedGoals = this.dbContext.Goals.Where(g => !g.IsFinished);
+
+            foreach (var goal in unfinishedGoals)
+            {
+                if (DateTime.Compare(goal.DueDate, DateTime.UtcNow) <= 0)
+                {
+                    goal.IsFinished = true;
+                }
+            }
+
+            this.dbContext.SaveChanges();
+        }
     }
 }

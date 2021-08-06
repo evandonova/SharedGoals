@@ -71,7 +71,7 @@ namespace SharedGoals.Controllers
 
             if (!this.goals.DateIsValid(goal.DueDate))
             {
-                this.ModelState.AddModelError(nameof(goal.DueDate), "Due Date must be in the future and before 2100 year.");
+                this.ModelState.AddModelError(nameof(goal.DueDate), "Due Date must be in the future and before the 2100 year.");
             }
 
             if (!ModelState.IsValid)
@@ -87,7 +87,9 @@ namespace SharedGoals.Controllers
                 goal.TagId,
                 creatorId);
 
-            return RedirectToAction("All", "Goals");
+            TempData["message"] = "Goal was created successfully!";
+
+            return RedirectToAction("All");
         }
 
         [Authorize]
@@ -95,16 +97,16 @@ namespace SharedGoals.Controllers
         {
             var userId = this.User.Id();
 
-            var goal = this.goals.Info(id);
-
-            if(goal == null)
+            if(!this.goals.GoalExists(id))
             {
                 return View();
             }
 
+            var goal = this.goals.Info(id);
+
             if (goal.UserId != userId && !this.User.IsAdmin())
             {
-                return Unauthorized("You cannot edit a goal of another creator!");
+                return Unauthorized();
             }
 
             var goalModel = this.mapper.Map<GoalDetailsViewModel>(goal);
@@ -121,11 +123,17 @@ namespace SharedGoals.Controllers
 
             if (goalData.UserId != userId && !this.User.IsAdmin())
             {
-                return Unauthorized("You cannot edit a goal of another creator!");
+                return Unauthorized();
             }
 
-            this.goals.Delete(goalModel.Id);
+            var deleted = this.goals.Delete(goalModel.Id);
 
+            if(!deleted)
+            {
+                return BadRequest();
+            }
+
+            TempData["message"] = "Goal was deleted successfully!";
             return this.RedirectToAction("All");
         }
 
@@ -143,7 +151,7 @@ namespace SharedGoals.Controllers
 
             if (goal.UserId != userId && !this.User.IsAdmin())
             {
-                return Unauthorized("You cannot edit a goal of another creator!");
+                return Unauthorized();
             }
 
             var goalForm = this.mapper.Map<GoalFormModel>(goal);
@@ -159,7 +167,7 @@ namespace SharedGoals.Controllers
 
             if (goalData.UserId != userId && !this.User.IsAdmin())
             {
-                return Unauthorized("You cannot edit a goal of another creator!");
+                return Unauthorized();
             }
 
             if (!this.goals.TagExists(goal.TagId))
@@ -178,13 +186,19 @@ namespace SharedGoals.Controllers
                 return this.View(goal);
             }
 
-            this.goals.Edit(
+            var edited = this.goals.Edit(
                 id, 
                 goal.Name, 
                 goal.Description, 
                 goal.DueDate, 
                 goal.TagId);
 
+            if(!edited)
+            {
+                return BadRequest();
+            }
+
+            TempData["message"] = "Goal was edited successfully!";
             return this.RedirectToAction("All");
         }
 
@@ -202,7 +216,7 @@ namespace SharedGoals.Controllers
 
             if (goal.UserId != userId && !this.User.IsAdmin())
             {
-                return Unauthorized("You cannot edit a goal of another creator!");
+                return Unauthorized();
             }
 
             var goalModel = this.mapper.Map<GoalDetailsViewModel>(goal);
@@ -219,11 +233,17 @@ namespace SharedGoals.Controllers
 
             if (goalData.UserId != userId && !this.User.IsAdmin())
             {
-                return Unauthorized("You cannot edit a goal of another creator!");
+                return Unauthorized();
             }
 
-            this.goals.Finish(goalModel.Id);
+            var finished = this.goals.Finish(goalModel.Id);
 
+            if(!finished)
+            {
+                return BadRequest();
+            }
+
+            TempData["message"] = "Goal was finished successfully!";
             return this.RedirectToAction("All");
         }
     }

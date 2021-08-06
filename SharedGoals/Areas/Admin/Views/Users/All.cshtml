@@ -30,25 +30,29 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var goalWork in Model)
+        @foreach (var user in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => goalWork.Username)
+                    @Html.DisplayFor(modelItem => user.Username)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => goalWork.Email)
+                    @Html.DisplayFor(modelItem => user.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => goalWork.FirstName)
+                    @Html.DisplayFor(modelItem => user.FirstName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => goalWork.LastName)
+                    @Html.DisplayFor(modelItem => user.LastName)
                 </td>
                 <td>
-                    @if (this.creators.IsCreator(goalWork.Id))
+                    @if (this.creators.IsCreator(user.Id))
                     {
                         @Html.Raw("yes");
+                    }
+                    else if (user.Username == TempData["adminUserName"].ToString())
+                    {
+                        @Html.Raw("admin");
                     }
                     else
                     {

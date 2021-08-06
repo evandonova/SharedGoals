@@ -1,21 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using SharedGoals.Services.Goals.Models;
 using SharedGoals.Services.GoalWorks;
+using System;
+using System.Collections.Generic;
 
 namespace SharedGoals.Areas.Admin.Controllers
 {
     public class GoalWorksController : AdminController
     {
         private readonly IGoalWorkService goalWorks;
+        private readonly IMemoryCache cache;
 
-        public GoalWorksController(IGoalWorkService goalWorks)
+        public GoalWorksController(IGoalWorkService goalWorks, IMemoryCache cache)
         {
             this.goalWorks = goalWorks;
+            this.cache = cache;
         }
 
         [Route("/GoalWorks/All")]
         public IActionResult All()
         {
-            var goalWorks = this.goalWorks.All();
+            const string goalWorksCacheKey = "GoalWorksCacheKey";
+
+            var goalWorks = this.cache.Get<IEnumerable<GoalWorkServiceModel>>(goalWorksCacheKey);
+
+            if (goalWorks == null)
+            {
+                goalWorks = this.goalWorks.All();
+
+                var cacheOptions = new MemoryCacheEntryOptions()
+                   .SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+
+                this.cache.Set(goalWorksCacheKey, goalWorks, cacheOptions);
+            }
 
             return View(goalWorks);
         }

@@ -23,8 +23,8 @@
                                 Goals
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="Default" asp-controller="Goals" asp-action="Create">Create Goal</a>
-                                <a class="dropdown-item" asp-area="Default" asp-controller="Goals" asp-action="All">All Goals</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Goals" asp-action="Create">Create Goal</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Goals" asp-action="All">All Goals</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown active">
@@ -32,7 +32,7 @@
                                 Works
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="Default" asp-controller="GoalWorks" asp-action="Mine">My Works</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="GoalWorks" asp-action="Mine">My Works</a>
                             </div>
                         </li>
                         @if (User.IsAdmin())

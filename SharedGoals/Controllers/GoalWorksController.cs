@@ -4,7 +4,6 @@ using SharedGoals.Infrastructure;
 using SharedGoals.Models.GoalWorks;
 using SharedGoals.Services.Creators;
 using SharedGoals.Services.GoalWorks;
-using System.Linq;
 
 namespace SharedGoals.Controllers
 {
@@ -39,7 +38,7 @@ namespace SharedGoals.Controllers
 
             if (this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
             {
-                return Unauthorized("Creators cannot work on goals!");
+                return Unauthorized();
             }
 
             return View(new GoalWorkFormModel());
@@ -56,7 +55,7 @@ namespace SharedGoals.Controllers
 
             if (this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
             {
-                return Unauthorized("Creators cannot work on goals!");
+                return Unauthorized();
             }
 
             this.goalWorks.Work(

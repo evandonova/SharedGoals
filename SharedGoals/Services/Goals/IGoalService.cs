@@ -33,6 +33,8 @@ namespace SharedGoals.Services.Goals
 
         bool Delete(int id);
 
+        bool GoalExists(int goalId);
+
         bool TagExists(int tagId);
 
         bool DateIsValid(DateTime dueDate);
