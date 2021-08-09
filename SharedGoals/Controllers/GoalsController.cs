@@ -96,15 +96,13 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Delete(int id)
         {
-            var userId = this.User.Id();
-
-            if(!this.goals.GoalExists(id))
+            var goal = this.goals.Info(id);
+            if (goal == null)
             {
-                return View();
+                return BadRequest();
             }
 
-            var goal = this.goals.Info(id);
-
+            var userId = this.User.Id();
             if (goal.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
@@ -119,9 +117,13 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Delete(GoalDetailsViewModel goalModel)
         {
-            var userId = this.User.Id();
             var goalData = this.goals.Info(goalModel.Id);
+            if (goalData == null)
+            {
+                return BadRequest();
+            }
 
+            var userId = this.User.Id();
             if (goalData.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
@@ -147,7 +149,7 @@ namespace SharedGoals.Controllers
 
             if (goal == null)
             {
-                return View();
+                return BadRequest();
             }
 
             if (goal.UserId != userId && !this.User.IsAdmin())
@@ -163,9 +165,13 @@ namespace SharedGoals.Controllers
         [HttpPost]
         public IActionResult Edit(int id, GoalFormModel goal)
         {
-            var userId = this.User.Id();
             var goalData = this.goals.Info(id);
+            if (goalData == null)
+            {
+                return BadRequest();
+            }
 
+            var userId = this.User.Id();
             if (goalData.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
@@ -207,15 +213,13 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Finish(int id)
         {
-            var userId = this.User.Id();
-
             var goal = this.goals.Info(id);
-
             if (goal == null)
             {
-                return View();
+                return BadRequest();
             }
 
+            var userId = this.User.Id();
             if (goal.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
@@ -230,9 +234,13 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Finish(GoalDetailsViewModel goalModel)
         {
-            var userId = this.User.Id();
             var goalData = this.goals.Info(goalModel.Id);
+            if (goalData == null)
+            {
+                return BadRequest();
+            }
 
+            var userId = this.User.Id();
             if (goalData.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();

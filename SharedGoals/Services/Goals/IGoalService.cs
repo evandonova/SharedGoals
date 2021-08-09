@@ -41,6 +41,8 @@ namespace SharedGoals.Services.Goals
 
         bool DateIsValid(DateTime dueDate);
 
+        string GetCreatorId(int goalId);
+
         IEnumerable<GoalTagServiceModel> Tags();
     }
 }

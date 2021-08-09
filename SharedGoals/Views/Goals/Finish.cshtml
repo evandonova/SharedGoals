@@ -4,8 +4,6 @@
     ViewBag.Title = "Finish Goal";
 }
 
-@if (Model != null)
-{
 <form asp-action="Finish">
     @await Html.PartialAsync("_GoalDetailsPartial.cshtml", Model)
     <div class="row">
@@ -16,9 +14,3 @@
         </div>
     </div>
 </form>
-}
-else
-{
-    <h2 class="text-danger">Goal not found.</h2>
-    <a asp-action="All" class="btn btn-secondary">Back to List</a>
-}

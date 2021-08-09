@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject ICreatorService creators
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,36 +18,43 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" asp-controller="Goals" asp-action="All" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Goals
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-controller="Goals" asp-action="Create">Create Goal</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Goals" asp-action="All">All Goals</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" asp-controller="GoalWorks" asp-action="Mine" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Works
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-area="" asp-controller="GoalWorks" asp-action="Mine">My Works</a>
-                            </div>
-                        </li>
-                        @if (User.IsAdmin())
+                        @if (this.User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item dropdown active">
-                                <a class="nav-link dropdown-toggle" asp-controller="GoalWorks" asp-action="All" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    See All
+                                <a class="nav-link dropdown-toggle" asp-controller="Goals" asp-action="All" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Goals
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="GoalWorks" asp-action="All">Works</a>
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="All">Users</a>
+                                    @if (this.creators.IsCreator(this.User.Id()) || this.User.IsAdmin())
+                                    {
+                                        <a class="dropdown-item" asp-area="" asp-controller="Goals" asp-action="Create">Create Goal</a>
+                                    }
+                                    <a class="dropdown-item" asp-area="" asp-controller="Goals" asp-action="All">All Goals</a>
                                 </div>
                             </li>
+                            <li class="nav-item dropdown active">
+                                <a class="nav-link dropdown-toggle" asp-controller="GoalWorks" asp-action="Mine" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Works
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="" asp-controller="GoalWorks" asp-action="Mine">My Works</a>
+                                </div>
+                            </li>
+                            @if (User.IsAdmin())
+                            {
+                                <li class="nav-item dropdown active">
+                                    <a class="nav-link dropdown-toggle" asp-controller="GoalWorks" asp-action="All" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        See All
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="GoalWorks" asp-action="All">Works</a>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="All">Users</a>
+                                    </div>
+                                </li>
+                            }
                         }
                     </ul>
                     <partial name="_LoginPartial" />

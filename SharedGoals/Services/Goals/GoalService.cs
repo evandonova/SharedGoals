@@ -155,6 +155,8 @@ namespace SharedGoals.Services.Goals
             => dueDate > DateTime.UtcNow &&
                 dueDate.Year < 2100;
 
+        public string GetCreatorId(int goalId)
+             => this.dbContext.Goals.Find(goalId).CreatorId;
 
         private void CheckGoals()
         {

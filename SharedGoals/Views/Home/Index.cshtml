@@ -2,6 +2,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+@inject ICreatorService creators
+
 <div class="jumbotron text-center">
     <h2 class="display-4">Hello, @(this.User.Identity.IsAuthenticated ? this.User.Identity.Name : "Guest")!</h2>
     <p class="lead">This is your free goal tracker - reach your goals <b>today</b>.</p>
@@ -17,7 +19,10 @@
     {
         <p class="lead">
             <a class="btn btn-primary btn-lg" href="/Goals/All" role="button">All Goals</a>
-            <a class="btn btn-primary btn-lg" href="/Goals/Create" role="button">Create Goal</a>
+            @if (this.creators.IsCreator(this.User.Id()) || this.User.IsAdmin())
+            {
+                <a class="btn btn-primary btn-lg" href="/Goals/Create" role="button">Create Goal</a>
+            }
         </p>
     }
 </div>

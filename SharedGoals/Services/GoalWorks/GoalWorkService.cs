@@ -31,9 +31,6 @@ namespace SharedGoals.Services.GoalWorks
                 .ProjectTo<GoalWorkServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
 
-        public bool GoalExists(int id)
-            => this.dbContext.Goals.FirstOrDefault(g => g.Id == id) != null;
-
         public void Work(string description, string userId, int goalId)
         {
             var goalWork = new GoalWork()

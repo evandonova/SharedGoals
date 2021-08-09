@@ -10,6 +10,8 @@
     }
 
     var maxPage = Math.Ceiling((double)Model.TotalGoals / Model.GoalsPerPage);
+
+    var userId = this.User.Id();
 }
 
 @inject ICreatorService creators
@@ -24,7 +26,7 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-@if (this.User.IsAdmin()) //or creator
+@if (this.creators.IsCreator(userId) || this.User.IsAdmin())
 {
     <p class="text-center">
         <a asp-controller="Goals" asp-action="Create" class="btn btn-primary">Create New Goal</a>

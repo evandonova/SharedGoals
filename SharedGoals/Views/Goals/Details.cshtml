@@ -2,55 +2,67 @@
 
 @{
     ViewBag.Title = "Goal Details";
+
+    var userId = this.User.Id();
 }
+
+@inject ICreatorService creators
+@inject IGoalService goals
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-@if (Model != null)
+@if ((this.goals.GetCreatorId(@Model.Id) != null &&
+   this.goals.GetCreatorId(@Model.Id) == this.creators.IdByUser(userId))
+   || this.User.IsAdmin())
 {
     <p>
         <a asp-controller="Goals" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Edit Goal</a>
         <a asp-controller="Goals" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-secondary">Delete Goal</a>
     </p>
-    <div class="card text-center">
-        <div class="card-header">
-            Goal Details
-        </div>
-        <div class="card-body">
-            <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Name image">
-            <h2 class="card-title">@Model.Name</h2>
-            <p class="card-text">@Model.Description</p>
-            @if (!Model.IsFinished)
+}
+
+<div class="card text-center">
+    <div class="card-header">
+        Goal Details
+    </div>
+    <div class="card-body">
+        <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Name image">
+        <h2 class="card-title">@Model.Name</h2>
+        <p class="card-text">@Model.Description</p>
+        @if (!Model.IsFinished)
+        {
+            @if (!this.creators.IsCreator(userId) || this.User.IsAdmin())
             {
                 <a asp-controller="GoalWorks" asp-action="Work" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Work on Goal</a>
+            }
+            @if ((this.goals.GetCreatorId(@Model.Id) != null &&
+             this.goals.GetCreatorId(@Model.Id) == this.creators.IdByUser(userId))
+             || this.User.IsAdmin())
+            {
                 <a asp-controller="Goals" asp-action="Finish" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Finish Goal</a>
             }
-            <p class="card-text">@Model.Tag Goal - Finshed: @Model.IsFinished</p>
-        </div>
-        <div class="card-footer text-muted">
-            Created on: @Model.CreatedOn | Due to: @Model.DueDate
-        </div>
+        }
+        <p class="card-text">@Model.Tag Goal - Finshed: @Model.IsFinished</p>
     </div>
-    <br />
-    <div class="card text-center">
-        <div class="card-header">
-            Works on the "@Model.Name" Goal
-        </div>
-        <div class="card-body">
-            <ul class="list-group">
-                @foreach (var work in Model.GoalWorks)
-                {
-                    <li class="list-group-item"><b>@work.Description</b> by <b>@work.User</b></li>
-                }
-            </ul>
-        </div>
-        <div class="card-footer text-muted"></div>
+    <div class="card-footer text-muted">
+        Created on: @Model.CreatedOn | Due to: @Model.DueDate
     </div>
+</div>
+<br />
+<div class="card text-center">
+    <div class="card-header">
+        Works on the "@Model.Name" Goal
+    </div>
+    <div class="card-body">
+        <ul class="list-group">
+            @foreach (var work in Model.GoalWorks)
+            {
+                <li class="list-group-item"><b>@work.Description</b> by <b>@work.User</b></li>
+            }
+        </ul>
+    </div>
+    <div class="card-footer text-muted"></div>
+</div>
 
-}
-else
-{
-    <h2 class="text-danger">Goal not found.</h2>
-    <a asp-action="All" class="btn btn-secondary">Back to List</a>
-}
+
