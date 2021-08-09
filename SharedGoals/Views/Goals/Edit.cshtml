@@ -45,7 +45,14 @@
                     <span asp-validation-for="TagId" class="small text-danger"></span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="ImageURL" class="control-label"></label>
+                    <input asp-for="ImageURL" class="form-control" placeholder="Image URL..." />
+                    <span asp-validation-for="ImageURL" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-12 mt-3 text-center">
                 <div class="form-group">
                     <input type="submit" value="Edit" class="btn btn-primary" />
                 </div>

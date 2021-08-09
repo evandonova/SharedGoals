@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharedGoals.Data;
 
 namespace SharedGoals.Data.Migrations
 {
     [DbContext(typeof(SharedGoalsDbContext))]
-    partial class SharedGoalsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210809065149_GoalImageURLColumn")]
+    partial class GoalImageURLColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -433,7 +435,7 @@ namespace SharedGoals.Data.Migrations
                     b.HasOne("SharedGoals.Data.Models.Goal", "Goal")
                         .WithMany("GoalWorks")
                         .HasForeignKey("GoalId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SharedGoals.Data.Models.User", "User")

@@ -84,6 +84,7 @@ namespace SharedGoals.Controllers
             this.goals.Create(goal.Name,
                 goal.Description,
                 goal.DueDate,
+                goal.ImageURL,
                 goal.TagId,
                 creatorId);
 
@@ -191,6 +192,7 @@ namespace SharedGoals.Controllers
                 goal.Name, 
                 goal.Description, 
                 goal.DueDate, 
+                goal.ImageURL,
                 goal.TagId);
 
             if(!edited)

@@ -18,6 +18,7 @@
             Goal Details
         </div>
         <div class="card-body">
+            <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Name image">
             <h2 class="card-title">@Model.Name</h2>
             <p class="card-text">@Model.Description</p>
             @if (!Model.IsFinished)

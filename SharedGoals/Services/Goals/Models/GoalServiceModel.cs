@@ -12,6 +12,9 @@ namespace SharedGoals.Services.Goals.Models
         [DisplayName("Due Date")]
         public string DueDate { get; init; }
 
+        [DisplayName("Image URL")]
+        public string ImageUrl { get; init; }
+
         [DisplayName("Finished")]
         public bool IsFinished { get; init; }
 

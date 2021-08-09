@@ -40,7 +40,7 @@ namespace SharedGoals.Services.Goals
         }
 
         public void Create(string name, string description,
-            DateTime dueDate, int tagId, string creatorId)
+            DateTime dueDate, string imageURL, int tagId, string creatorId)
         {
             var goalData = new Goal
             {
@@ -49,6 +49,7 @@ namespace SharedGoals.Services.Goals
                 CreatedOn = DateTime.UtcNow,
                 DueDate = dueDate,
                 IsFinished = false,
+                ImageURL = imageURL,
                 TagId = tagId,
                 CreatorId = creatorId
             };
@@ -98,6 +99,7 @@ namespace SharedGoals.Services.Goals
         public bool Edit(int id, string name,
             string description,
             DateTime dueDate,
+            string imageURL,
             int tagId)
         {
             var goal = this.dbContext.Goals.Find(id);
@@ -110,6 +112,7 @@ namespace SharedGoals.Services.Goals
             goal.Name = name;
             goal.Description = description;
             goal.DueDate = dueDate;
+            goal.ImageURL = imageURL;
             goal.TagId = tagId;
 
             this.dbContext.SaveChanges();

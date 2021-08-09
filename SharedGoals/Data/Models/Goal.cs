@@ -21,6 +21,9 @@ namespace SharedGoals.Data.Models
         public DateTime CreatedOn { get; init; }
 
         public DateTime DueDate { get; set; }
+        
+        [Required]
+        public string ImageURL { get; set; }
 
         public bool IsFinished { get; set; }
 

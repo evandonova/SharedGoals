@@ -15,7 +15,8 @@ namespace SharedGoals.Services.Goals
         void Create(
             string name, 
             string description, 
-            DateTime dueDate, 
+            DateTime dueDate,
+            string imageURL,
             int tagId, 
             string creatorId);
 
@@ -29,6 +30,7 @@ namespace SharedGoals.Services.Goals
             string name,
             string description,
             DateTime dueDate,
+            string imageURL,
             int tagId);
 
         bool Delete(int id);

@@ -38,6 +38,12 @@ namespace SharedGoals.Data
 
             builder
                 .Entity<Goal>()
+                .HasMany(g => g.GoalWorks)
+                .WithOne(gw => gw.Goal)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .Entity<Goal>()
                 .HasOne(g => g.Creator)
                 .WithMany(c => c.Goals)
                 .HasForeignKey(g => g.CreatorId)
