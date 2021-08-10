@@ -12,7 +12,6 @@ using SharedGoals.Infrastructure;
 using SharedGoals.Services.Creators;
 using SharedGoals.Services.Goals;
 using SharedGoals.Services.GoalWorks;
-using AutoMapper;
 using SharedGoals.Services.Users;
 
 namespace SharedGoals
