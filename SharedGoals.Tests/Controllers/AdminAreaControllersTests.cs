@@ -1,9 +1,13 @@
 ﻿using MyTested.AspNetCore.Mvc;
 using SharedGoals.Areas.Admin.Controllers;
 using SharedGoals.Services.Goals.Models;
+using SharedGoals.Services.GoalWorks;
 using SharedGoals.Services.Users;
+using System;
 using System.Collections.Generic;
 using Xunit;
+
+using static SharedGoals.Areas.Admin.AdminConstants;
 
 namespace SharedGoals.Tests.Controllers
 {
@@ -12,12 +16,11 @@ namespace SharedGoals.Tests.Controllers
         [Fact]
         public void HomeController_IndexShouldReturnCorrectView()
             => MyController<HomeController>
-               .Instance()
+            .Instance()
                .Calling(c => c.Index())
                .ShouldReturn()
                .View();
 
-        // Add memory cache check
         // Should be for authorized (attribute check)
         [Fact]
         public void UsersController_GetAllShouldReturnCorrectViewWithModelType()
@@ -25,12 +28,16 @@ namespace SharedGoals.Tests.Controllers
                 .Instance()
                 .Calling(c => c.All())
                 .ShouldHave()
-                .ValidModelState()
+                .MemoryCache(cache => cache
+                    .ContainingEntry(entry => entry
+                        .WithKey(UsersCacheKey)
+                        .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromMinutes(10))
+                        .WithValueOfType<List<UserServiceModel>>()))
                 .TempData(tempData => tempData
                     .ContainingEntryWithKey("adminUserName"))
                 .AndAlso()
                 .ShouldReturn()
-                .View(c => c.WithModelOfType<IEnumerable<UserServiceModel>>());
+                .View(result => result.WithModelOfType<IEnumerable<UserServiceModel>>());
 
         [Fact]
         public void GoalWorksController_GetAllShouldReturnCorrectViewWithModelType()
@@ -38,9 +45,13 @@ namespace SharedGoals.Tests.Controllers
                 .Instance()
                 .Calling(c => c.All())
                 .ShouldHave()
-                .ValidModelState()
+                .MemoryCache(cache => cache
+                    .ContainingEntry(entry => entry
+                        .WithKey(GoalWorksCacheKey)
+                        .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromMinutes(10))
+                        .WithValueOfType<List<GoalWorkServiceModel>>()))
                 .AndAlso()
                 .ShouldReturn()
-                .View(c => c.WithModelOfType<IEnumerable<GoalWorkServiceModel>>());
+                .View(result => result.WithModelOfType<IEnumerable<GoalWorkServiceModel>>());
     }
 }

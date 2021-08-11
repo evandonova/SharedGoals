@@ -4,6 +4,7 @@ using AutoMapper.QueryableExtensions;
 using SharedGoals.Data;
 using SharedGoals.Data.Models;
 using SharedGoals.Services.Goals.Models;
+using SharedGoals.Services.GoalWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;

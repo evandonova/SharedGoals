@@ -4,5 +4,7 @@
     {
         public const string AreaName = "Admin";
         public const string AdministratorRoleName = "Administrator";
+        public const string UsersCacheKey = "UsersCacheKey";
+        public const string GoalWorksCacheKey = "GoalWorksCacheKey";
     }
 }

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 
 namespace SharedGoals.Areas.Admin.Controllers
 {
+    using static AdminConstants;
+
     public class GoalWorksController : AdminController
     {
         private readonly IGoalWorkService goalWorks;
@@ -21,7 +23,7 @@ namespace SharedGoals.Areas.Admin.Controllers
         [Route("/GoalWorks/All")]
         public IActionResult All()
         {
-            const string goalWorksCacheKey = "GoalWorksCacheKey";
+            const string goalWorksCacheKey = GoalWorksCacheKey;
 
             var goalWorks = this.cache.Get<IEnumerable<GoalWorkServiceModel>>(goalWorksCacheKey);
 

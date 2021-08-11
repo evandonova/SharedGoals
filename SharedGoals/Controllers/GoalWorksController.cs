@@ -71,7 +71,7 @@ namespace SharedGoals.Controllers
 
             TempData["message"] = "You worked on a goal!";
 
-            return this.RedirectToAction("All", "Goals");
+            return this.RedirectToAction("Mine");
         }
     }
 }

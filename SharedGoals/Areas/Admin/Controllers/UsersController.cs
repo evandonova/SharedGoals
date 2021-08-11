@@ -7,6 +7,8 @@ using System.Collections.Generic;
 
 namespace SharedGoals.Areas.Admin.Controllers
 {
+    using static AdminConstants;
+
     public class UsersController : AdminController
     {
         private readonly IUserService users;
@@ -21,7 +23,7 @@ namespace SharedGoals.Areas.Admin.Controllers
         [Route("Users/All")]
         public IActionResult All()
         {
-            const string usersCacheKey = "UsersCacheKey";
+            const string usersCacheKey = UsersCacheKey;
 
             var users = this.cache.Get<IEnumerable<UserServiceModel>>(usersCacheKey);
 

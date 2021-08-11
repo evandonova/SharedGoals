@@ -163,6 +163,7 @@ namespace SharedGoals.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(int id, GoalFormModel goal)
         {
             var goalData = this.goals.Info(id);
