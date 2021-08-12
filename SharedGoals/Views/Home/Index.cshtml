@@ -3,9 +3,10 @@
 }
 
 @inject ICreatorService creators
+@inject IUserService users 
 
 <div class="jumbotron text-center">
-    <h2 class="display-4">Hello, @(this.User.Identity.IsAuthenticated ? this.User.Identity.Name : "Guest")!</h2>
+    <h2 class="display-4">Hello, @(this.User.Identity.IsAuthenticated ? this.users.GetFirstName(this.User.Id()) : "Guest")!</h2>
     <p class="lead">This is your free goal tracker - reach your goals <b>today</b>.</p>
     <hr class="my-4">
     @if (!this.User.Identity.IsAuthenticated)

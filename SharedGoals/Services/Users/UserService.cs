@@ -24,5 +24,19 @@ namespace SharedGoals.Services.Users
             .Users
             .ProjectTo<UserServiceModel>(this.mapper.ConfigurationProvider)
             .ToList();
+
+        public string GetFirstName(string userId)
+        {
+            var user = this.dbContext.Users.Find(userId);
+
+            if(user == null)
+            {
+                return "Guest";
+            }
+            else
+            {
+                return user.FirstName;
+            }
+        }
     }
 }

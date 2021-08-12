@@ -37,10 +37,12 @@ namespace SharedGoals.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
             [Display(Name = "First Name")]
             [StringLength(UserFirstNameMaxLenght, MinimumLength = UserFirstNameMinLenght)]
             public string FirstName { get; set; }
 
+            [Required]
             [Display(Name = "Last Name")]
             [StringLength(UserLastNameMaxLenght, MinimumLength = UserLastNameMinLenght)]
             public string LastName { get; set; }

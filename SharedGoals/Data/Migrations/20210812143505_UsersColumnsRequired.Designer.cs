@@ -10,8 +10,8 @@ using SharedGoals.Data;
 namespace SharedGoals.Data.Migrations
 {
     [DbContext(typeof(SharedGoalsDbContext))]
-    [Migration("20210728123916_UserFirstLastNameColumns")]
-    partial class UserFirstLastNameColumns
+    [Migration("20210812143505_UsersColumnsRequired")]
+    partial class UsersColumnsRequired
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -204,13 +204,17 @@ namespace SharedGoals.Data.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("ProgressInPercents")
-                        .HasColumnType("int");
 
                     b.Property<int>("TagId")
                         .HasColumnType("int");
@@ -242,9 +246,6 @@ namespace SharedGoals.Data.Migrations
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("WorkDoneInPercents")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -292,10 +293,12 @@ namespace SharedGoals.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
@@ -434,7 +437,7 @@ namespace SharedGoals.Data.Migrations
                     b.HasOne("SharedGoals.Data.Models.Goal", "Goal")
                         .WithMany("GoalWorks")
                         .HasForeignKey("GoalId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SharedGoals.Data.Models.User", "User")
