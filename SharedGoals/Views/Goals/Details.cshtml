@@ -28,7 +28,7 @@
     </div>
     <div class="card-body">
         <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Name image">
-        <h2 class="card-title">@Model.Name</h2>
+        <h2 class="card-title mt-3">@Model.Name</h2>
         <p class="card-text">@Model.Description</p>
         @if (!Model.IsFinished)
         {
@@ -43,7 +43,8 @@
                 <a asp-controller="Goals" asp-action="Finish" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Finish Goal</a>
             }
         }
-        <p class="card-text">@Model.Tag Goal - Finshed: @Model.IsFinished</p>
+        <p class="card-text mb-0"><b>@Model.Tag</b> Goal By <b>@Model.Creator</b></p>
+        <p class="card-text mt-2">Finished: @Model.IsFinished</p>
     </div>
     <div class="card-footer text-muted">
         Created on: @Model.CreatedOn | Due to: @Model.DueDate

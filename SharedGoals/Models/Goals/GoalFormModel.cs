@@ -10,6 +10,8 @@ namespace SharedGoals.Models.Goals
 
     public class GoalFormModel
     {
+        private DateTime dueDate;
+
         [Required]
         [StringLength(GoalNameMaxLength, MinimumLength = GoalNameMinLength)]
         public string Name { get; set; }
@@ -20,7 +22,21 @@ namespace SharedGoals.Models.Goals
 
         [Display(Name = "Due To Date")]
         [DataType(DataType.Date)]
-        public DateTime DueDate { get; set; }
+        public DateTime DueDate 
+        { 
+            get
+            {
+                if(this.dueDate == default(DateTime))
+                {
+                    return DateTime.UtcNow.AddDays(1);
+                }
+                return this.dueDate;
+            } 
+            set
+            {
+                this.dueDate = value;
+            }
+        }
 
         [Required]
         [Url]

@@ -6,6 +6,8 @@
 
         public bool IsCreatorByName(string name);
 
+        public string GetCreatorName(string userId);
+
         public string IdByUser(string userId);
 
         public void Become(string userId, string creatorName);

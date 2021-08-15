@@ -8,8 +8,6 @@
 
         public string CreatorId { get; init; }
 
-        public string CreatorName { get; init; }
-
         public string UserId { get; init; }
     }
 }

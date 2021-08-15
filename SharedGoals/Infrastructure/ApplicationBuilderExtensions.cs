@@ -24,28 +24,27 @@ namespace SharedGoals.Infrastructure
 
             SeedTags(services);
             SeedAdministrator(services);
-            //SeedGoals(services);
 
             return app;
         }
 
         private static void MigrateDatabase(IServiceProvider services)
         {
-            var data = services.GetRequiredService<SharedGoalsDbContext>();
+            var dbContext = services.GetRequiredService<SharedGoalsDbContext>();
 
-            data.Database.Migrate();
+            dbContext.Database.Migrate();
         }
 
         private static void SeedTags(IServiceProvider services)
         {
-            var data = services.GetRequiredService<SharedGoalsDbContext>();
+            var dbContext = services.GetRequiredService<SharedGoalsDbContext>();
 
-            if (data.Tags.Any())
+            if (dbContext.Tags.Any())
             {
                 return;
             }
 
-            data.Tags.AddRange(new[]
+            dbContext.Tags.AddRange(new[]
             {
                 new Tag { Name = "Very Important" },
                 new Tag { Name = "Important" },
@@ -53,14 +52,13 @@ namespace SharedGoals.Infrastructure
                 new Tag { Name = "Not much important" }
             });
 
-            data.SaveChanges();
+            dbContext.SaveChanges();
         }
 
         private static void SeedAdministrator(IServiceProvider services)
         {
             var userManager = services.GetRequiredService<UserManager<User>>();
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
 
             Task
                 .Run(async () =>
@@ -92,6 +90,5 @@ namespace SharedGoals.Infrastructure
                 .GetAwaiter()
                 .GetResult();
         }
-        
     }
 }

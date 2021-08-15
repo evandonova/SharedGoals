@@ -58,6 +58,7 @@ namespace SharedGoals.Services.Goals
             this.dbContext.Goals.Add(goalData);
             this.dbContext.SaveChanges();
         }
+
         public GoalExtendedServiceModel Info(int id)
             => this.dbContext
                 .Goals
@@ -69,18 +70,21 @@ namespace SharedGoals.Services.Goals
         {
             var goal = this.dbContext
                   .Goals
+                  .ProjectTo<GoalDetailsServiceModel>(this.mapper.ConfigurationProvider)
                   .FirstOrDefault(g => g.Id == id);
 
-            var goalWorksModel = 
+            var goalWorksModel =
                 this.dbContext
                 .GoalWorks
                 .Where(g => g.GoalId == id)
                 .ProjectTo<GoalWorkServiceModel>(this.mapper.ConfigurationProvider);
 
-            var goalData = this.mapper.Map<GoalDetailsServiceModel>(goal);
-            goalData.GoalWorks = goalWorksModel;
+            if (goalWorksModel != null)
+            {
+                goal.GoalWorks = goalWorksModel;
+            }
 
-            return goalData;
+            return goal;
         }
 
         public bool Finish(int id)

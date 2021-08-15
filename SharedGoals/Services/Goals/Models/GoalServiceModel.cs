@@ -18,6 +18,8 @@ namespace SharedGoals.Services.Goals.Models
         [DisplayName("Finished")]
         public bool IsFinished { get; init; }
 
+        public string Creator { get; init; }
+
         public string Tag { get; init; }
     }
 }

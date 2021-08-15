@@ -48,7 +48,7 @@ namespace SharedGoals.Controllers
 
             this.creators.Become(this.User.Id(), creator.Name);
 
-            return RedirectToAction("All", "Goals");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
