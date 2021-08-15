@@ -24,6 +24,7 @@ namespace SharedGoals.Infrastructure
 
             SeedTags(services);
             SeedAdministrator(services);
+            //SeedGoals(services);
 
             return app;
         }
@@ -60,6 +61,7 @@ namespace SharedGoals.Infrastructure
             var userManager = services.GetRequiredService<UserManager<User>>();
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
+
             Task
                 .Run(async () =>
                 {
@@ -90,5 +92,6 @@ namespace SharedGoals.Infrastructure
                 .GetAwaiter()
                 .GetResult();
         }
+        
     }
 }

@@ -170,15 +170,10 @@ namespace SharedGoals.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
                         .IsUnique();
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Creators");
                 });
@@ -400,10 +395,6 @@ namespace SharedGoals.Data.Migrations
                         .HasForeignKey("SharedGoals.Data.Models.Creator", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("SharedGoals.Data.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });

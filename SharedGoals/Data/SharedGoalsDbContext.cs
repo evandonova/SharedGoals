@@ -49,13 +49,6 @@ namespace SharedGoals.Data
                 .HasForeignKey(g => g.CreatorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<Creator>()
-                .HasOne<User>()
-                .WithOne()
-                .HasForeignKey<Creator>(c => c.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             base.OnModelCreating(builder);
         }
     }

@@ -10,8 +10,8 @@ using SharedGoals.Data;
 namespace SharedGoals.Data.Migrations
 {
     [DbContext(typeof(SharedGoalsDbContext))]
-    [Migration("20210812143505_UsersColumnsRequired")]
-    partial class UsersColumnsRequired
+    [Migration("20210815075510_ChangesInRelationship")]
+    partial class ChangesInRelationship
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -172,8 +172,7 @@ namespace SharedGoals.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Creators");
                 });
@@ -396,10 +395,10 @@ namespace SharedGoals.Data.Migrations
 
             modelBuilder.Entity("SharedGoals.Data.Models.Creator", b =>
                 {
-                    b.HasOne("SharedGoals.Data.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("SharedGoals.Data.Models.Creator", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("SharedGoals.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
