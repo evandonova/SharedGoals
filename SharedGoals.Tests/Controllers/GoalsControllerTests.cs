@@ -27,21 +27,28 @@ namespace SharedGoals.Tests.Controllers
             .View();
 
         [Theory]
-        [InlineData(1, "Test Goal", "Testing", "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg")]
+        [InlineData(1, "Test Goal", "Testing", "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg", 2)]
         public void DetailsShouldReturnView(
             int goalId,
             string name,
             string description,
-            string imageUrl)
+            string imageUrl,
+            int tagId)
             => MyController<GoalsController>
                 .Instance(instance => instance
                     .WithUser()
+                    .WithData(d => d.WithSet<Tag>(set => set.Add(new Tag()
+                    {
+                        Id = tagId
+                    })))
                     .WithData(d => d.WithSet<Goal>(set => set.Add(new Goal()
                     {
                         Id = goalId,
                         Name = name,
                         Description = description,
-                        ImageURL = imageUrl
+                        ImageURL = imageUrl,
+                        CreatorId = TestUser.Identifier,
+                        TagId = tagId
                     }))))
             .Calling(c => c.Details(goalId))
             .ShouldHave()
@@ -78,14 +85,14 @@ namespace SharedGoals.Tests.Controllers
                 .RedirectToAction("Become", "Creators");
 
         [Theory]
-        [InlineData("Test Goal", 
-            "Testing", 
+        [InlineData("Test Goal",
+            "Testing",
             "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg",
             1,
             "Tag")]
         public void PostCreateShouldReturnRedirectWhenUserAdministrator(
             string name,
-            string description, 
+            string description,
             string imageUrl,
             int tagId,
             string tagName)
@@ -98,7 +105,7 @@ namespace SharedGoals.Tests.Controllers
                         Name = tagName
                     }))))
                 .Calling(c => c.Create(new GoalFormModel()
-                { 
+                {
                     Name = name,
                     Description = description,
                     DueDate = DateTime.UtcNow.AddDays(5),
@@ -131,8 +138,8 @@ namespace SharedGoals.Tests.Controllers
             => MyController<GoalsController>
                 .Instance(instance => instance
                     .WithUser(u => u.InRole(AdministratorRoleName))
-                    .WithData(d => d.WithSet<Tag>(set => set.Add(new Tag() 
-                    { 
+                    .WithData(d => d.WithSet<Tag>(set => set.Add(new Tag()
+                    {
                         Id = tagId
                     })))
                     .WithData(d => d.WithSet<Goal>(set => set.Add(new Goal()

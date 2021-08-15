@@ -46,6 +46,6 @@ namespace SharedGoals.Tests.Controllers
                 .AndAlso()
                 .ShouldReturn()
                 .Redirect(redirect => redirect
-                    .To<GoalsController>(c => c.All(With.Any<AllGoalsQueryModel>())));
+                    .To<HomeController>(c => c.Index()));
     }
 }
