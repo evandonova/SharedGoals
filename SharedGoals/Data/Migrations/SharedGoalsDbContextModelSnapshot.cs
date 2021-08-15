@@ -170,7 +170,8 @@ namespace SharedGoals.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Creators");
                 });
@@ -393,13 +394,11 @@ namespace SharedGoals.Data.Migrations
 
             modelBuilder.Entity("SharedGoals.Data.Models.Creator", b =>
                 {
-                    b.HasOne("SharedGoals.Data.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("SharedGoals.Data.Models.User", null)
+                        .WithOne()
+                        .HasForeignKey("SharedGoals.Data.Models.Creator", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SharedGoals.Data.Models.Goal", b =>

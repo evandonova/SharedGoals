@@ -17,8 +17,6 @@ namespace SharedGoals.Data.Models
         [Required]
         public string UserId { get; set; }
 
-        public User User { get; init; }
-
         public IEnumerable<Goal> Goals { get; init; } = new List<Goal>();
     }
 }

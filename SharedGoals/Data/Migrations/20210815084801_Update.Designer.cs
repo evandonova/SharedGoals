@@ -10,8 +10,8 @@ using SharedGoals.Data;
 namespace SharedGoals.Data.Migrations
 {
     [DbContext(typeof(SharedGoalsDbContext))]
-    [Migration("20210812143505_UsersColumnsRequired")]
-    partial class UsersColumnsRequired
+    [Migration("20210815084801_Update")]
+    partial class Update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -401,8 +401,6 @@ namespace SharedGoals.Data.Migrations
                         .HasForeignKey("SharedGoals.Data.Models.Creator", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SharedGoals.Data.Models.Goal", b =>
