@@ -8,11 +8,7 @@
 <div class="jumbotron text-center">
     <h2 class="display-4">
         Hello,
-        @if (this.User.IsAdmin())
-        {
-            <text>Admin!</text>
-        }
-        else if (this.User.Identity.IsAuthenticated && this.creators.IsCreator(this.User.Id()))
+        @if (this.User.Identity.IsAuthenticated && this.creators.IsCreator(this.User.Id()))
         {
             var name = this.creators.GetCreatorName(this.User.Id());
             <text>@name!</text>
@@ -27,27 +23,43 @@
             <text>Guest!</text>
         }
     </h2>
-    <p class="lead mb-0 mt-3">This is your free goal tracker - reach your goals <b>today</b>.</p>
-    @if (this.User.Identity.IsAuthenticated && this.creators.IsCreator(this.User.Id()))
-    {
-        <p class="lead mt-0">You have a special role - you are a <b>creator</b>.</p>
-    }
-    <hr class="my-4">
     @if (!this.User.Identity.IsAuthenticated)
     {
+        <p class="lead mb-0 mt-3">This is your free goal tracker - reach your goals <b>today</b>.</p>
+        <hr class="my-4">
         <p>
-            <a class="btn btn-primary btn-lg" href="/Identity/Account/Login" role="button">Login</a>
-            <a class="btn btn-primary btn-lg" href="/Identity/Account/Register" role="button">Register</a>
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary btn-lg">Login</a>
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg">Register</a>
         </p>
     }
     else
     {
+        if (this.User.Identity.IsAuthenticated && this.creators.IsCreator(this.User.Id()))
+        {
+            <p class="lead mt-3 mb-0">
+                You have a special role - you are a <b>creator</b>.
+            </p>
+            <p class="lead mt-0">
+                Start <b>creating</b> goals now!
+            </p>
+        }
+        else
+        {
+            <p class="lead mt-3 mb-0">
+                Start <b>working</b> on goals now! If you want to create goals -> become a <b>creator</b>.
+            </p>
+        }
+
+        <hr class="my-4">
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/Goals/All" role="button">All Goals</a>
+            <a asp-area="" asp-controller="Goals" asp-action="All" class="btn btn-primary btn-lg">All Goals</a>
             @if (this.creators.IsCreator(this.User.Id()) || this.User.IsAdmin())
             {
-                <a class="btn btn-primary btn-lg" href="/Goals/Create" role="button">Create Goal</a>
+                <span>  |   </span>
+                <a asp-area="" asp-controller="Goals" asp-action="Create" class="btn btn-primary btn-lg">Create Goal</a>
             }
+            <span>  |   </span>
+            <a asp-area="" asp-controller="GoalWorks" asp-action="Mine" class="btn btn-primary btn-lg">My Goal Works</a>
         </p>
     }
 </div>

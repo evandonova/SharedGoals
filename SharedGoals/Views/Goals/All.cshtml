@@ -40,35 +40,48 @@
            asp-action="All"
            asp-route-currentPage="@previousPage"><<</a>
     </div>
+
+    @{
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
+                                     !Model.Goals.Any();
+    }
+
     <div class="col-md-6">
-        <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)"
+        <a class="btn btn-primary float-right @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
            asp-controller="Goals"
            asp-action="All"
            asp-route-currentPage="@(Model.CurrentPage + 1)">>></a>
     </div>
 </div>
 <div class="list-group-horizontal row ml-1 justify-content-center">
-    @foreach (var goal in Model.Goals)
+    @if (!Model.Goals.Any())
     {
-        <div class="list-group-item form-group text-center col-md-4 mr-1 mb-3">
-            <div class="text-center">
-                <img style="height: 100%; width: 100%; object-fit: contain" class="rounded h-auto" src="@goal.ImageUrl" alt="@goal.Name image">
-            </div>
-            <hr />
-            <div class="form-group">
-                <h5 class="mb-1">@goal.Name</h5>
+        <h3 class="text-center">No goals yet!</h3>
+    }
+    else
+    {
+        @foreach (var goal in Model.Goals)
+        {
+            <div class="list-group-item form-group text-center col-md-4 mr-1 mb-3">
+                <div class="text-center">
+                    <img style="height: 100%; width: 100%; object-fit: contain" class="rounded h-auto" src="@goal.ImageUrl" alt="@goal.Name image">
+                </div>
                 <hr />
-                <small>Finished: <b>@goal.IsFinished</b></small>
-                <br />
-                <small>Due to <b>@goal.DueDate</b></small>
-                <br />
-                <small>By <b>@goal.Creator</b></small>
-                <br />
-                <small class="mb-1"><b>@goal.Tag</b></small>
-            </div>
+                <div class="form-group">
+                    <h5 class="mb-1">@goal.Name</h5>
+                    <hr />
+                    <small>Finished: <b>@goal.IsFinished</b></small>
+                    <br />
+                    <small>Due to <b>@goal.DueDate</b></small>
+                    <br />
+                    <small>By <b>@goal.Creator</b></small>
+                    <br />
+                    <small class="mb-1"><b>@goal.Tag</b></small>
+                </div>
 
-            <a asp-controller="Goals" asp-action="Details" asp-route-id="@goal.Id" class="btn btn-secondary mb-2">View Details</a>
-        </div>
-        <div class="mb-3"></div>
+                <a asp-controller="Goals" asp-action="Details" asp-route-id="@goal.Id" class="btn btn-secondary mb-2">View Details</a>
+            </div>
+            <div class="mb-3"></div>
+        }
     }
 </div>
