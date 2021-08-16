@@ -1,4 +1,4 @@
-## The “SharedGoals” Project
+## The â€œSharedGoalsâ€ Project
 
 **Shared Goals Website** is my defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (June 2021).
 
@@ -8,13 +8,13 @@
 
 ## :performing_arts: User Types
 
-**Administrator** - created from site owner – username: “admin@mail.com”, password: “pass123#”
+**Administrator** - created from site owner â€“ username: â€œadmin@mail.comâ€, password: â€œpass123#â€
 * Create, read, edit, delete and finish all goals on the site.
 * Work on all goals and see their own goal works.
 * See all goal works.
 * See all users.
 
-**Creator** - logged-in user, who has become a creator through the “Become a Creator” functionality and has a “creator name”
+**Creator** - logged-in user, who has become a creator through the â€œBecome a Creatorâ€ functionality and has a â€œcreator nameâ€
 * Read all goals on the site.
 * Create goals and edit, delete and finish them. Creators can manage only goals they created!
 * See their own goal works from the time before they became a creator.
@@ -29,9 +29,9 @@
 
 ## :hammer: Built With
 * ASP.NET [CORE 5.0] MVC
-	- 4 controllers + 4 more in the “Admin” area
+	- 4 controllers + 4 more in the â€œAdminâ€ area
 	- 5 entity models
-	- 10 views + 3 more in the “Admin” area + partial views where appropriate
+	- 10 views + 3 more in the â€œAdminâ€ area + partial views where appropriate
 	- Services
 	- Service, view and form models
 	- etc.
@@ -46,7 +46,7 @@
 * MyTested.AspNetCore.Mvc
 
 ## :wrench: DB Diagram
-
+![image](https://user-images.githubusercontent.com/69080997/129544513-edf338bf-8b67-4747-b76a-33d359a3b486.png)
 
 
 
