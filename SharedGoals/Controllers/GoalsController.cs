@@ -69,11 +69,6 @@ namespace SharedGoals.Controllers
                 this.ModelState.AddModelError(nameof(goal.TagId), "Tag does not exist.");
             }
 
-            if (!this.goals.DateIsValid(goal.DueDate))
-            {
-                this.ModelState.AddModelError(nameof(goal.DueDate), "Due Date must be in the future and before the 2100 year.");
-            }
-
             if (!ModelState.IsValid)
             {
                 goal.Tags = this.goals.Tags();
@@ -181,11 +176,6 @@ namespace SharedGoals.Controllers
             if (!this.goals.TagExists(goal.TagId))
             {
                 this.ModelState.AddModelError(nameof(goal.TagId), "Tag does not exist.");
-            }
-
-            if (!this.goals.DateIsValid(goal.DueDate))
-            {
-                this.ModelState.AddModelError(nameof(goal.DueDate), "Due Date must be in the future and before 2100 year.");
             }
 
             if (!this.ModelState.IsValid)

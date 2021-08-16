@@ -1,4 +1,5 @@
-﻿using SharedGoals.Data;
+﻿using SharedGoals.Attributes;
+using SharedGoals.Data;
 using SharedGoals.Services.Goals.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace SharedGoals.Models.Goals
 
     public class GoalFormModel
     {
+        private static string dateTimeNow = DateTime.UtcNow.ToString();
         private DateTime dueDate;
 
         [Required]
@@ -22,6 +24,7 @@ namespace SharedGoals.Models.Goals
 
         [Display(Name = "Due To Date")]
         [DataType(DataType.Date)]
+        [CustomDateValidation]
         public DateTime DueDate 
         { 
             get
