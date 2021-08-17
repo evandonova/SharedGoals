@@ -19,6 +19,7 @@ namespace SharedGoals.Infrastructure
         private static string userEmail = "user@mail.com";
 
         private static string creatorName = "First Creator";
+        private static string adminCreatorName = "Admin";
 
         public static IApplicationBuilder PrepareDatabase(
             this IApplicationBuilder app)
@@ -166,14 +167,22 @@ namespace SharedGoals.Infrastructure
             Task
                 .Run(async () =>
                 {
-                    var userId = dbContext.Users.FirstOrDefault(x => x.Email == creatorEmail).Id;
-                    var creator = new Creator()
-                    {
-                        Name = creatorName,
-                        UserId = userId
-                    };
+                    var userCreatorId = dbContext.Users.FirstOrDefault(x => x.Email == creatorEmail).Id;
+                    var userAdminId = dbContext.Users.FirstOrDefault(x => x.Email == adminEmail).Id;
 
-                    await dbContext.Creators.AddAsync(creator);
+                    await dbContext.Creators.AddRangeAsync(new Creator[]
+                    {
+                        new Creator()
+                        {
+                            Name = creatorName,
+                            UserId = userCreatorId
+                        },
+                        new Creator()
+                        {
+                            Name = adminCreatorName,
+                            UserId = userAdminId
+                        }
+                });
                     await dbContext.SaveChangesAsync();
 
                 })
@@ -194,6 +203,7 @@ namespace SharedGoals.Infrastructure
                 .Run(async () =>
                 {
                     var creatorId = dbContext.Creators.FirstOrDefault(x => x.Name == creatorName).Id;
+                    var adminCreatorId = dbContext.Creators.FirstOrDefault(x => x.Name == adminCreatorName).Id;
 
                     await dbContext.Goals.AddRangeAsync(new Goal[]
                     {
@@ -215,7 +225,7 @@ namespace SharedGoals.Infrastructure
                             ImageURL = "https://milemir.com/wp-content/uploads/2020/11/team.jpg",
                             CreatedOn = DateTime.UtcNow.AddDays(-20),
                             DueDate = DateTime.UtcNow.Date.Add(new TimeSpan(00, 00, 0)).AddMonths(3),
-                            CreatorId = creatorId,
+                            CreatorId = adminCreatorId,
                             TagId = 2,
                             IsFinished = false
                         }

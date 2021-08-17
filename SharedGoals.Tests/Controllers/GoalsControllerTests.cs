@@ -24,10 +24,10 @@ namespace SharedGoals.Tests.Controllers
 
         [Theory]
         [InlineData(
-            1, 
-            "Test Goal", 
-            "Testing", 
-            "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg", 
+            1,
+            "Test Goal",
+            "Testing",
+            "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg",
             2)]
         public void GetDetailsShouldReturnView(
             int goalId,
@@ -90,13 +90,15 @@ namespace SharedGoals.Tests.Controllers
             "Testing",
             "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg",
             1,
-            "Tag")]
+            "Tag",
+            "creatorId")]
         public void PostCreateShouldReturnRedirectWhenUserAdministrator(
             string name,
             string description,
             string imageUrl,
             int tagId,
-            string tagName)
+            string tagName,
+            string creatorId)
             => MyController<GoalsController>
                 .Instance(instance => instance
                     .WithUser(u => u.InRole(AdministratorRoleName))
@@ -104,6 +106,11 @@ namespace SharedGoals.Tests.Controllers
                     {
                         Id = tagId,
                         Name = tagName
+                    })))
+                    .WithData(d => d.WithSet<Creator>(set => set.Add(new Creator()
+                    {
+                        Id = creatorId,
+                        UserId = TestUser.Identifier
                     }))))
                 .Calling(c => c.Create(new GoalFormModel()
                 {
@@ -257,12 +264,12 @@ namespace SharedGoals.Tests.Controllers
 
         [Theory]
         [InlineData(
-            1, 
-            "Goal Name", 
-            "Goal Description", 
-            "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg", 
-            2, 
-            "New Goal Name", 
+            1,
+            "Goal Name",
+            "Goal Description",
+            "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg",
+            2,
+            "New Goal Name",
             "creatorId")]
         public void PostEditShouldReturnRedirectWhenUserAdministrator(
             int id,
@@ -363,7 +370,7 @@ namespace SharedGoals.Tests.Controllers
             int id,
             string name,
             string description,
-            int tagId, 
+            int tagId,
             string creatorId)
             => MyController<GoalsController>
                 .Instance(instance => instance

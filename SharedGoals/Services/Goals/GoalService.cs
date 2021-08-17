@@ -138,6 +138,11 @@ namespace SharedGoals.Services.Goals
         {
             var creatorId = GetCreatorId(goalId);
             var creator = this.dbContext.Creators.Find(creatorId);
+            if(creator == null)
+            {
+                var admin = this.dbContext.Users.Find(creatorId);
+                return admin.Id;
+            }
             return creator.UserId;
         }
 

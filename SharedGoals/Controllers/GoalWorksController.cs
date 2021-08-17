@@ -42,7 +42,7 @@ namespace SharedGoals.Controllers
                 return BadRequest();
             }
 
-            if (this.creators.IsCreator(this.User.Id()))
+            if (this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -59,7 +59,7 @@ namespace SharedGoals.Controllers
                 return BadRequest();
             }
 
-            if (this.creators.IsCreator(this.User.Id()))
+            if (this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }

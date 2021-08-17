@@ -59,7 +59,7 @@ namespace SharedGoals.Controllers
         {
             var userId = this.User.Id();
             var isCreator = this.creators.IsCreator(userId);
-            if (!isCreator && !this.User.IsAdmin())
+            if (!isCreator)
             {
                 return RedirectToAction(nameof(CreatorsController.Become), "Creators");
             }
@@ -77,6 +77,7 @@ namespace SharedGoals.Controllers
             }
 
             var creatorId = this.creators.IdByUser(this.User.Id());
+
             this.goals.Create(goal.Name,
                 goal.Description,
                 goal.DueDate,
@@ -99,7 +100,7 @@ namespace SharedGoals.Controllers
 
             var userId = this.User.Id();
             var goalUserId = this.goals.GetCreatorUserId(id);
-            if (goalUserId != userId && !this.User.IsAdmin())
+            if (!this.User.IsAdmin() && goalUserId != userId)
             {
                 return Unauthorized();
             }
@@ -121,7 +122,7 @@ namespace SharedGoals.Controllers
 
             var userId = this.User.Id();
             var goalUserId = this.goals.GetCreatorUserId(goalModel.Id);
-            if (goalUserId != userId && !this.User.IsAdmin())
+            if (!this.User.IsAdmin() && goalUserId != userId)
             {
                 return Unauthorized();
             }
@@ -142,7 +143,7 @@ namespace SharedGoals.Controllers
 
             var userId = this.User.Id();
             var goalUserId = this.goals.GetCreatorUserId(id);
-            if (goalUserId != userId && !this.User.IsAdmin())
+            if (!this.User.IsAdmin() && goalUserId != userId)
             {
                 return Unauthorized();
             }
@@ -165,7 +166,7 @@ namespace SharedGoals.Controllers
 
             var userId = this.User.Id();
             var goalUserId = this.goals.GetCreatorUserId(id);
-            if (goalUserId != userId && !this.User.IsAdmin())
+            if (!this.User.IsAdmin() && goalUserId != userId)
             {
                 return Unauthorized();
             }
@@ -203,7 +204,7 @@ namespace SharedGoals.Controllers
 
             var userId = this.User.Id();
             var goalUserId = this.goals.GetCreatorUserId(id);
-            if (goalUserId != userId && !this.User.IsAdmin())
+            if (!this.User.IsAdmin() && goalUserId != userId)
             {
                 return Unauthorized();
             }
@@ -225,7 +226,7 @@ namespace SharedGoals.Controllers
 
             var userId = this.User.Id();
             var goalUserId = this.goals.GetCreatorUserId(goalModel.Id);
-            if (goalUserId != userId && !this.User.IsAdmin())
+            if (!this.User.IsAdmin() && goalUserId != userId)
             {
                 return Unauthorized();
             }

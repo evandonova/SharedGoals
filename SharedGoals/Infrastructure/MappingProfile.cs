@@ -27,6 +27,7 @@ namespace SharedGoals.Infrastructure
             this.CreateMap<GoalWork, GoalWorkServiceModel>()
                 .ForMember(g => g.User, cfg => cfg.MapFrom(g => g.User.UserName))
                 .ForMember(g => g.Goal, cfg => cfg.MapFrom(g => g.Goal.Name));
+            this.CreateMap<GoalWorkServiceModel, GoalWorkViewModel>();
 
             this.CreateMap<Tag, GoalTagServiceModel>();
 
