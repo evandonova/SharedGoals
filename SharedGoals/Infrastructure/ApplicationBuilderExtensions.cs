@@ -240,7 +240,7 @@ namespace SharedGoals.Infrastructure
             Task
                .Run(async () =>
                {
-                   var goalId = dbContext.Goals.FirstOrDefault(g => g.IsFinished == true).Id;
+                   var goalId = dbContext.Goals.FirstOrDefault(g => g.TagId == 1).Id;
                    var userId = dbContext.Users.FirstOrDefault(u => u.Email == userEmail).Id;
                    var adminId = dbContext.Users.FirstOrDefault(u => u.Email == adminEmail).Id;
 

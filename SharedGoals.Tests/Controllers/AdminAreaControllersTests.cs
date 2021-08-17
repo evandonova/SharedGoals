@@ -21,7 +21,6 @@ namespace SharedGoals.Tests.Controllers
                .ShouldReturn()
                .View();
 
-        // Should be for authorized (attribute check)
         [Fact]
         public void UsersController_GetAllShouldReturnCorrectViewWithModelType()
             => MyController<UsersController>
@@ -31,7 +30,7 @@ namespace SharedGoals.Tests.Controllers
                 .MemoryCache(cache => cache
                     .ContainingEntry(entry => entry
                         .WithKey(UsersCacheKey)
-                        .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromMinutes(10))
+                        .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromMinutes(5))
                         .WithValueOfType<List<UserServiceModel>>()))
                 .TempData(tempData => tempData
                     .ContainingEntryWithKey("adminUserName"))
@@ -48,7 +47,7 @@ namespace SharedGoals.Tests.Controllers
                 .MemoryCache(cache => cache
                     .ContainingEntry(entry => entry
                         .WithKey(GoalWorksCacheKey)
-                        .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromMinutes(10))
+                        .WithAbsoluteExpirationRelativeToNow(TimeSpan.FromMinutes(5))
                         .WithValueOfType<List<GoalWorkServiceModel>>()))
                 .AndAlso()
                 .ShouldReturn()

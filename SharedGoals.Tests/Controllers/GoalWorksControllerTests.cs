@@ -50,7 +50,7 @@ namespace SharedGoals.Tests.Controllers
                 .View(result => result.WithModelOfType<GoalWorkFormModel>());
 
         [Theory]
-        [InlineData(1, "Goal Work", 2)]
+        [InlineData(1, "Goal Work Description", 2)]
         public void PostWorkShouldReturnRedirectWhenUserAdministrator(
             int id,
             string description,
@@ -60,7 +60,8 @@ namespace SharedGoals.Tests.Controllers
                     .WithUser(u => u.InRole(AdministratorRoleName))
                     .WithData(d => d.WithSet<Goal>(set => set.Add(new Goal()
                     {
-                        Id = goalId
+                        Id = goalId,
+                        IsFinished = false
                     }))))
                 .Calling(c => c.Work(goalId, new GoalWorkFormModel()
                 {
