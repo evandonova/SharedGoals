@@ -32,7 +32,7 @@ namespace SharedGoals.Areas.Admin.Controllers
                 goalWorks = this.goalWorks.All();
 
                 var cacheOptions = new MemoryCacheEntryOptions()
-                   .SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+                   .SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
 
                 this.cache.Set(goalWorksCacheKey, goalWorks, cacheOptions);
             }

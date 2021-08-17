@@ -35,7 +35,9 @@ namespace SharedGoals.Services.Goals
 
         bool Delete(int id);
 
-        bool GoalExists(int goalId);
+        bool Exists(int goalId);
+
+        bool IsFinished(int goalId);
 
         bool TagExists(int tagId);
 

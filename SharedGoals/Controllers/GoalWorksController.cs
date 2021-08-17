@@ -37,9 +37,9 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Work(int id)
         {
-            if (!this.goals.GoalExists(id))
+            if (!this.goals.Exists(id) || this.goals.IsFinished(id))
             {
-                return View();
+                return BadRequest();
             }
 
             if (this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
@@ -54,7 +54,7 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Work(int id, GoalWorkFormModel goalWorkModel)
         {
-            if (!this.goals.GoalExists(id))
+            if (!this.goals.Exists(id) || this.goals.IsFinished(id))
             {
                 return BadRequest();
             }
@@ -62,6 +62,11 @@ namespace SharedGoals.Controllers
             if (this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
             {
                 return Unauthorized();
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(goalWorkModel);
             }
 
             this.goalWorks.Work(

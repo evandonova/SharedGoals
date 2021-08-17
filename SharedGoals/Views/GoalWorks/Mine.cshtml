@@ -4,5 +4,12 @@
     ViewBag.Title = "My Goal Works";
 }
 
+@if (TempData["message"] != null && this.User.Identity.IsAuthenticated)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["message"]
+    </div>
+}
+
 @await Html.PartialAsync("~/Views/Shared/_GoalWorksPartial.cshtml", Model)
 

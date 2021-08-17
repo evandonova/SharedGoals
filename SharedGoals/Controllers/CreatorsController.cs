@@ -48,6 +48,7 @@ namespace SharedGoals.Controllers
 
             this.creators.Become(this.User.Id(), creator.Name);
 
+            TempData["message"] = "You have successfully become a creator!";
             return RedirectToAction("Index", "Home");
         }
     }

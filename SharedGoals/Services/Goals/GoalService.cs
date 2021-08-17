@@ -146,10 +146,13 @@ namespace SharedGoals.Services.Goals
                 .ProjectTo<GoalTagServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
 
-        public bool GoalExists(int goalId)
+        public bool Exists(int goalId)
             => this.dbContext
             .Goals
-            .Any(c => c.Id == goalId);
+            .Any(g => g.Id == goalId);
+
+        public bool IsFinished(int goalId)
+             => this.dbContext.Goals.Find(goalId).IsFinished;
 
         public bool TagExists(int tagId)
             => this.dbContext

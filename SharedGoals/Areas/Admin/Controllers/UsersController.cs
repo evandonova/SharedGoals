@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using SharedGoals.Services.Users;
 using System;
@@ -32,7 +31,7 @@ namespace SharedGoals.Areas.Admin.Controllers
                 users = this.users.All();
 
                 var cacheOptions = new MemoryCacheEntryOptions()
-                   .SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+                   .SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
 
                 this.cache.Set(usersCacheKey, users, cacheOptions);
             }
