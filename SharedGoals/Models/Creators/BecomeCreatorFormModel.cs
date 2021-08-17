@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using static SharedGoals.Data.DataConstants;
-
 namespace SharedGoals.Models.Creators
 {
+    using static Data.DataConstants.Creator;
     public class BecomeCreatorFormModel
     {
         [Required]
-        [StringLength(CreatorNameMaxLength, MinimumLength = CreatorNameMinLength)]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; }
     }
 }

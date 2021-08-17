@@ -5,6 +5,7 @@
 }
 
 @inject ICreatorService creators
+@using static SharedGoals.Areas.Admin.AdminConstants 
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
@@ -48,15 +49,15 @@
                 <td>
                     @if (this.creators.IsCreator(user.Id))
                     {
-                        @Html.Raw("yes");
+                        <text>yes</text>
                     }
-                    else if (user.Username == TempData["adminUserName"].ToString())
+                    else if (user.Username == TempData[TempDataAdminUsernameKey].ToString())
                     {
-                        @Html.Raw("admin");
+                        <text>admin</text>
                     }
                     else
                     {
-                        @Html.Raw("no");
+                        <text>no</text>
                     }
                 </td>
             </tr>

@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using SharedGoals.Services.Goals.Models;
-using SharedGoals.Services.GoalWorks;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SharedGoals.Services.GoalWorks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace SharedGoals.Areas.Admin.Controllers
 {

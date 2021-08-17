@@ -1,10 +1,9 @@
-﻿using MyTested.AspNetCore.Mvc;
+﻿using System.Linq;
 using SharedGoals.Controllers;
 using SharedGoals.Data.Models;
 using SharedGoals.Models.Creators;
-using SharedGoals.Models.Goals;
-using System.Linq;
 using Xunit;
+using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Controllers
 {
@@ -24,7 +23,7 @@ namespace SharedGoals.Tests.Controllers
 
         [Theory]
         [InlineData("Creator Name")]
-        public void PostBecomeShouldBeForAuthorizedUsersAndReturnRedirectWithValidModel(
+        public void PostBecomeShouldBeForAuthorizedUsersAndReturnRedirect(
             string creatorName)
             => MyController<CreatorsController>
                 .Instance(controller => controller

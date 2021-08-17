@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using SharedGoals.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using SharedGoals.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SharedGoals.Data
 {

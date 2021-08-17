@@ -4,7 +4,7 @@
     {
         public bool IsCreator(string userId);
 
-        public bool IsCreatorByName(string name);
+        public bool CreatorNameExists(string name);
 
         public string GetCreatorName(string userId);
 

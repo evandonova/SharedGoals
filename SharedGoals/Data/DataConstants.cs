@@ -2,27 +2,39 @@
 {
     public class DataConstants
     {
-        public const int GoalNameMaxLength = 50;
-        public const int GoalNameMinLength = 3;
+        public class Goal
+        {
+            public const int NameMaxLength = 50;
+            public const int NameMinLength = 3;
 
-        public const int GoalDescriptionMaxLength = 100;
-        public const int GoalDescriptionMinLength = 5;
+            public const int DescriptionMaxLength = 100;
+            public const int DescriptionMinLength = 5;
+        }
 
-        public const int TagNameMaxLength = 20;
+        public class Tag
+        {
+            public const int NameMaxLength = 20;
+        }
 
-        public const int CreatorNameMaxLength = 20;
-        public const int CreatorNameMinLength = 3;
+        public class Creator
+        {
+            public const int NameMaxLength = 20;
+            public const int NameMinLength = 3;
+        }
 
-        public const int WorkDescriptionMaxLength = 200;
-        public const int WorkDescriptionMinLength = 10;
+        public class GoalWork
+        {
+            public const int DescriptionMaxLength = 200;
+            public const int DescriptionMinLength = 10;
+        }
 
-        public const int PercentsMaxValue = 100;
-        public const int PercentsMinValue = 0;
+        public class User
+        {
+            public const int FirstNameMaxLenght = 10;
+            public const int FirstNameMinLenght = 1;
 
-        public const int UserFirstNameMaxLenght = 10;
-        public const int UserFirstNameMinLenght = 1;
-
-        public const int UserLastNameMaxLenght = 15;
-        public const int UserLastNameMinLenght = 3;
+            public const int LastNameMaxLenght = 15;
+            public const int LastNameMinLenght = 3;
+        }
     }
 }

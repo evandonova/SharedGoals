@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using SharedGoals.Data;
+using SharedGoals.Data.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SharedGoals.Data;
-using SharedGoals.Data.Models;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-
-using static SharedGoals.Areas.Admin.AdminConstants;
 
 namespace SharedGoals.Infrastructure
 {
+    using static Areas.Admin.AdminConstants;
+
     public static class ApplicationBuilderExtensions
     {
         private static string adminEmail = "admin@mail.com";
@@ -100,7 +100,7 @@ namespace SharedGoals.Infrastructure
                         Email = adminEmail,
                         UserName = adminEmail,
                         FirstName = "Admin",
-                        LastName = "Admin"
+                        LastName = "Administrator"
                     };
 
                     await userManager.CreateAsync(user, adminPassword);

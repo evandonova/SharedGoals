@@ -1,10 +1,10 @@
-﻿using AutoMapper;
+﻿using SharedGoals.Models.Goals;
+using SharedGoals.Services.Goals;
+using SharedGoals.Services.Creators;
+using SharedGoals.Infrastructure;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SharedGoals.Infrastructure;
-using SharedGoals.Models.Goals;
-using SharedGoals.Services.Creators;
-using SharedGoals.Services.Goals;
 
 namespace SharedGoals.Controllers
 {
@@ -57,9 +57,9 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Create(GoalFormModel goal)
         {
-            var creatorId = this.creators.IdByUser(this.User.Id());
-
-            if (creatorId == null && !this.User.IsAdmin())
+            var userId = this.User.Id();
+            var isCreator = this.creators.IsCreator(userId);
+            if (!isCreator && !this.User.IsAdmin())
             {
                 return RedirectToAction(nameof(CreatorsController.Become), "Creators");
             }
@@ -76,6 +76,7 @@ namespace SharedGoals.Controllers
                 return View(goal);
             }
 
+            var creatorId = this.creators.IdByUser(this.User.Id());
             this.goals.Create(goal.Name,
                 goal.Description,
                 goal.DueDate,
@@ -91,18 +92,19 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Delete(int id)
         {
-            var goal = this.goals.Info(id);
-            if (goal == null)
+            if (!this.goals.Exists(id))
             {
                 return BadRequest();
             }
 
             var userId = this.User.Id();
-            if (goal.UserId != userId && !this.User.IsAdmin())
+            var goalUserId = this.goals.GetCreatorUserId(id);
+            if (goalUserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }
 
+            var goal = this.goals.Details(id);
             var goalModel = this.mapper.Map<GoalDetailsViewModel>(goal);
 
             return this.View(goalModel);
@@ -112,24 +114,19 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Delete(GoalDetailsViewModel goalModel)
         {
-            var goalData = this.goals.Info(goalModel.Id);
-            if (goalData == null)
+            if (!this.goals.Exists(goalModel.Id))
             {
                 return BadRequest();
             }
 
             var userId = this.User.Id();
-            if (goalData.UserId != userId && !this.User.IsAdmin())
+            var goalUserId = this.goals.GetCreatorUserId(goalModel.Id);
+            if (goalUserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }
 
-            var deleted = this.goals.Delete(goalModel.Id);
-
-            if(!deleted)
-            {
-                return BadRequest();
-            }
+            this.goals.Delete(goalModel.Id);
 
             TempData["message"] = "Goal was deleted successfully!";
             return this.RedirectToAction("All");
@@ -138,22 +135,22 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Edit(int id)
         {
-            var userId = this.User.Id();
-
-            var goal = this.goals.Info(id);
-
-            if (goal == null)
+            if (!this.goals.Exists(id))
             {
                 return BadRequest();
             }
 
-            if (goal.UserId != userId && !this.User.IsAdmin())
+            var userId = this.User.Id();
+            var goalUserId = this.goals.GetCreatorUserId(id);
+            if (goalUserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }
 
+            var goal = this.goals.Details(id);
             var goalForm = this.mapper.Map<GoalFormModel>(goal);
             goalForm.Tags = this.goals.Tags();
+
             return this.View(goalForm);
         }
 
@@ -161,14 +158,14 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Edit(int id, GoalFormModel goal)
         {
-            var goalData = this.goals.Info(id);
-            if (goalData == null)
+            if (!this.goals.Exists(id))
             {
                 return BadRequest();
             }
 
             var userId = this.User.Id();
-            if (goalData.UserId != userId && !this.User.IsAdmin())
+            var goalUserId = this.goals.GetCreatorUserId(id);
+            if (goalUserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -184,18 +181,13 @@ namespace SharedGoals.Controllers
                 return this.View(goal);
             }
 
-            var edited = this.goals.Edit(
+            this.goals.Edit(
                 id, 
                 goal.Name, 
                 goal.Description, 
                 goal.DueDate, 
                 goal.ImageURL,
                 goal.TagId);
-
-            if(!edited)
-            {
-                return BadRequest();
-            }
 
             TempData["message"] = "Goal was edited successfully!";
             return this.RedirectToAction("All");
@@ -204,18 +196,19 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Finish(int id)
         {
-            var goal = this.goals.Info(id);
-            if (goal == null || this.goals.IsFinished(id))
+            if (!this.goals.Exists(id) || this.goals.IsFinished(id))
             {
                 return BadRequest();
             }
 
             var userId = this.User.Id();
-            if (goal.UserId != userId && !this.User.IsAdmin())
+            var goalUserId = this.goals.GetCreatorUserId(id);
+            if (goalUserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }
 
+            var goal = this.goals.Details(id);
             var goalModel = this.mapper.Map<GoalDetailsViewModel>(goal);
 
             return this.View(goalModel);
@@ -225,24 +218,19 @@ namespace SharedGoals.Controllers
         [Authorize]
         public IActionResult Finish(GoalDetailsViewModel goalModel)
         {
-            var goalData = this.goals.Info(goalModel.Id);
-            if (goalData == null || this.goals.IsFinished(goalModel.Id))
+            if (!this.goals.Exists(goalModel.Id) || this.goals.IsFinished(goalModel.Id))
             {
                 return BadRequest();
             }
 
             var userId = this.User.Id();
-            if (goalData.UserId != userId && !this.User.IsAdmin())
+            var goalUserId = this.goals.GetCreatorUserId(goalModel.Id);
+            if (goalUserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }
 
-            var finished = this.goals.Finish(goalModel.Id);
-
-            if(!finished)
-            {
-                return BadRequest();
-            }
+            this.goals.Finish(goalModel.Id);
 
             TempData["message"] = "Goal was finished successfully!";
             return this.RedirectToAction("All");

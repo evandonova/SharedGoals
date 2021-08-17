@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using SharedGoals.Data;
 using SharedGoals.Data.Models;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SharedGoals.Areas.Identity.Pages.Account
 {
-    using static DataConstants;
+    using static DataConstants.User;
 
     [AllowAnonymous]
     public class RegisterModel : PageModel
@@ -39,12 +39,12 @@ namespace SharedGoals.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "First Name")]
-            [StringLength(UserFirstNameMaxLenght, MinimumLength = UserFirstNameMinLenght)]
+            [StringLength(FirstNameMaxLenght, MinimumLength = FirstNameMinLenght)]
             public string FirstName { get; set; }
 
             [Required]
             [Display(Name = "Last Name")]
-            [StringLength(UserLastNameMaxLenght, MinimumLength = UserLastNameMinLenght)]
+            [StringLength(LastNameMaxLenght, MinimumLength = LastNameMinLenght)]
             public string LastName { get; set; }
 
             [Required]

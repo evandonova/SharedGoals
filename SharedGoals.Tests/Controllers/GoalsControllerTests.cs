@@ -1,18 +1,14 @@
-﻿using MyTested.AspNetCore.Mvc;
+﻿using System;
+using System.Linq;
 using SharedGoals.Controllers;
 using SharedGoals.Data.Models;
 using SharedGoals.Models.Goals;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
-
-using static SharedGoals.Areas.Admin.AdminConstants;
+using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Controllers
 {
+    using static Areas.Admin.AdminConstants;
     public class GoalsControllerTests
     {
         [Fact]
@@ -27,8 +23,13 @@ namespace SharedGoals.Tests.Controllers
             .View();
 
         [Theory]
-        [InlineData(1, "Test Goal", "Testing", "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg", 2)]
-        public void DetailsShouldReturnView(
+        [InlineData(
+            1, 
+            "Test Goal", 
+            "Testing", 
+            "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg", 
+            2)]
+        public void GetDetailsShouldReturnView(
             int goalId,
             string name,
             string description,
@@ -129,12 +130,13 @@ namespace SharedGoals.Tests.Controllers
                 .RedirectToAction("All");
 
         [Theory]
-        [InlineData(1, "Goal Name", "Goal Description", 2)]
-        public void GetDeleteShouldReturnViewWhenUserAdministrator(
+        [InlineData(1, "Goal Name", "Goal Description", 2, "creatorId")]
+        public void GetDeleteShouldReturnViewWithModelWhenUserAdministrator(
             int id,
             string name,
             string description,
-            int tagId)
+            int tagId,
+            string creatorId)
             => MyController<GoalsController>
                 .Instance(instance => instance
                     .WithUser(u => u.InRole(AdministratorRoleName))
@@ -142,12 +144,18 @@ namespace SharedGoals.Tests.Controllers
                     {
                         Id = tagId
                     })))
+                    .WithData(d => d.WithSet<Creator>(set => set.Add(new Creator()
+                    {
+                        Id = creatorId,
+                        UserId = TestUser.Identifier
+                    })))
                     .WithData(d => d.WithSet<Goal>(set => set.Add(new Goal()
                     {
                         Id = id,
                         Name = name,
                         Description = description,
-                        TagId = tagId
+                        TagId = tagId,
+                        CreatorId = creatorId
                     }))))
                 .Calling(c => c.Delete(id))
                 .ShouldHave()
@@ -162,12 +170,13 @@ namespace SharedGoals.Tests.Controllers
                         m.Description == description));
 
         [Theory]
-        [InlineData(1, "Goal Name", "Goal Description", 2)]
+        [InlineData(1, "Goal Name", "Goal Description", 2, "creatorId")]
         public void PostDeleteShouldReturnRedirectWhenUserAdministrator(
             int id,
             string name,
             string description,
-            int tagId)
+            int tagId,
+            string creatorId)
             => MyController<GoalsController>
                 .Instance(instance => instance
                     .WithUser(u => u.InRole(AdministratorRoleName))
@@ -175,12 +184,18 @@ namespace SharedGoals.Tests.Controllers
                     {
                         Id = tagId
                     })))
+                    .WithData(d => d.WithSet<Creator>(set => set.Add(new Creator()
+                    {
+                        Id = creatorId,
+                        UserId = TestUser.Identifier
+                    })))
                     .WithData(d => d.WithSet<Goal>(set => set.Add(new Goal()
                     {
                         Id = id,
                         Name = name,
                         Description = description,
-                        TagId = tagId
+                        TagId = tagId,
+                        CreatorId = creatorId
                     }))))
                 .Calling(c => c.Delete(new GoalDetailsViewModel()
                 {
@@ -202,12 +217,13 @@ namespace SharedGoals.Tests.Controllers
                 .RedirectToAction("All");
 
         [Theory]
-        [InlineData(1, "Goal Name", "Goal Description", 2)]
-        public void GetEditShouldReturnViewWhenUserAdministrator(
+        [InlineData(1, "Goal Name", "Goal Description", 2, "creatorId")]
+        public void GetEditShouldReturnViewWithModelWhenUserAdministrator(
             int id,
             string name,
             string description,
-            int tagId)
+            int tagId,
+            string creatorId)
             => MyController<GoalsController>
                 .Instance(instance => instance
                     .WithUser(u => u.InRole(AdministratorRoleName))
@@ -215,12 +231,18 @@ namespace SharedGoals.Tests.Controllers
                     {
                         Id = tagId
                     })))
+                    .WithData(d => d.WithSet<Creator>(set => set.Add(new Creator()
+                    {
+                        Id = creatorId,
+                        UserId = TestUser.Identifier
+                    })))
                     .WithData(d => d.WithSet<Goal>(set => set.Add(new Goal()
                     {
                         Id = id,
                         Name = name,
                         Description = description,
-                        TagId = tagId
+                        TagId = tagId,
+                        CreatorId = creatorId
                     }))))
                 .Calling(c => c.Edit(id))
                 .ShouldHave()
@@ -234,14 +256,22 @@ namespace SharedGoals.Tests.Controllers
                         m.Description == description));
 
         [Theory]
-        [InlineData(1, "Goal Name", "Goal Description", "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg", 2, "New Goal Name")]
+        [InlineData(
+            1, 
+            "Goal Name", 
+            "Goal Description", 
+            "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg", 
+            2, 
+            "New Goal Name", 
+            "creatorId")]
         public void PostEditShouldReturnRedirectWhenUserAdministrator(
             int id,
             string name,
             string description,
             string imageUrl,
             int tagId,
-            string newName)
+            string newName,
+            string creatorId)
             => MyController<GoalsController>
                 .Instance(instance => instance
                     .WithUser(u => u.InRole(AdministratorRoleName))
@@ -249,13 +279,19 @@ namespace SharedGoals.Tests.Controllers
                     {
                         Id = tagId
                     })))
+                    .WithData(d => d.WithSet<Creator>(set => set.Add(new Creator()
+                    {
+                        Id = creatorId,
+                        UserId = TestUser.Identifier
+                    })))
                     .WithData(d => d.WithSet<Goal>(set => set.Add(new Goal()
                     {
                         Id = id,
                         Name = name,
                         Description = description,
                         ImageURL = imageUrl,
-                        TagId = tagId
+                        TagId = tagId,
+                        CreatorId = creatorId
                     }))))
                 .Calling(c => c.Edit(id, new GoalFormModel()
                 {
@@ -281,12 +317,13 @@ namespace SharedGoals.Tests.Controllers
                 .RedirectToAction("All");
 
         [Theory]
-        [InlineData(1, "Goal Name", "Goal Description", 2)]
-        public void GetFinishShouldReturnViewWhenUserAdministrator(
+        [InlineData(1, "Goal Name", "Goal Description", 2, "creatorId")]
+        public void GetFinishShouldReturnViewWithModelWhenUserAdministrator(
             int id,
             string name,
             string description,
-            int tagId)
+            int tagId,
+            string creatorId)
             => MyController<GoalsController>
                 .Instance(instance => instance
                     .WithUser(u => u.InRole(AdministratorRoleName))
@@ -294,12 +331,18 @@ namespace SharedGoals.Tests.Controllers
                     {
                         Id = tagId
                     })))
+                    .WithData(d => d.WithSet<Creator>(set => set.Add(new Creator()
+                    {
+                        Id = creatorId,
+                        UserId = TestUser.Identifier
+                    })))
                     .WithData(d => d.WithSet<Goal>(set => set.Add(new Goal()
                     {
                         Id = id,
                         Name = name,
                         Description = description,
-                        TagId = tagId
+                        TagId = tagId,
+                        CreatorId = creatorId
                     }))))
                 .Calling(c => c.Finish(id))
                 .ShouldHave()
@@ -315,12 +358,13 @@ namespace SharedGoals.Tests.Controllers
                         m.IsFinished == false));
 
         [Theory]
-        [InlineData(1, "Goal Name", "Goal Description", 2)]
+        [InlineData(1, "Goal Name", "Goal Description", 2, "creatorId")]
         public void PostFinishShouldReturnRedirectWhenUserAdministrator(
             int id,
             string name,
             string description,
-            int tagId)
+            int tagId, 
+            string creatorId)
             => MyController<GoalsController>
                 .Instance(instance => instance
                     .WithUser(u => u.InRole(AdministratorRoleName))
@@ -328,12 +372,18 @@ namespace SharedGoals.Tests.Controllers
                     {
                         Id = tagId
                     })))
+                    .WithData(d => d.WithSet<Creator>(set => set.Add(new Creator()
+                    {
+                        Id = creatorId,
+                        UserId = TestUser.Identifier
+                    })))
                     .WithData(d => d.WithSet<Goal>(set => set.Add(new Goal()
                     {
                         Id = id,
                         Name = name,
                         Description = description,
-                        TagId = tagId
+                        TagId = tagId,
+                        CreatorId = creatorId
                     }))))
                 .Calling(c => c.Finish(new GoalDetailsViewModel()
                 {

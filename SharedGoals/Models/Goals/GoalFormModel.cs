@@ -1,24 +1,23 @@
-﻿using SharedGoals.Attributes;
-using SharedGoals.Data;
-using SharedGoals.Services.Goals.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using SharedGoals.Data;
+using SharedGoals.Attributes;
+using SharedGoals.Services.Goals.Models;
 
 namespace SharedGoals.Models.Goals
 {
-    using static DataConstants;
-
+    using static DataConstants.Goal;
     public class GoalFormModel
     {
         private DateTime dueDate;
 
         [Required]
-        [StringLength(GoalNameMaxLength, MinimumLength = GoalNameMinLength)]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; }
 
         [Required]
-        [StringLength(GoalDescriptionMaxLength, MinimumLength = GoalDescriptionMinLength)]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
         public string Description { get; set; }
 
         [Display(Name = "Due To Date")]

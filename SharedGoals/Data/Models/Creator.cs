@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SharedGoals.Data.Models
 {
-    using static DataConstants;
+    using static DataConstants.Creator;
 
     public class Creator
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();
 
         [Required]
-        [MaxLength(CreatorNameMaxLength)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         [Required]

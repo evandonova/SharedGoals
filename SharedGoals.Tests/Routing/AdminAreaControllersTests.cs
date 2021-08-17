@@ -1,13 +1,13 @@
-﻿using MyTested.AspNetCore.Mvc;
-using SharedGoals.Areas.Admin.Controllers;
+﻿using SharedGoals.Areas.Admin.Controllers;
 using Xunit;
+using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Routing
 {
     public class AdminAreaControllersTests
     {
         [Fact]
-        public void HomeController_IndexRouteShouldBeMapped()
+        public void HomeController_GetIndexRouteShouldBeMapped()
             => MyRouting
                 .Configuration()
                 .ShouldMap("/Admin/")

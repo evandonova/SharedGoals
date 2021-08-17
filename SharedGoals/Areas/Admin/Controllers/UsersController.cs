@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using SharedGoals.Services.Users;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SharedGoals.Services.Users;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace SharedGoals.Areas.Admin.Controllers
 {
@@ -36,7 +36,7 @@ namespace SharedGoals.Areas.Admin.Controllers
                 this.cache.Set(usersCacheKey, users, cacheOptions);
             }
 
-            TempData["adminUserName"] = this.User.Identity.Name;
+            TempData[TempDataAdminUsernameKey] = this.User.Identity.Name;
             return View(users);
         }
     }

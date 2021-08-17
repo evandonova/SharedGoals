@@ -1,16 +1,14 @@
-﻿using MyTested.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
 using SharedGoals.Areas.Admin.Controllers;
-using SharedGoals.Services.Goals.Models;
 using SharedGoals.Services.GoalWorks;
 using SharedGoals.Services.Users;
-using System;
-using System.Collections.Generic;
 using Xunit;
-
-using static SharedGoals.Areas.Admin.AdminConstants;
+using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Controllers
 {
+    using static Areas.Admin.AdminConstants;
     public class AdminAreaControllersTests
     {
         [Fact]
@@ -22,7 +20,7 @@ namespace SharedGoals.Tests.Controllers
                .View();
 
         [Fact]
-        public void UsersController_GetAllShouldReturnCorrectViewWithModelType()
+        public void UsersController_GetAllShouldReturnCorrectViewWithModel()
             => MyController<UsersController>
                 .Instance()
                 .Calling(c => c.All())
@@ -39,7 +37,7 @@ namespace SharedGoals.Tests.Controllers
                 .View(result => result.WithModelOfType<IEnumerable<UserServiceModel>>());
 
         [Fact]
-        public void GoalWorksController_GetAllShouldReturnCorrectViewWithModelType()
+        public void GoalWorksController_GetAllShouldReturnCorrectViewWithModel()
             => MyController<GoalWorksController>
                 .Instance()
                 .Calling(c => c.All())

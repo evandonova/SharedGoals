@@ -1,13 +1,12 @@
-﻿using AutoMapper;
-using AutoMapper.Configuration;
-using AutoMapper.QueryableExtensions;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using SharedGoals.Data;
 using SharedGoals.Data.Models;
 using SharedGoals.Services.Goals.Models;
 using SharedGoals.Services.GoalWorks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace SharedGoals.Services.Goals
 {
@@ -59,13 +58,6 @@ namespace SharedGoals.Services.Goals
             this.dbContext.SaveChanges();
         }
 
-        public GoalExtendedServiceModel Info(int id)
-            => this.dbContext
-                .Goals
-                .Where(g => g.Id == id)
-                .ProjectTo<GoalExtendedServiceModel>(this.mapper.ConfigurationProvider)
-                .FirstOrDefault();
-
         public GoalDetailsServiceModel Details(int id)
         {
             var goal = this.dbContext
@@ -87,32 +79,20 @@ namespace SharedGoals.Services.Goals
             return goal;
         }
 
-        public bool Finish(int id)
+        public void Finish(int id)
         {
             var goal = this.dbContext.Goals.Find(id);
-
-            if (goal == null || goal.IsFinished)
-            {
-                return false;
-            }
-
             goal.IsFinished = true;
             this.dbContext.SaveChanges();
-            return true;
         }
 
-        public bool Edit(int id, string name,
+        public void Edit(int id, string name,
             string description,
             DateTime dueDate,
             string imageURL,
             int tagId)
         {
             var goal = this.dbContext.Goals.Find(id);
-
-            if (goal == null)
-            {
-                return false;
-            }
 
             goal.Name = name;
             goal.Description = description;
@@ -121,23 +101,14 @@ namespace SharedGoals.Services.Goals
             goal.TagId = tagId;
 
             this.dbContext.SaveChanges();
-
-            return true;
         }
 
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             var goal = this.dbContext.Goals.Find(id);
 
-            if (goal == null)
-            {
-                return false;
-            }
-
             this.dbContext.Remove(goal);
             this.dbContext.SaveChanges();
-
-            return true;
         }
 
         public IEnumerable<GoalTagServiceModel> Tags()
@@ -162,6 +133,13 @@ namespace SharedGoals.Services.Goals
         public bool DateIsValid(DateTime dueDate)
             => dueDate > DateTime.UtcNow &&
                 dueDate.Year < 2100;
+
+        public string GetCreatorUserId(int goalId)
+        {
+            var creatorId = GetCreatorId(goalId);
+            var creator = this.dbContext.Creators.Find(creatorId);
+            return creator.UserId;
+        }
 
         public string GetCreatorId(int goalId)
              => this.dbContext.Goals.Find(goalId).CreatorId;

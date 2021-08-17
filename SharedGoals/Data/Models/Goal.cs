@@ -4,18 +4,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SharedGoals.Data.Models
 {
-    using static DataConstants;
+    using static DataConstants.Goal;
 
     public class Goal
     {
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(GoalNameMaxLength)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(GoalDescriptionMaxLength)]
+        [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
 
         public DateTime CreatedOn { get; init; }

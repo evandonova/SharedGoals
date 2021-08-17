@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SharedGoals.Data.Models
 {
-    using static DataConstants;
+    using static DataConstants.GoalWork;
 
     public class GoalWork
     {
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(WorkDescriptionMaxLength)]
+        [MaxLength(DescriptionMaxLength)]
         public string Description { get; init; }
 
         [Required]

@@ -1,10 +1,9 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using System.Linq;
+using System.Collections.Generic;
 using SharedGoals.Data;
 using SharedGoals.Data.Models;
-using SharedGoals.Services.Goals.Models;
-using System.Collections.Generic;
-using System.Linq;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace SharedGoals.Services.GoalWorks
 {

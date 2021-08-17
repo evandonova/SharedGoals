@@ -1,3 +1,10 @@
+using SharedGoals.Data;
+using SharedGoals.Data.Models;
+using SharedGoals.Infrastructure;
+using SharedGoals.Services.Creators;
+using SharedGoals.Services.Goals;
+using SharedGoals.Services.GoalWorks;
+using SharedGoals.Services.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -6,13 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SharedGoals.Data;
-using SharedGoals.Data.Models;
-using SharedGoals.Infrastructure;
-using SharedGoals.Services.Creators;
-using SharedGoals.Services.Goals;
-using SharedGoals.Services.GoalWorks;
-using SharedGoals.Services.Users;
 
 namespace SharedGoals
 {

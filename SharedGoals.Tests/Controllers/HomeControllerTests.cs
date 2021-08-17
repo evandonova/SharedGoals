@@ -1,15 +1,14 @@
-﻿using MyTested.AspNetCore.Mvc;
-using SharedGoals.Controllers;
+﻿using SharedGoals.Controllers;
 using Xunit;
-
-using static SharedGoals.Areas.Admin.AdminConstants;
+using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Controllers
 {
+    using static Areas.Admin.AdminConstants;
     public class HomeControllerTests
     {
         [Fact]
-        public void IndexShouldReturnCorrectView()
+        public void GetIndexShouldReturnCorrectView()
         => MyController<HomeController>
                 .Instance()
                 .Calling(c => c.Index())
@@ -17,7 +16,7 @@ namespace SharedGoals.Tests.Controllers
                 .View();
 
         [Fact]
-        public void IndexShouldRedirectReturnCorrectViewWhenUserIsAdmin()
+        public void GetIndexShouldRedirectReturnCorrectViewWhenUserIsAdmin()
         => MyController<HomeController>
                 .Instance(controller => controller
                     .WithUser(u => u.InRole(AdministratorRoleName)))
@@ -26,7 +25,7 @@ namespace SharedGoals.Tests.Controllers
                 .RedirectToAction("Index", "Home", new { area = "Admin" });
 
         [Fact]
-        public void ErrorShouldReturnView()
+        public void GetErrorShouldReturnView()
             => MyController<HomeController>
                 .Instance()
                 .Calling(c => c.Error())

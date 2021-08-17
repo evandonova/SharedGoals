@@ -1,20 +1,20 @@
-﻿using MyTested.AspNetCore.Mvc;
-using SharedGoals.Controllers;
+﻿using SharedGoals.Controllers;
 using Xunit;
+using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Routing
 {
     public class HomeControllerTests
     {
         [Fact]
-        public void IndexRouteShouldBeMapped()
+        public void GetIndexRouteShouldBeMapped()
             => MyRouting
                 .Configuration()
                 .ShouldMap("/")
                 .To<HomeController>(c => c.Index());
 
         [Fact]
-        public void ErrorRouteShouldBeMapped()
+        public void GetErrorRouteShouldBeMapped()
             => MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Error")

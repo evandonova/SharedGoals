@@ -1,6 +1,5 @@
-﻿using SharedGoals.Models.Goals;
+﻿using System.Collections.Generic;
 using SharedGoals.Services.GoalWorks;
-using System.Collections.Generic;
 
 namespace SharedGoals.Services.Goals.Models
 {

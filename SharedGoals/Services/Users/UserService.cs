@@ -1,9 +1,8 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using SharedGoals.Data;
-using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
+using SharedGoals.Data;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace SharedGoals.Services.Users
 {

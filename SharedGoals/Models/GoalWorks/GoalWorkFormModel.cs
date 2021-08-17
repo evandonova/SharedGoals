@@ -1,15 +1,15 @@
-﻿using SharedGoals.Data;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using SharedGoals.Data;
 
 namespace SharedGoals.Models.GoalWorks
 {
-    using static DataConstants;
+    using static DataConstants.GoalWork;
     public class GoalWorkFormModel
     {
         public int Id { get; init; }
 
         [Required]
-        [StringLength(WorkDescriptionMaxLength, MinimumLength = WorkDescriptionMinLength)]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
         public string Description { get; init; }
     }
 }

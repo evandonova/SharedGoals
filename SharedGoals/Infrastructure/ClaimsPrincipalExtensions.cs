@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
 
-using static SharedGoals.Areas.Admin.AdminConstants;
-
 namespace SharedGoals.Infrastructure
 {
+    using static Areas.Admin.AdminConstants;
+
     public static class ClaimsPrincipalExtensions
     {
         public static string Id(this ClaimsPrincipal user)

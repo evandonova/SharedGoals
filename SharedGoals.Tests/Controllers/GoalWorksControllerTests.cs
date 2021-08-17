@@ -1,23 +1,19 @@
-﻿using MyTested.AspNetCore.Mvc;
+﻿using System.Linq;
+using System.Collections.Generic;
 using SharedGoals.Controllers;
 using SharedGoals.Data.Models;
 using SharedGoals.Models.GoalWorks;
 using SharedGoals.Services.GoalWorks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
-
-using static SharedGoals.Areas.Admin.AdminConstants;
+using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Controllers
 {
+    using static Areas.Admin.AdminConstants;
     public class GoalWorksControllerTests
     {
         [Fact]
-        public void DetailsShouldReturnView()
+        public void GetMineShouldReturnViewWithModel()
             => MyController<GoalWorksController>
                 .Instance(instance => instance
                     .WithUser())
@@ -33,7 +29,7 @@ namespace SharedGoals.Tests.Controllers
 
         [Theory]
         [InlineData(1)]
-        public void GetWorkShouldReturnViewWhenUserAdministrator(int goalId)
+        public void GetWorkShouldReturnViewWithModelWhenUserAdministrator(int goalId)
             => MyController<GoalWorksController>
                 .Instance(instance => instance
                     .WithUser(u => u.InRole(AdministratorRoleName))

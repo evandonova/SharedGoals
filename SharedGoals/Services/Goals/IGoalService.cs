@@ -20,20 +20,18 @@ namespace SharedGoals.Services.Goals
             int tagId, 
             string creatorId);
 
-        GoalExtendedServiceModel Info(int id);
-
         GoalDetailsServiceModel Details(int id);
 
-        bool Finish(int id);
+        void Finish(int id);
 
-        bool Edit(int id,
+        void Edit(int id,
             string name,
             string description,
             DateTime dueDate,
             string imageURL,
             int tagId);
 
-        bool Delete(int id);
+        void Delete(int id);
 
         bool Exists(int goalId);
 
@@ -42,6 +40,8 @@ namespace SharedGoals.Services.Goals
         bool TagExists(int tagId);
 
         bool DateIsValid(DateTime dueDate);
+
+        string GetCreatorUserId(int goalId);
 
         string GetCreatorId(int goalId);
 

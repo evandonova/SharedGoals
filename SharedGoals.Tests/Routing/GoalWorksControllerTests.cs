@@ -1,12 +1,6 @@
-﻿using MyTested.AspNetCore.Mvc;
-using SharedGoals.Controllers;
-using SharedGoals.Models.Goals;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SharedGoals.Controllers;
 using Xunit;
+using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Routing
 {

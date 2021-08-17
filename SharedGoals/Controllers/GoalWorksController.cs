@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SharedGoals.Infrastructure;
+﻿using SharedGoals.Infrastructure;
 using SharedGoals.Models.GoalWorks;
 using SharedGoals.Services.Creators;
 using SharedGoals.Services.Goals;
 using SharedGoals.Services.GoalWorks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SharedGoals.Controllers
 {
@@ -42,7 +42,7 @@ namespace SharedGoals.Controllers
                 return BadRequest();
             }
 
-            if (this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
+            if (this.creators.IsCreator(this.User.Id()))
             {
                 return Unauthorized();
             }
@@ -59,7 +59,7 @@ namespace SharedGoals.Controllers
                 return BadRequest();
             }
 
-            if (this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
+            if (this.creators.IsCreator(this.User.Id()))
             {
                 return Unauthorized();
             }

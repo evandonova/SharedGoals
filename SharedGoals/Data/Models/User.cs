@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace SharedGoals.Data.Models
 {
-    using static DataConstants;
+    using static DataConstants.User;
     public class User : IdentityUser
     {
         [Required]
-        [MaxLength(UserFirstNameMaxLenght)]
+        [MaxLength(FirstNameMaxLenght)]
         public string FirstName { get; init; }
 
         [Required]
-        [MaxLength(UserLastNameMaxLenght)]
+        [MaxLength(LastNameMaxLenght)]
         public string LastName { get; init; }
     }
 }

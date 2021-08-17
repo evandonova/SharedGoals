@@ -1,7 +1,7 @@
-﻿using MyTested.AspNetCore.Mvc;
-using SharedGoals.Controllers;
+﻿using SharedGoals.Controllers;
 using SharedGoals.Models.Creators;
 using Xunit;
+using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Routing
 {

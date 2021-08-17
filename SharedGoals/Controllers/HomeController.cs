@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SharedGoals.Models;
-using System.Diagnostics;
-
-using static SharedGoals.Areas.Admin.AdminConstants;
 
 namespace SharedGoals.Controllers
 {
+    using static Areas.Admin.AdminConstants;
+
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            if(this.User.IsInRole(AdministratorRoleName))
+            if (this.User.IsInRole(AdministratorRoleName))
             {
                 return RedirectToAction("Index", "Home", new { area = "Admin" });
             }

@@ -16,7 +16,7 @@ namespace SharedGoals.Services.Creators
                 .Creators
                 .Any(d => d.UserId == userId);
 
-        public bool IsCreatorByName(string name)
+        public bool CreatorNameExists(string name)
             => this.dbContext
                 .Creators
                 .Any(d => d.Name == name);
