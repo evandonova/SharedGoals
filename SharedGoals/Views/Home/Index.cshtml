@@ -5,6 +5,13 @@
 @inject ICreatorService creators
 @inject IUserService users
 
+@if (TempData["message"] != null && this.User.Identity.IsAuthenticated)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["message"]
+    </div>
+}
+
 <div class="jumbotron text-center">
     <h2 class="display-4">
         Hello,

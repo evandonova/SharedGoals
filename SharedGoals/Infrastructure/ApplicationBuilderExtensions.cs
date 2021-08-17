@@ -203,18 +203,18 @@ namespace SharedGoals.Infrastructure
                             Description = "Make our app accept creadit card payments.",
                             ImageURL = "https://vervetimes.com/wp-content/uploads/2021/06/credit-card.jpeg",
                             CreatedOn = DateTime.UtcNow,
-                            DueDate = DateTime.UtcNow.AddMonths(3),
+                            DueDate = DateTime.UtcNow.Date.Add(new TimeSpan(00, 00, 0)).AddMonths(3),
                             CreatorId = creatorId,
                             TagId = 1,
-                            IsFinished = false
+                            IsFinished = true
                         },
                         new Goal()
                         {
                             Name = "Improve team organizational skills",
                             Description = "Our team needs to organize tasks and work better. It needs some training",
                             ImageURL = "https://milemir.com/wp-content/uploads/2020/11/team.jpg",
-                            CreatedOn = DateTime.UtcNow.AddDays(20),
-                            DueDate = DateTime.UtcNow.AddDays(20),
+                            CreatedOn = DateTime.UtcNow.AddDays(-20),
+                            DueDate = DateTime.UtcNow.Date.Add(new TimeSpan(00, 00, 0)).AddMonths(3),
                             CreatorId = creatorId,
                             TagId = 2,
                             IsFinished = false

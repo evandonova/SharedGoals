@@ -44,7 +44,7 @@
             }
         }
         <p class="card-text mb-0"><b>@Model.Tag</b> Goal By <b>@Model.Creator</b></p>
-        <p class="card-text mt-2">Finished: @Model.IsFinished</p>
+        <p class="card-text mt-2">Finished: @(Model.IsFinished == true ? "yes" : "no")</p>
     </div>
     <div class="card-footer text-muted">
         Created on: @Model.CreatedOn | Due to: @Model.DueDate

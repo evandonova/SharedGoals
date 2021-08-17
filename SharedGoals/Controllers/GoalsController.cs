@@ -205,7 +205,7 @@ namespace SharedGoals.Controllers
         public IActionResult Finish(int id)
         {
             var goal = this.goals.Info(id);
-            if (goal == null)
+            if (goal == null || this.goals.IsFinished(id))
             {
                 return BadRequest();
             }
@@ -226,7 +226,7 @@ namespace SharedGoals.Controllers
         public IActionResult Finish(GoalDetailsViewModel goalModel)
         {
             var goalData = this.goals.Info(goalModel.Id);
-            if (goalData == null)
+            if (goalData == null || this.goals.IsFinished(goalModel.Id))
             {
                 return BadRequest();
             }
