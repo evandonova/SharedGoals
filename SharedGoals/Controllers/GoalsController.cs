@@ -23,17 +23,26 @@ namespace SharedGoals.Controllers
 
         public IActionResult All([FromQuery] AllGoalsQueryModel query)
         {
-            var queryResult = this.goals.All(query.GoalsPerPage, query.CurrentPage, query.TotalGoals);
+            var queryResult = this.goals.All(query.GoalsPerPage, query.CurrentPage);
+
+            if(queryResult.CurrentPage == 0)
+            {
+                return RedirectToAction("All");
+            }
 
             query.TotalGoals = queryResult.TotalGoals;
             query.Goals = queryResult.Goals;
-
             return View(query);
         }
 
         [Authorize]
         public IActionResult Details(int id)
         {
+            if(!this.goals.Exists(id))
+            {
+                return BadRequest();
+            }
+
             var goal = this.goals.Details(id);
 
             return View(goal);

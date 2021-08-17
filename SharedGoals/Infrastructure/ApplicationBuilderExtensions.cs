@@ -222,7 +222,7 @@ namespace SharedGoals.Infrastructure
                         {
                             Name = "Improve team organizational skills",
                             Description = "Our team needs to organize tasks and work better. It needs some training",
-                            ImageURL = "https://milemir.com/wp-content/uploads/2020/11/team.jpg",
+                            ImageURL = "https://i.pinimg.com/originals/d6/0f/63/d60f63f6dd27989ce8756c37f774d309.gif",
                             CreatedOn = DateTime.UtcNow.AddDays(-20),
                             DueDate = DateTime.UtcNow.Date.Add(new TimeSpan(00, 00, 0)).AddMonths(3),
                             CreatorId = adminCreatorId,

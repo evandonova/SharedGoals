@@ -15,15 +15,23 @@ namespace SharedGoals.Services.Goals
         private readonly SharedGoalsDbContext dbContext;
         private readonly IMapper mapper;
 
+        private string defaultImageUrl = "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg";
+
         public GoalService(SharedGoalsDbContext dbContext, IMapper mapper)
         {
             this.dbContext = dbContext;
             this.mapper = mapper;
         }
 
-        public GoalQueryServiceModel All(int goalsPerPage, int currentPage, int totalGoals)
+        public GoalQueryServiceModel All(int goalsPerPage, int currentPage)
         {
             CheckGoals();
+            var totalGoalCount = this.dbContext.Goals.Count();
+            var pages = Math.Ceiling((double)totalGoalCount / goalsPerPage);
+            if(currentPage < 1 || currentPage > pages)
+            {
+                return new GoalQueryServiceModel();
+            }
             var goals = this.dbContext.Goals
                .Skip((currentPage - 1) * goalsPerPage)
                .Take(goalsPerPage)
@@ -34,7 +42,7 @@ namespace SharedGoals.Services.Goals
             {
                 GoalsPerPage = goalsPerPage,
                 CurrentPage = currentPage,
-                TotalGoals = this.dbContext.Goals.Count(),
+                TotalGoals = totalGoalCount,
                 Goals = goals
             };
         }
@@ -49,7 +57,9 @@ namespace SharedGoals.Services.Goals
                 CreatedOn = DateTime.UtcNow,
                 DueDate = dueDate,
                 IsFinished = false,
-                ImageURL = imageURL,
+                ImageURL = imageURL == null 
+                    ? defaultImageUrl
+                    : imageURL,
                 TagId = tagId,
                 CreatorId = creatorId
             };
@@ -62,8 +72,9 @@ namespace SharedGoals.Services.Goals
         {
             var goal = this.dbContext
                   .Goals
+                  .Where(g => g.Id == id)
                   .ProjectTo<GoalDetailsServiceModel>(this.mapper.ConfigurationProvider)
-                  .FirstOrDefault(g => g.Id == id);
+                  .FirstOrDefault();
 
             var goalWorksModel =
                 this.dbContext
@@ -97,7 +108,9 @@ namespace SharedGoals.Services.Goals
             goal.Name = name;
             goal.Description = description;
             goal.DueDate = dueDate;
-            goal.ImageURL = imageURL;
+            goal.ImageURL = imageURL == null
+                    ? defaultImageUrl
+                    : imageURL;
             goal.TagId = tagId;
 
             this.dbContext.SaveChanges();

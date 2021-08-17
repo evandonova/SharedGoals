@@ -9,8 +9,7 @@ namespace SharedGoals.Services.Goals
     {
         GoalQueryServiceModel All(
             int goalsPerPage,
-            int currentPage,
-            int totalGoals);
+            int currentPage);
 
         void Create(
             string name, 
