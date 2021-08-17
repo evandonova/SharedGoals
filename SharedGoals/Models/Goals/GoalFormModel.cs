@@ -11,7 +11,6 @@ namespace SharedGoals.Models.Goals
 
     public class GoalFormModel
     {
-        private static string dateTimeNow = DateTime.UtcNow.ToString();
         private DateTime dueDate;
 
         [Required]
