@@ -15,8 +15,6 @@ namespace SharedGoals.Services.Goals
         private readonly SharedGoalsDbContext dbContext;
         private readonly IMapper mapper;
 
-        private string defaultImageUrl = "https://mk0gostrengths4h9kdq.kinstacdn.com/wp-content/uploads/2012/03/Goal-Setting.jpg";
-
         public GoalService(SharedGoalsDbContext dbContext, IMapper mapper)
         {
             this.dbContext = dbContext;
@@ -57,9 +55,7 @@ namespace SharedGoals.Services.Goals
                 CreatedOn = DateTime.UtcNow,
                 DueDate = dueDate,
                 IsFinished = false,
-                ImageURL = imageURL == null 
-                    ? defaultImageUrl
-                    : imageURL,
+                ImageURL = imageURL,
                 TagId = tagId,
                 CreatorId = creatorId
             };
@@ -108,9 +104,7 @@ namespace SharedGoals.Services.Goals
             goal.Name = name;
             goal.Description = description;
             goal.DueDate = dueDate;
-            goal.ImageURL = imageURL == null
-                    ? defaultImageUrl
-                    : imageURL;
+            goal.ImageURL = imageURL;
             goal.TagId = tagId;
 
             this.dbContext.SaveChanges();

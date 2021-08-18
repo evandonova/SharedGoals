@@ -12,15 +12,35 @@ namespace SharedGoals.Tests.Controllers
     public class GoalsControllerTests
     {
         [Fact]
-        public void GetAllShouldReturnView()
+        public void GetAllShouldReturnViewWhenAnyGoals()
             => MyController<GoalsController>
-            .Instance()
-            .Calling(c => c.All(new AllGoalsQueryModel()))
+            .Instance(instance => instance
+                  .WithData(d => d.WithSet<Goal>(set => set.Add(new Goal()
+                  {
+                      Id = 1,
+                      Name = "Goal",
+                      Description = "The best goal"
+                  }))))
+            .Calling(c => c.All(new AllGoalsQueryModel() 
+            {  
+                CurrentPage = 1
+            }))
             .ShouldHave()
             .ValidModelState()
             .AndAlso()
             .ShouldReturn()
             .View();
+
+        [Fact]
+        public void GetAllShouldReturnRedirectWhenNotExistingCurrentPage()
+            => MyController<GoalsController>
+            .Instance()
+            .Calling(c => c.All(new AllGoalsQueryModel()
+            {
+                CurrentPage = 0
+            }))
+            .ShouldReturn()
+            .RedirectToAction("All");
 
         [Theory]
         [InlineData(

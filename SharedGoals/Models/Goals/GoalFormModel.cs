@@ -39,6 +39,7 @@ namespace SharedGoals.Models.Goals
             }
         }
 
+        [Required]
         public string ImageURL { get; set; }
 
         [Display(Name = "Tag")]
