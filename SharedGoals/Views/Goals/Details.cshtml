@@ -4,6 +4,8 @@
     ViewBag.Title = "Goal Details";
 
     var userId = this.User.Id();
+    var canSeeButtons = this.User.IsAdmin() || (this.goals.GetCreatorId(@Model.Id) != null &&
+   this.goals.GetCreatorId(@Model.Id) == this.creators.IdByUser(userId));
 }
 
 @inject ICreatorService creators
@@ -12,9 +14,7 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-@if ((this.goals.GetCreatorId(@Model.Id) != null &&
-   this.goals.GetCreatorId(@Model.Id) == this.creators.IdByUser(userId))
-   || this.User.IsAdmin())
+@if (canSeeButtons)
 {
     <p>
         <a asp-controller="Goals" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Edit Goal</a>
@@ -32,13 +32,11 @@
         <p class="card-text">@Model.Description</p>
         @if (!Model.IsFinished)
         {
-            @if (!this.creators.IsCreator(userId) || this.User.IsAdmin())
+            @if (this.User.IsAdmin() || !this.creators.IsCreator(userId))
             {
                 <a asp-controller="GoalWorks" asp-action="Work" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Work on Goal</a>
             }
-            @if ((this.goals.GetCreatorId(@Model.Id) != null &&
-             this.goals.GetCreatorId(@Model.Id) == this.creators.IdByUser(userId))
-             || this.User.IsAdmin())
+            @if (canSeeButtons)
             {
                 <a asp-controller="Goals" asp-action="Finish" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Finish Goal</a>
             }

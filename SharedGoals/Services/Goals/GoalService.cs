@@ -93,11 +93,8 @@ namespace SharedGoals.Services.Goals
             this.dbContext.SaveChanges();
         }
 
-        public void Edit(int id, string name,
-            string description,
-            DateTime dueDate,
-            string imageURL,
-            int tagId)
+        public void Edit(int id, string name, string description, DateTime dueDate,
+            string imageURL, int tagId)
         {
             var goal = this.dbContext.Goals.Find(id);
 

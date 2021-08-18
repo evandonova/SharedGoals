@@ -12,12 +12,12 @@ namespace SharedGoals.Infrastructure
         public MappingProfile()
         {
             this.CreateMap<Goal, GoalServiceModel>()
-                .ForMember(g => g.Creator, cfg => cfg.MapFrom(g => g.Creator.Name == null ? "Admin" : g.Creator.Name))
+                .ForMember(g => g.Creator, cfg => cfg.MapFrom(g => g.Creator.Name))
                 .ForMember(g => g.Tag, cfg => cfg.MapFrom(g => g.Tag.Name))
                 .ForMember(g => g.DueDate, cfg => cfg.MapFrom(g => g.DueDate.ToString("dd/MM/yyyy")));
             this.CreateMap<Goal, GoalDetailsServiceModel>()
                 .ForMember(g => g.Tag, cfg => cfg.MapFrom(g => g.Tag.Name))
-                .ForMember(g => g.Creator, cfg => cfg.MapFrom(g => g.Creator.Name == null ? "Admin" : g.Creator.Name))
+                .ForMember(g => g.Creator, cfg => cfg.MapFrom(g => g.Creator.Name))
                 .ForMember(g => g.DueDate, cfg => cfg.MapFrom(g => g.DueDate.ToString("dd/MM/yyyy HH:mm")))
                 .ForMember(g => g.CreatedOn, cfg => cfg.MapFrom(g => g.CreatedOn.ToString("dd/MM/yyyy HH:mm")));
 

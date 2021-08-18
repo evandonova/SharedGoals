@@ -259,7 +259,8 @@ namespace SharedGoals.Infrastructure
                        new GoalWork()
                        {
                            Description = "Searched for information on the topic",
-                           GoalId = goalId, UserId = userId
+                           GoalId = goalId, 
+                           UserId = userId
                        },
                        new GoalWork()
                        {
