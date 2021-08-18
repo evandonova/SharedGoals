@@ -5,12 +5,17 @@
 ## :pencil2: Overview
 
 **Shared Goals** is a website for goal tracking. Goals can be created, read, edited, deleted and finished. Also, users can work on created goals, e.g. to create a goal work. 
+* Anyone has access to see all goals and their details.
+* Goals may be edited and deleted all the time only by their creator or by the administrator.
+* When a goal is deleted, its goal works are deleted, too.
+* No one can work on a finished goal.
+* All goal works and all users in the administration part are reloaded after 5 minutes because of cache.
 
 ## :performing_arts: User Types
 
 **Administrator** - created from site owner – username: “admin@mail.com”, password: “pass123#”
-* Create, read, edit, delete and finish all goals on the site.
-* Work on all goals and see their own goal works.
+* Create, read, edit, delete and finish all goals on the site (the administrator is a creator).
+* Work on all unfinished goals and see their own goal works.
 * See all goal works.
 * See all users.
 
@@ -42,8 +47,13 @@
 * AutoMapper
 * In-Memmory Cache
 * TempData messages
+* jQuery
 * XUnit
 * MyTested.AspNetCore.Mvc
+
+## :clipboard: Test Coverage
+![Screenshot_72](https://user-images.githubusercontent.com/69080997/129886120-76b41fb4-9fed-4937-a96e-7b2825a95b72.png)
+
 
 ## :wrench: DB Diagram
 ![image](https://user-images.githubusercontent.com/69080997/129544513-edf338bf-8b67-4747-b76a-33d359a3b486.png)
