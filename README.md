@@ -10,6 +10,7 @@
 * When a goal is deleted, its goal works are deleted, too.
 * No one can work on a finished goal.
 * All goal works and all users in the administration part are reloaded after 5 minutes because of cache.
+* Users can become creators, but creators cannot become users again.
 
 ## :performing_arts: User Types
 
@@ -28,6 +29,7 @@
 **User** - logged-in user, who is not a creator
 * Read all goals on the site.
 * Work on all goals and see their own goal works.
+* Can become a creator.
 
 **Guest User** - not logged-in user
 * Read all goals on the site.
