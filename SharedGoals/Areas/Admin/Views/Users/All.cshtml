@@ -47,13 +47,13 @@
                     @Html.DisplayFor(modelItem => user.LastName)
                 </td>
                 <td>
-                    @if (this.creators.IsCreator(user.Id))
-                    {
-                        <text>yes</text>
-                    }
-                    else if (user.Username == TempData[TempDataAdminUsernameKey].ToString())
+                    @if (user.Username == TempData[TempDataAdminUsernameKey].ToString())
                     {
                         <text>admin</text>
+                    }
+                    else if (this.creators.IsCreator(user.Id))
+                    {
+                        <text>yes</text>
                     }
                     else
                     {
