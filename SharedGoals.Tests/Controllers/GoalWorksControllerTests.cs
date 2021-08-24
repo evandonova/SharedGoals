@@ -18,10 +18,6 @@ namespace SharedGoals.Tests.Controllers
                 .Instance(instance => instance
                     .WithUser())
             .Calling(c => c.Mine())
-            .ShouldHave()
-            .ActionAttributes(atributes => atributes
-                .RestrictingForAuthorizedRequests())
-            .AndAlso()
             .ShouldReturn()
             .View(result => result
                 .WithModelOfType<IEnumerable<GoalWorkServiceModel>>());
@@ -38,10 +34,6 @@ namespace SharedGoals.Tests.Controllers
                         Id = goalId
                     }))))
                 .Calling(c => c.Work(goalId))
-                .ShouldHave()
-                .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests())
-                .AndAlso()
                 .ShouldReturn()
                 .View(result => result.WithModelOfType<GoalWorkFormModel>());
 
@@ -66,7 +58,6 @@ namespace SharedGoals.Tests.Controllers
                 }))
                 .ShouldHave()
                 .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests()
                     .RestrictingForHttpMethod(HttpMethod.Post))
                 .Data(data => data
                     .WithSet<GoalWork>(goalWorks => goalWorks

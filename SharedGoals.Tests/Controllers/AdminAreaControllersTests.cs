@@ -5,6 +5,7 @@ using SharedGoals.Services.GoalWorks;
 using SharedGoals.Services.Users;
 using Xunit;
 using MyTested.AspNetCore.Mvc;
+using SharedGoals.Services.Comments;
 
 namespace SharedGoals.Tests.Controllers
 {
@@ -50,5 +51,13 @@ namespace SharedGoals.Tests.Controllers
                 .AndAlso()
                 .ShouldReturn()
                 .View(result => result.WithModelOfType<IEnumerable<GoalWorkServiceModel>>());
+
+        [Fact]
+        public void CommentsController_GetAllShouldReturnCorrectViewWithModel()
+            => MyController<CommentsController>
+                .Instance()
+                .Calling(c => c.All())
+                .ShouldReturn()
+                .View(result => result.WithModelOfType<IEnumerable<CommentServiceModel>>());
     }
 }

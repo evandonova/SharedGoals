@@ -14,10 +14,6 @@ namespace SharedGoals.Tests.Controllers
             => MyController<CreatorsController>
                 .Instance(controller => controller.WithUser())
                 .Calling(c => c.Become())
-                .ShouldHave()
-                .ActionAttributes(attributes => attributes
-                    .RestrictingForAuthorizedRequests())
-                .AndAlso()
                 .ShouldReturn()
                 .View();
 
@@ -33,9 +29,6 @@ namespace SharedGoals.Tests.Controllers
                     Name = creatorName
                 }))
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes
-                    .RestrictingForHttpMethod(HttpMethod.Post)
-                    .RestrictingForAuthorizedRequests())
                 .ValidModelState()
                 .Data(data => data
                     .WithSet<Creator>(creators => creators

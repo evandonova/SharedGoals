@@ -72,10 +72,6 @@ namespace SharedGoals.Tests.Controllers
                         TagId = tagId
                     }))))
             .Calling(c => c.Details(goalId))
-            .ShouldHave()
-            .ActionAttributes(atributes => atributes
-                .RestrictingForAuthorizedRequests())
-            .AndAlso()
             .ShouldReturn()
             .View();
 
@@ -85,10 +81,6 @@ namespace SharedGoals.Tests.Controllers
                 .Instance(instance => instance
                     .WithUser(u => u.InRole(AdministratorRoleName)))
                 .Calling(c => c.Create())
-                .ShouldHave()
-                .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests())
-                .AndAlso()
                 .ShouldReturn()
                 .View(result => result.WithModelOfType<GoalFormModel>());
 
@@ -98,10 +90,6 @@ namespace SharedGoals.Tests.Controllers
                 .Instance(instance => instance
                     .WithUser())
                 .Calling(c => c.Create())
-                .ShouldHave()
-                .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests())
-                .AndAlso()
                 .ShouldReturn()
                 .RedirectToAction("Become", "Creators");
 
@@ -142,7 +130,6 @@ namespace SharedGoals.Tests.Controllers
                 }))
                 .ShouldHave()
                 .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests()
                     .RestrictingForHttpMethod(HttpMethod.Post))
                 .ValidModelState()
                 .Data(data => data
@@ -185,10 +172,6 @@ namespace SharedGoals.Tests.Controllers
                         CreatorId = creatorId
                     }))))
                 .Calling(c => c.Delete(id))
-                .ShouldHave()
-                .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests())
-                .AndAlso()
                 .ShouldReturn()
                 .View(result => result
                     .WithModelOfType<GoalDetailsViewModel>()
@@ -230,7 +213,6 @@ namespace SharedGoals.Tests.Controllers
                 }))
                 .ShouldHave()
                 .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests()
                     .RestrictingForHttpMethod(HttpMethod.Post))
                 .ValidModelState()
                 .Data(data => data
@@ -272,10 +254,6 @@ namespace SharedGoals.Tests.Controllers
                         CreatorId = creatorId
                     }))))
                 .Calling(c => c.Edit(id))
-                .ShouldHave()
-                .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests())
-                .AndAlso()
                 .ShouldReturn()
                 .View(result => result
                     .WithModelOfType<GoalFormModel>()
@@ -330,7 +308,6 @@ namespace SharedGoals.Tests.Controllers
                 }))
                 .ShouldHave()
                 .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests()
                     .RestrictingForHttpMethod(HttpMethod.Post))
                 .ValidModelState()
                 .Data(data => data
@@ -372,10 +349,6 @@ namespace SharedGoals.Tests.Controllers
                         CreatorId = creatorId
                     }))))
                 .Calling(c => c.Finish(id))
-                .ShouldHave()
-                .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests())
-                .AndAlso()
                 .ShouldReturn()
                 .View(result => result
                     .WithModelOfType<GoalDetailsViewModel>()
@@ -418,7 +391,6 @@ namespace SharedGoals.Tests.Controllers
                 }))
                 .ShouldHave()
                 .ActionAttributes(atributes => atributes
-                    .RestrictingForAuthorizedRequests()
                     .RestrictingForHttpMethod(HttpMethod.Post))
                 .ValidModelState()
                 .Data(data => data

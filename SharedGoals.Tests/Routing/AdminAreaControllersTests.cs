@@ -30,5 +30,15 @@ namespace SharedGoals.Tests.Routing
                     .WithPath("/GoalWorks/All")
                     .WithMethod(HttpMethod.Get))
                 .To<GoalWorksController>(a => a.All());
+
+        [Theory]
+        [InlineData(1)]
+        public void CommentsController_PostDeleteShouldBeMapped(int id)
+           => MyRouting
+               .Configuration()
+               .ShouldMap(request => request
+                   .WithPath($"/Comments/Delete/{id}")
+                   .WithMethod(HttpMethod.Post))
+               .To<CommentsController>(a => a.Delete(id));
     }
 }

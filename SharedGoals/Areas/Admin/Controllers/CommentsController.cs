@@ -20,6 +20,7 @@ namespace SharedGoals.Areas.Admin.Controllers
             return View(comments);
         }
 
+        [Route("/Comments/Delete/{id}")]
         [HttpPost]
         public IActionResult Delete(int id)
         {
