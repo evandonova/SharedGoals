@@ -56,7 +56,7 @@
 * MyTested.AspNetCore.Mvc
 
 ## :clipboard: Test Coverage
-![Screenshot_61](https://user-images.githubusercontent.com/69080997/130662171-d1111bac-1902-4490-9641-b290fa5e6a2c.png)
+![image](https://user-images.githubusercontent.com/69080997/130685698-2d6a3aa7-1097-407c-afc1-9370d24766d8.png)
 
 
 
