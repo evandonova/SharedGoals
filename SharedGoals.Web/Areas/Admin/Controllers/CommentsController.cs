@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SharedGoals.Services.Comments;
+﻿using SharedGoals.Services.Comments;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SharedGoals.Web.Areas.Admin.Controllers
 {

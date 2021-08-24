@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SharedGoals.Controllers.Models.Comments;
+﻿using SharedGoals.Services.Goals;
 using SharedGoals.Services.Comments;
-using SharedGoals.Services.Goals;
-using Microsoft.AspNetCore.Authorization;
 using SharedGoals.Controllers.Infrastructure;
+using SharedGoals.Controllers.Models.Comments;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SharedGoals.Controllers
 {

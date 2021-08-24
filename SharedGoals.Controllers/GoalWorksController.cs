@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SharedGoals.Controllers.Infrastructure;
+﻿using SharedGoals.Controllers.Infrastructure;
 using SharedGoals.Controllers.Models.GoalWorks;
 using SharedGoals.Services.Creators;
 using SharedGoals.Services.Goals;
 using SharedGoals.Services.GoalWorks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SharedGoals.Controllers
 {

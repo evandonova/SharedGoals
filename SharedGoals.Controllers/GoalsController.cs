@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SharedGoals.Controllers.Infrastructure;
+﻿using SharedGoals.Controllers.Infrastructure;
 using SharedGoals.Controllers.Models.Goals;
 using SharedGoals.Services.Creators;
 using SharedGoals.Services.Goals;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace SharedGoals.Controllers
 {
