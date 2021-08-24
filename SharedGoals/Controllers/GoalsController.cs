@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SharedGoals.Controllers
 {
+    [Authorize]
     public class GoalsController : Controller
     {
         private readonly IGoalService goals;
@@ -35,7 +36,6 @@ namespace SharedGoals.Controllers
             return View(query);
         }
 
-        [Authorize]
         public IActionResult Details(int id)
         {
             if(!this.goals.Exists(id))
@@ -48,7 +48,6 @@ namespace SharedGoals.Controllers
             return View(goal);
         }
 
-        [Authorize]
         public IActionResult Create()
         {
             if (!this.creators.IsCreator(this.User.Id()) && !this.User.IsAdmin())
@@ -63,7 +62,6 @@ namespace SharedGoals.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult Create(GoalFormModel goal)
         {
             var userId = this.User.Id();
@@ -99,7 +97,6 @@ namespace SharedGoals.Controllers
             return RedirectToAction("All");
         }
 
-        [Authorize]
         public IActionResult Delete(int id)
         {
             if (!this.goals.Exists(id))
@@ -121,7 +118,6 @@ namespace SharedGoals.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult Delete(GoalDetailsViewModel goalModel)
         {
             if (!this.goals.Exists(goalModel.Id))
@@ -142,7 +138,6 @@ namespace SharedGoals.Controllers
             return this.RedirectToAction("All");
         }
 
-        [Authorize]
         public IActionResult Edit(int id)
         {
             if (!this.goals.Exists(id))
@@ -165,7 +160,6 @@ namespace SharedGoals.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult Edit(int id, GoalFormModel goal)
         {
             if (!this.goals.Exists(id))
@@ -203,7 +197,6 @@ namespace SharedGoals.Controllers
             return this.RedirectToAction("All");
         }
 
-        [Authorize]
         public IActionResult Finish(int id)
         {
             if (!this.goals.Exists(id) || this.goals.IsFinished(id))
@@ -225,7 +218,6 @@ namespace SharedGoals.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult Finish(GoalDetailsViewModel goalModel)
         {
             if (!this.goals.Exists(goalModel.Id) || this.goals.IsFinished(goalModel.Id))

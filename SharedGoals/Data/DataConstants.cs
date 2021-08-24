@@ -36,5 +36,14 @@
             public const int LastNameMaxLenght = 15;
             public const int LastNameMinLenght = 3;
         }
+
+        public class Comment
+        {
+            public const int NameMaxLenght = 10;
+            public const int NameMinLenght = 1;
+
+            public const int BodyMaxLenght = 100;
+            public const int BodyMinLenght = 5;
+        }
     }
 }

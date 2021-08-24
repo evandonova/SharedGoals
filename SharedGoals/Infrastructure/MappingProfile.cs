@@ -4,6 +4,7 @@ using SharedGoals.Services.Users;
 using SharedGoals.Services.GoalWorks;
 using SharedGoals.Services.Goals.Models;
 using AutoMapper;
+using SharedGoals.Services.Comments;
 
 namespace SharedGoals.Infrastructure
 {
@@ -32,7 +33,10 @@ namespace SharedGoals.Infrastructure
             this.CreateMap<Tag, GoalTagServiceModel>();
 
             this.CreateMap<User, UserServiceModel>();
-            
+
+            this.CreateMap<Comment, CommentServiceModel>()
+                .ForMember(g => g.User, cfg => cfg.MapFrom(g => g.User.UserName))
+                .ForMember(g => g.Goal, cfg => cfg.MapFrom(g => g.Goal.Name));
         }
     }
 }

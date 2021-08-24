@@ -40,6 +40,7 @@
             {
                 <a asp-controller="Goals" asp-action="Finish" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Finish Goal</a>
             }
+            <a asp-controller="Comments" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary mb-3">Add Comment</a>
         }
         <p class="card-text mb-0"><b>@Model.Tag</b> Goal By <b>@Model.Creator</b></p>
         <p class="card-text mt-2">Finished: @(Model.IsFinished == true ? "yes" : "no")</p>

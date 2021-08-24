@@ -36,5 +36,7 @@ namespace SharedGoals.Data.Models
         public Creator Creator { get; init; }
 
         public IEnumerable<GoalWork> GoalWorks { get; init; } = new List<GoalWork>();
+
+        public IEnumerable<Comment> Comments { get; init; } = new List<Comment>();
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SharedGoals.Controllers
 {
+    [Authorize]
     public class CreatorsController : Controller
     {
         private readonly ICreatorService creators;
@@ -15,7 +16,6 @@ namespace SharedGoals.Controllers
             this.creators = creators;
         }
 
-        [Authorize]
         public IActionResult Become() 
         {
             var userId = this.User.Id();
@@ -30,7 +30,6 @@ namespace SharedGoals.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult Become(BecomeCreatorFormModel creator)
         {
             var userId = this.User.Id();

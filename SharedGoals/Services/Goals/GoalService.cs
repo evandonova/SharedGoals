@@ -111,7 +111,7 @@ namespace SharedGoals.Services.Goals
         {
             var goal = this.dbContext.Goals.Find(id);
 
-            this.dbContext.Remove(goal);
+            this.dbContext.Goals.Remove(goal);
             this.dbContext.SaveChanges();
         }
 

@@ -19,6 +19,8 @@ namespace SharedGoals.Data
 
         public DbSet<GoalWork> GoalWorks { get; init; }
 
+        public DbSet<Comment> Comments { get; init; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
@@ -39,6 +41,12 @@ namespace SharedGoals.Data
                 .Entity<Goal>()
                 .HasMany(g => g.GoalWorks)
                 .WithOne(gw => gw.Goal)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .Entity<Goal>()
+                .HasMany(g => g.Comments)
+                .WithOne(c => c.Goal)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder

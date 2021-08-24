@@ -5,6 +5,7 @@ using SharedGoals.Services.Creators;
 using SharedGoals.Services.Goals;
 using SharedGoals.Services.GoalWorks;
 using SharedGoals.Services.Users;
+using SharedGoals.Services.Comments;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -54,6 +55,7 @@ namespace SharedGoals
             services.AddTransient<ICreatorService, CreatorService>();
             services.AddTransient<IGoalWorkService, GoalWorkService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICommentService, CommentService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

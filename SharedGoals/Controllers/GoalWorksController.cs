@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SharedGoals.Controllers
 {
+    [Authorize]
     public class GoalWorksController : Controller
     {
         private readonly IGoalService goals;
@@ -24,7 +25,6 @@ namespace SharedGoals.Controllers
             this.creators = creators;
         }
 
-        [Authorize]
         public IActionResult Mine()
         {
             var userId = this.User.Id();
@@ -34,7 +34,6 @@ namespace SharedGoals.Controllers
             return View(goalWorks);
         }
 
-        [Authorize]
         public IActionResult Work(int id)
         {
             if (!this.goals.Exists(id) || this.goals.IsFinished(id))
@@ -51,7 +50,6 @@ namespace SharedGoals.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult Work(int id, GoalWorkFormModel goalWorkModel)
         {
             if (!this.goals.Exists(id) || this.goals.IsFinished(id))
