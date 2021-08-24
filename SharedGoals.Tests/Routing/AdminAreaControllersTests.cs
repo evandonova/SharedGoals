@@ -1,4 +1,4 @@
-﻿using SharedGoals.Areas.Admin.Controllers;
+﻿using SharedGoals.Web.Areas.Admin.Controllers;
 using Xunit;
 using MyTested.AspNetCore.Mvc;
 

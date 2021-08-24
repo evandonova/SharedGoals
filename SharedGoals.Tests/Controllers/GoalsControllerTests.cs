@@ -2,13 +2,13 @@
 using System.Linq;
 using SharedGoals.Controllers;
 using SharedGoals.Data.Models;
-using SharedGoals.Models.Goals;
 using Xunit;
 using MyTested.AspNetCore.Mvc;
+using SharedGoals.Controllers.Models.Goals;
 
 namespace SharedGoals.Tests.Controllers
 {
-    using static Areas.Admin.AdminConstants;
+    using static Web.Areas.Admin.AdminConstants;
     public class GoalsControllerTests
     {
         [Fact]

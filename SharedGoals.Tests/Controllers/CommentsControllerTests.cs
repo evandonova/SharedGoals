@@ -1,17 +1,13 @@
 ﻿using MyTested.AspNetCore.Mvc;
 using SharedGoals.Controllers;
+using SharedGoals.Controllers.Models.Comments;
 using SharedGoals.Data.Models;
-using SharedGoals.Models.Comments;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SharedGoals.Tests.Controllers
 {
-    using static Areas.Admin.AdminConstants;
+    using static Web.Areas.Admin.AdminConstants;
     public class CommentsControllerTests
     {
         [Theory]

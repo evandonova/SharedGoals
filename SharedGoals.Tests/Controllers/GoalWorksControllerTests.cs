@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using MyTested.AspNetCore.Mvc;
 using SharedGoals.Controllers;
+using SharedGoals.Controllers.Models.GoalWorks;
 using SharedGoals.Data.Models;
-using SharedGoals.Models.GoalWorks;
 using SharedGoals.Services.GoalWorks;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
-using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Controllers
 {
-    using static Areas.Admin.AdminConstants;
+    using static Web.Areas.Admin.AdminConstants;
     public class GoalWorksControllerTests
     {
         [Fact]

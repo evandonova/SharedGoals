@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SharedGoals.Services.Comments;
 
-namespace SharedGoals.Areas.Admin.Controllers
+namespace SharedGoals.Web.Areas.Admin.Controllers
 {
     public class CommentsController : AdminController
     {
@@ -31,7 +31,6 @@ namespace SharedGoals.Areas.Admin.Controllers
 
             this.comments.Delete(id);
 
-            TempData["message"] = "Goal was deleted successfully!";
             return this.RedirectToAction("All");
         }
     }

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using SharedGoals.Areas.Admin.Controllers;
+﻿using MyTested.AspNetCore.Mvc;
+using SharedGoals.Services.Comments;
 using SharedGoals.Services.GoalWorks;
 using SharedGoals.Services.Users;
+using SharedGoals.Web.Areas.Admin.Controllers;
+using System;
+using System.Collections.Generic;
 using Xunit;
-using MyTested.AspNetCore.Mvc;
-using SharedGoals.Services.Comments;
 
 namespace SharedGoals.Tests.Controllers
 {
-    using static Areas.Admin.AdminConstants;
+    using static SharedGoals.Web.Areas.Admin.AdminConstants;
     public class AdminAreaControllersTests
     {
         [Fact]

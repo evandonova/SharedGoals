@@ -4,7 +4,7 @@ using SharedGoals.Services.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace SharedGoals.Areas.Admin.Controllers
+namespace SharedGoals.Web.Areas.Admin.Controllers
 {
     using static AdminConstants;
 

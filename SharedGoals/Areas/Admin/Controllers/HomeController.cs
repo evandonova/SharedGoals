@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace SharedGoals.Areas.Admin.Controllers
+namespace SharedGoals.Web.Areas.Admin.Controllers
 {
     public class HomeController : AdminController
     {

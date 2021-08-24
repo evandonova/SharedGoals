@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace SharedGoals.Areas.Admin.Controllers
+namespace SharedGoals.Web.Areas.Admin.Controllers
 {
     using static AdminConstants;
 

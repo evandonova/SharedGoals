@@ -4,7 +4,7 @@ using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Controllers
 {
-    using static Areas.Admin.AdminConstants;
+    using static Web.Areas.Admin.AdminConstants;
     public class HomeControllerTests
     {
         [Fact]

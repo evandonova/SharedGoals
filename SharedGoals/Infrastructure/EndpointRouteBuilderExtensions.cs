@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 
-namespace SharedGoals.Infrastructure
+namespace SharedGoals.Web.Infrastructure
 {
     public static class EndpointRouteBuilderExtensions
     {

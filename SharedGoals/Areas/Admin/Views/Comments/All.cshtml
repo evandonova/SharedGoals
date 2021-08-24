@@ -6,48 +6,57 @@
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Goal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Body)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var comment in Model)
-        {
+
+@if (!Model.Any())
+{
+    <h3 class="text-center">No comments yet!</h3>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => comment.Goal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => comment.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => comment.Body)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => comment.User)
-                </td>
-                <td>
-                    <form asp-controller="Comments" asp-route-id="@comment.Id" asp-action="Delete" method="post">
-                        <input type="submit" name="upvote" value="Delete" />
-                    </form>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Goal)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Body)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.User)
+                </th>
+                <th>
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var comment in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => comment.Goal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => comment.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => comment.Body)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => comment.User)
+                    </td>
+                    <td>
+                        <form asp-controller="Comments" asp-route-id="@comment.Id" asp-action="Delete" method="post">
+                            <input type="submit" name="upvote" value="Delete" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 

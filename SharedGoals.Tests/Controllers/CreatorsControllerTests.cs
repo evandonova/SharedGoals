@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿using MyTested.AspNetCore.Mvc;
 using SharedGoals.Controllers;
+using SharedGoals.Controllers.Models.Creators;
 using SharedGoals.Data.Models;
-using SharedGoals.Models.Creators;
+using System.Linq;
 using Xunit;
-using MyTested.AspNetCore.Mvc;
 
 namespace SharedGoals.Tests.Controllers
 {

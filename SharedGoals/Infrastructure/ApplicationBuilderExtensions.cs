@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SharedGoals.Infrastructure
+namespace SharedGoals.Web.Infrastructure
 {
     using static Areas.Admin.AdminConstants;
 

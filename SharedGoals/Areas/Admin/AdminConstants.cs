@@ -1,4 +1,4 @@
-﻿namespace SharedGoals.Areas.Admin
+﻿namespace SharedGoals.Web.Areas.Admin
 {
     public class AdminConstants
     {
