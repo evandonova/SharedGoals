@@ -83,8 +83,6 @@ namespace SharedGoals.Tests.Controllers
                 .Data(data => data
                     .WithSet<Comment>(comments => comments
                         .Any(c => c.Name == name && c.Body == body)))
-                .TempData(td => td
-                    .ContainingEntryWithKey("message"))
                 .AndAlso()
                 .ShouldReturn()
                 .RedirectToAction("Details", "Goals", new { id = id});
