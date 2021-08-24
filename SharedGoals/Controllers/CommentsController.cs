@@ -46,8 +46,6 @@ namespace SharedGoals.Controllers
 
             this.comments.Add(commentModel.Name, commentModel.Body, this.User.Id(), id);
 
-            TempData["message"] = "You added a goal comment!";
-
             return this.RedirectToAction("Details", "Goals", new { id = id});
         }
     }
