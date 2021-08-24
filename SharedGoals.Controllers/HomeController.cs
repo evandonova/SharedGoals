@@ -15,5 +15,20 @@ namespace SharedGoals.Controllers
         }
 
         public IActionResult Error() => View();
+
+        public IActionResult Error401()
+        {
+            return this.View();
+        }
+
+        public IActionResult Error404()
+        {
+            return this.View();
+        }
+
+        public IActionResult Error500()
+        {
+            return this.View();
+        }
     }
 }

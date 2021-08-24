@@ -82,6 +82,7 @@ namespace SharedGoals.Web
                 .UseRouting()
                 .UseAuthentication()
                 .UseAuthorization()
+                .UseStatusCodePagesWithRedirects("/Home/Error{0}")
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapDefaultAreaRoute();

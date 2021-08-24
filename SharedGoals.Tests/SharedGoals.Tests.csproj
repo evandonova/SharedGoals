@@ -23,7 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="..\SharedGoals.Controllers\SharedGoals.Controllers.csproj" />
     <ProjectReference Include="..\SharedGoals.Web\SharedGoals.Web.csproj" />
-    <ProjectReference Include="..\SharedGoals\SharedGoals.Web.csproj" />
   </ItemGroup>
 
 </Project>
