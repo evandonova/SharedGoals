@@ -7,6 +7,7 @@ using SharedGoals.Services.Goals.Models;
 using SharedGoals.Services.GoalWorks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using SharedGoals.Services.Comments;
 
 namespace SharedGoals.Services.Goals
 {
@@ -81,6 +82,17 @@ namespace SharedGoals.Services.Goals
             if (goalWorksModel != null)
             {
                 goal.GoalWorks = goalWorksModel;
+            }
+
+            var commentsModel =
+                this.dbContext
+                .Comments
+                .Where(g => g.GoalId == id)
+                .ProjectTo<CommentServiceModel>(this.mapper.ConfigurationProvider);
+
+            if (commentsModel != null)
+            {
+                goal.Comments = commentsModel;
             }
 
             return goal;

@@ -39,7 +39,7 @@
 
         public class Comment
         {
-            public const int NameMaxLenght = 10;
+            public const int NameMaxLenght = 20;
             public const int NameMinLenght = 1;
 
             public const int BodyMaxLenght = 100;
